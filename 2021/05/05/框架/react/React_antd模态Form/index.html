@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;React&gt; Antd 模态Form表单组件 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicit4jrvuj20zk0m8785.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      &lt;React&gt; Antd 模态Form表单组件
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2021-05-05</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>Antd 还是挺好用的</p>
+</blockquote>
+<span id="more"></span>
+
+<div class="link-group"><div class="tagLink"><a class="link-card" title="Antd组件库官网" target="_blank" rel="noopener" href="https://ant.design/components/table-cn/#components-table-demo-order-column"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd组件库官网</p><p class="url">https://ant.design/components/table-cn/#components-table-demo-order-column</p></div></a></div></div>
+
+<h2 id="组件文档"><a href="#组件文档" class="headerlink" title="组件文档"></a>组件文档</h2><p>在后台项目中,很容易有那种点出一个模态框,模态框里有个表单,点提交调接口刷新表格的情况,antd 的表单每次写的嗨长,既然复用性这么高还是写个组件出来多好.<br>功能</p>
+<ul>
+<li><p>搜索框 选择框 单选框 多选框 图片预览 文本框 上传图片<br>successFuc本来可以也写进设置的对象里,但是我还是把他单拎出来写了,这样比较灵活,到时候有些情况也好办一些</p>
+<ol>
+<li>定义 <code>dialogRef1 = React.createRef();</code></li>
+<li>定义表单返回的值</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">successFuc = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dialogRef1.current.hideModelRef(<span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;success====&quot;</span>, data);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>绑定</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Dialog</span><br><span class="line">     &#123;...aaa.form&#125;</span><br><span class="line">     title=<span class="string">&quot;新增&quot;</span></span><br><span class="line">     ref=&#123;<span class="built_in">this</span>.dialogRef1&#125;</span><br><span class="line">     successFn=&#123;<span class="built_in">this</span>.successFuc&#125;</span><br><span class="line">     loadingModal=&#123;<span class="literal">false</span>&#125;</span><br><span class="line">   &gt;&lt;/Dialog&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>父组件打开自定义模态框</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">this</span>.dialogRef1.current.showModelRef(<span class="literal">true</span>, &#123;</span><br><span class="line">  <span class="attr">companyName</span>: <span class="string">&quot;123123123&quot;</span>,</span><br><span class="line">  <span class="attr">select</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">  <span class="attr">image</span>: <span class="string">&quot;tenant-license/20220426/a117164f-59e5-46a7-add0-8ae35adad573.jpg&quot;</span>,</span><br><span class="line">&#125;,<span class="string">&#x27;eye&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p><code>eye</code> 传了之后表单所有东西都变成已读</p>
+<ol start="5">
+<li>模态框数据设置</li>
+</ol>
+<p>  结构是这样的</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> aaa = &#123;</span><br><span class="line">   <span class="attr">form</span>: &#123;</span><br><span class="line">     <span class="attr">detail</span>: []</span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>支持的功能 input radio select textarea image upload checkbox和</p>
+<ul>
+<li>支持的属性 required 必填</li>
+<li>message 必填提示文字,不写就用组件自带的提示</li>
+<li>select,checkbox和 radio都是这样传</li>
+</ul>
+<p> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;名称&quot;</span>,</span><br><span class="line">    <span class="attr">field</span>: <span class="string">&quot;select&quot;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;select&quot;</span>,</span><br><span class="line">    <span class="attr">disabled</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">data</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h2 id="组件代码"><a href="#组件代码" class="headerlink" title="组件代码"></a>组件代码</h2><details info><summary> 组件代码 </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, forwardRef, useImperativeHandle &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  Modal,</span><br><span class="line">  Form,</span><br><span class="line">  Input,</span><br><span class="line">  Radio,</span><br><span class="line">  Select,</span><br><span class="line">  Spin,</span><br><span class="line">  Upload,</span><br><span class="line">  Image,</span><br><span class="line">  message,</span><br><span class="line">  Checkbox,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; LoadingOutlined, CloudDownloadOutlined &#125; <span class="keyword">from</span> <span class="string">&quot;@ant-design/icons&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dialog</span>(<span class="params">props, ref</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; successFn, isFlex &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> [visible, setVisible] = useState(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [formModal] = Form.useForm();</span><br><span class="line">  <span class="keyword">const</span> [loadingFormModal, setLoadingFormModal] = useState(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">let</span> initialValues = &#123;&#125;;</span><br><span class="line">  <span class="keyword">const</span> arr = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(props.detail));</span><br><span class="line">  <span class="keyword">const</span> [isArr, getIsArr] = useState(arr);</span><br><span class="line">  <span class="keyword">const</span> [fileList, setFileList] = useState([]);</span><br><span class="line">  <span class="keyword">const</span> [upload, setUpload] = useState(&#123;&#125;);</span><br><span class="line">  <span class="keyword">const</span> [uploadLoading, setUploadLoading] = useState(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [Imgvisible, setImgvisible] = useState(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [isEye, getIsEye] = useState(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> region = props.region ? <span class="string">&quot;/&quot;</span> + props.region + <span class="string">&quot;/dfs/&quot;</span> : <span class="string">&quot;/wmqe/dfs/&quot;</span>;</span><br><span class="line">  <span class="comment">// 上传文件</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">beforeUpload</span>(<span class="params">file, item</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> isJpgOrPng = file.type === <span class="string">&quot;image/jpeg&quot;</span> || file.type === <span class="string">&quot;image/png&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (!isJpgOrPng) &#123;</span><br><span class="line">      message.error(<span class="string">&quot;请上传图片&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> isLt2M = file.size / <span class="number">1024</span> / <span class="number">1024</span> &lt; <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (!isLt2M) &#123;</span><br><span class="line">      message.error(<span class="string">&quot;您上传的图片过大&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!isJpgOrPng || !isLt2M) <span class="keyword">return</span>;</span><br><span class="line">    setLoadingFormModal(<span class="literal">true</span>);</span><br><span class="line">    setUploadLoading(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">    formData.append(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">    <span class="keyword">let</span> ApiUrl = props.region ? props.region : <span class="string">&quot;/wmqe&quot;</span>;</span><br><span class="line">    $http</span><br><span class="line">      .post(&#123;</span><br><span class="line">        <span class="attr">url</span>: ApiUrl + <span class="string">&quot;/dfs/tenant-license&quot;</span>,</span><br><span class="line">        <span class="attr">data</span>: formData,</span><br><span class="line">      &#125;)</span><br><span class="line">      .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        setUpload(&#123;</span><br><span class="line">          <span class="attr">item</span>: item,</span><br><span class="line">        &#125;);</span><br><span class="line">        setFileList([</span><br><span class="line">          ...fileList,</span><br><span class="line">          ...[</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">uid</span>: res.data.filePath,</span><br><span class="line">              <span class="attr">url</span>: region + res.data.filePath,</span><br><span class="line">              <span class="attr">name</span>: res.data.fileName,</span><br><span class="line">              <span class="attr">status</span>: <span class="string">&quot;done&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">          ],</span><br><span class="line">        ]);</span><br><span class="line">        setLoadingFormModal(<span class="literal">false</span>);</span><br><span class="line">        setUploadLoading(<span class="literal">false</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 删除图片</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleRemove</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> file = fileList.filter(<span class="function">(<span class="params">item_</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> item.uid != item_.uid;</span><br><span class="line">    &#125;);</span><br><span class="line">    setFileList(file);</span><br><span class="line">    setUpload(&#123;&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 预览图片</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">onPreview</span>(<span class="params">file</span>) </span>&#123;</span><br><span class="line">    setImgvisible(&#123; ...file, <span class="attr">vis</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getfield = <span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (item.type) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;select&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Select</span> <span class="attr">disabled</span>=<span class="string">&#123;item.disabled&#125;</span> &#123;<span class="attr">...item.opt</span>&#125; <span class="attr">options</span>=<span class="string">&#123;item.data&#125;</span> /&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;checkbox&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Checkbox.Group</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">disabled</span>=<span class="string">&#123;item.disabled&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            &#123;<span class="attr">...item.opt</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">options</span>=<span class="string">&#123;item.data&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          &gt;</span><span class="tag">&lt;/<span class="name">Checkbox.Group</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;radio&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Radio.Group</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">disabled</span>=<span class="string">&#123;item.disabled&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            &#123;<span class="attr">...item.opt</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">options</span>=<span class="string">&#123;item.data&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          /&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;textarea&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Input.TextArea</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">disabled</span>=<span class="string">&#123;item.disabled&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            &#123;<span class="attr">...item.opt</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">options</span>=<span class="string">&#123;item.data&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          /&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;image&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Image</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">width</span>=<span class="string">&#123;146&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">src</span>=<span class="string">&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">formModal.getFieldsValue</span>()[<span class="attr">item.field</span>]</span></span></span><br><span class="line"><span class="tag"><span class="xml">                ? <span class="attr">region</span> + <span class="attr">formModal.getFieldsValue</span>()[<span class="attr">item.field</span>]</span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">:</span> &quot;&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            &#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">          /&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;upload&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">Upload</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">listType</span>=<span class="string">&quot;picture-card&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">className</span>=<span class="string">&quot;avatar-uploader&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">beforeUpload</span>=<span class="string">&#123;(flie)</span> =&gt;</span> beforeUpload(flie, item)&#125;</span></span><br><span class="line"><span class="xml">            fileList=&#123;fileList&#125;</span></span><br><span class="line"><span class="xml">            style=&#123;&#123; width: &quot;146px&quot;, height: &quot;146px&quot; &#125;&#125;</span></span><br><span class="line"><span class="xml">            maxCount=&#123;1&#125;</span></span><br><span class="line"><span class="xml">            onRemove=&#123;(item) =&gt; handleRemove(item)&#125;</span></span><br><span class="line"><span class="xml">            onPreview=&#123;(file) =&gt; onPreview(file)&#125;</span></span><br><span class="line"><span class="xml">            &#123;...item.opt&#125;</span></span><br><span class="line"><span class="xml">          &gt;</span></span><br><span class="line"><span class="xml">            &#123;fileList.length &gt;=</span></span><br><span class="line"><span class="xml">            (item.opt &amp;&amp; item.opt.maxCount ? item.opt.maxCount : 1) ? null : (</span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">width:</span> &quot;<span class="attr">146px</span>&quot;, <span class="attr">height:</span> &quot;<span class="attr">146px</span>&quot; &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="xml">                &#123;uploadLoading ? (</span></span><br><span class="line"><span class="xml">                  <span class="tag">&lt;<span class="name">LoadingOutlined</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">fontSize:</span> &quot;<span class="attr">40px</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">marginTop:</span> &quot;<span class="attr">35px</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">color:</span> &quot;#<span class="attr">E6E6E6</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                  /&gt;</span></span></span><br><span class="line"><span class="xml">                ) : (</span></span><br><span class="line"><span class="xml">                  <span class="tag">&lt;<span class="name">CloudDownloadOutlined</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">fontSize:</span> &quot;<span class="attr">40px</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">marginTop:</span> &quot;<span class="attr">35px</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">color:</span> &quot;#<span class="attr">E6E6E6</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                  /&gt;</span></span></span><br><span class="line"><span class="xml">                )&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">marginTop:</span> <span class="attr">8</span>, <span class="attr">color:</span> &quot;#<span class="attr">E6E6E6</span>&quot; &#125;&#125;&gt;</span>请上传图片<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            )&#125;</span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">Upload</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Input</span> <span class="attr">disabled</span>=<span class="string">&#123;item.disabled&#125;</span> &#123;<span class="attr">...item.opt</span>&#125; /&gt;</span></span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> showModal = <span class="function">(<span class="params">bol, data, type</span>) =&gt;</span> &#123;</span><br><span class="line">    formModal.resetFields();</span><br><span class="line">    setFileList([]);</span><br><span class="line">    setUpload(&#123;&#125;);</span><br><span class="line">    getIsEye(type);</span><br><span class="line">    getIsArr(arr);</span><br><span class="line">    <span class="keyword">if</span> (type == <span class="string">&quot;eye&quot;</span>) &#123;</span><br><span class="line">      getIsEye(<span class="string">&quot;eye&quot;</span>);</span><br><span class="line">      arr.filter(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (item.disabled = <span class="literal">true</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">      getIsArr(arr);</span><br><span class="line">    &#125;</span><br><span class="line">    formModal.setFieldsValue(data);</span><br><span class="line">    setVisible(<span class="literal">true</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> hideModal = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setVisible(<span class="literal">false</span>);</span><br><span class="line">    setLoadingFormModal(<span class="literal">false</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  useImperativeHandle(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">showModelRef</span>: showModal,</span><br><span class="line">    <span class="attr">hideModelRef</span>: hideModal,</span><br><span class="line">  &#125;));</span><br><span class="line">  <span class="keyword">const</span> handleClose = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    hideModal();</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 提交</span></span><br><span class="line">    <span class="keyword">if</span> (props.loadingModal == <span class="literal">false</span>) &#123;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      setLoadingFormModal(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (upload.item &amp;&amp; fileList.length != <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> list = fileList.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> item.uid;</span><br><span class="line">      &#125;);</span><br><span class="line">      values[upload.item.field] = list;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (upload.item &amp;&amp; fileList.length == <span class="number">0</span>) &#123;</span><br><span class="line">      values[upload.item.field] = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (successFn &amp;&amp; isEye != <span class="string">&quot;eye&quot;</span>) &#123;</span><br><span class="line">      successFn(<span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(values)));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      hideModal();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> style = &#123;</span><br><span class="line">    <span class="attr">display</span>: props.footer == <span class="string">&quot;no&quot;</span> ? <span class="string">&quot;none&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;formModalBox&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">Image</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">display:</span> &quot;<span class="attr">none</span>&quot; &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">src</span>=<span class="string">&#123;Imgvisible.url</span> ? <span class="attr">Imgvisible.url</span> <span class="attr">:</span> &quot;&quot;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">preview</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">visible:</span> <span class="attr">Imgvisible.vis</span>,</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">src:</span> <span class="attr">Imgvisible.url</span> ? <span class="attr">Imgvisible.url</span> <span class="attr">:</span> &quot;&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">onVisibleChange:</span> (<span class="attr">value</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="xml">            setImgvisible(&#123; ...Imgvisible, ...&#123; vis: value &#125; &#125;);</span></span><br><span class="line"><span class="xml">          &#125;,</span></span><br><span class="line"><span class="xml">        &#125;&#125;</span></span><br><span class="line"><span class="xml">      /&gt;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">Modal</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">width</span>=<span class="string">&#123;isFlex</span> ? <span class="attr">1000</span> <span class="attr">:</span> <span class="attr">600</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">visible</span>=<span class="string">&#123;visible&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">maskClosable</span>=<span class="string">&#123;false&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">onCancel</span>=<span class="string">&#123;handleClose&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">destroyOnClose</span>=<span class="string">&#123;true&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">forceRender</span>=<span class="string">&#123;true&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">footer</span>=<span class="string">&#123;null&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">title</span>=<span class="string">&#123;props.title&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      &gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spinning</span>=<span class="string">&#123;loadingFormModal&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">Form</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">form</span>=<span class="string">&#123;formModal&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">initialValues</span>=<span class="string">&#123;initialValues&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">autoComplete</span>=<span class="string">&quot;off&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">labelCol</span>=<span class="string">&#123;&#123;</span> <span class="attr">span:</span> <span class="attr">4</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">wrapperCol</span>=<span class="string">&#123;&#123;</span> <span class="attr">span:</span> <span class="attr">20</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">onFinish</span>=<span class="string">&#123;onFinish&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            &#123;<span class="attr">...props.options</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">          &gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;formModalClass&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">              &#123;isArr.map((item, index) =&gt; (</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                  <span class="attr">key</span>=<span class="string">&#123;index&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                  <span class="attr">className</span>=<span class="string">&quot;formModalCard&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                  <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">display:</span> `$&#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">isFlex</span> &amp;&amp; <span class="attr">item.type</span> != <span class="string">&quot;upload&quot;</span> ? &quot;<span class="attr">inline-block</span>&quot; <span class="attr">:</span> &quot;<span class="attr">blok</span>&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;`,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">width:</span> `$&#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">isFlex</span> &amp;&amp; <span class="attr">item.type</span> != <span class="string">&quot;upload&quot;</span> ? &quot;<span class="attr">50</span>%&quot; <span class="attr">:</span> &quot;<span class="attr">100</span>%&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;`,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">marginLeft:</span> `$&#123;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                      <span class="attr">isFlex</span> &amp;&amp; <span class="attr">item.type</span> == <span class="string">&quot;upload&quot;</span> ? &quot;<span class="attr">-77px</span>&quot; <span class="attr">:</span> &quot;&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                    &#125;`,</span></span></span><br><span class="line"><span class="tag"><span class="xml">                  &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                &gt;</span></span></span><br><span class="line"><span class="xml">                  <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">getValueFromEvent</span>=<span class="string">&#123;(e)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="xml">                      if (item.type == &quot;upload&quot;) &#123;</span></span><br><span class="line"><span class="xml">                        if (Array.isArray(e)) &#123;</span></span><br><span class="line"><span class="xml">                          return e;</span></span><br><span class="line"><span class="xml">                        &#125;</span></span><br><span class="line"><span class="xml">                        return e &amp;&amp; e.fileList;</span></span><br><span class="line"><span class="xml">                      &#125; else if (</span></span><br><span class="line"><span class="xml">                        item.type == &quot;select&quot; ||</span></span><br><span class="line"><span class="xml">                        item.type == &quot;checkbox&quot;</span></span><br><span class="line"><span class="xml">                      ) &#123;</span></span><br><span class="line"><span class="xml">                        return e;</span></span><br><span class="line"><span class="xml">                      &#125; else &#123;</span></span><br><span class="line"><span class="xml">                        return e.target.value;</span></span><br><span class="line"><span class="xml">                      &#125;</span></span><br><span class="line"><span class="xml">                    &#125;&#125;</span></span><br><span class="line"><span class="xml">                    label=&#123;item.title&#125;</span></span><br><span class="line"><span class="xml">                    name=&#123;item.field&#125;</span></span><br><span class="line"><span class="xml">                    rules=&#123;[&#123; required: item.required, message: item.message &#125;]&#125;</span></span><br><span class="line"><span class="xml">                  &gt;</span></span><br><span class="line"><span class="xml">                    &#123;getfield(item, index)&#125;</span></span><br><span class="line"><span class="xml">                  <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">              ))&#125;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;ant-modal-footer ant-modal-footer-gai&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">onClick</span>=<span class="string">&#123;handleClose&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">className</span>=<span class="string">&quot;ant-btn ant-btn-default ant-btn-sm&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">style</span>=<span class="string">&#123;style&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              &gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>取 消<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">htmltype</span>=<span class="string">&quot;submit&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">className</span>=<span class="string">&quot;ant-btn ant-btn-primary ant-btn-sm&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              &gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>确 定<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">Form</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Spin</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">Modal</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> forwardRef(Dialog);</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<h2 id="用法代码"><a href="#用法代码" class="headerlink" title="用法代码"></a>用法代码</h2><details info><summary> 用法代码 </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> Dialog <span class="keyword">from</span> <span class="string">&quot;@/component/angel/angelModal&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Component, useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> aaa = &#123;</span><br><span class="line">  <span class="attr">form</span>: &#123;</span><br><span class="line">    <span class="attr">detail</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;租户名称称&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;companyName&quot;</span>,</span><br><span class="line">        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">disabled</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;radio&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;radio&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;radio&quot;</span>,</span><br><span class="line">        <span class="attr">disabled</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">data</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;checkbox&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;checkbox&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;checkbox&quot;</span>,</span><br><span class="line">        <span class="attr">data</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;名称&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;select&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;select&quot;</span>,</span><br><span class="line">        <span class="attr">disabled</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">data</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="string">&quot;222&quot;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;textarea&quot;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;申请日期&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;startDate&quot;</span>,</span><br><span class="line">        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;图片&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;image&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;image&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;图片上传&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;upload&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;upload&quot;</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;请上传图片&quot;</span>,</span><br><span class="line">        <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> vvaaa = &#123;</span><br><span class="line">  <span class="attr">form</span>: &#123;</span><br><span class="line">    <span class="attr">detail</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;租户2&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;companyName&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;联2&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;linkman&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;申请2期&quot;</span>,</span><br><span class="line">        <span class="attr">field</span>: <span class="string">&quot;startDate&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  dialogRef1 = React.createRef();</span><br><span class="line">  dialogRef2 = React.createRef();</span><br><span class="line">  successFuc = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dialogRef1.current.hideModelRef(<span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;success====&quot;</span>, data);</span><br><span class="line">  &#125;;</span><br><span class="line">  successFuc1 = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dialogRef2.current.hideModelRef(<span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;success====&quot;</span>, data);</span><br><span class="line">  &#125;;</span><br><span class="line">  test = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dialogRef1.current.showModelRef(<span class="literal">true</span>, &#123;</span><br><span class="line">      <span class="attr">companyName</span>: <span class="string">&quot;123123123&quot;</span>, <span class="comment">//这样传初始值</span></span><br><span class="line">      <span class="attr">select</span>: <span class="string">&quot;111&quot;</span>,</span><br><span class="line">      <span class="attr">image</span>: <span class="string">&quot;tenant-license/20220426/a117164f-59e5-46a7-add0-8ae35adad573.jpg&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  test2 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dialogRef2.current.showModelRef(<span class="literal">true</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;this.test&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          点击1</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;this.test2&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          点击2</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Dialog</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          &#123;<span class="attr">...aaa.form</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">title</span>=<span class="string">&quot;新增&quot;</span> //标题</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">ref</span>=<span class="string">&#123;this.dialogRef1&#125;</span> //<span class="attr">ref</span>   <span class="attr">dialogRef1</span> = <span class="string">React.createRef();</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">successFn</span>=<span class="string">&#123;this.successFuc&#125;</span> //拿到提交表单的返回,没有可以不写</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">loadingModal</span>=<span class="string">&#123;false&#125;</span> //是否提交时候加载特效</span></span></span><br><span class="line"><span class="tag"><span class="xml">        &gt;</span><span class="tag">&lt;/<span class="name">Dialog</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Dialog</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">title</span>=<span class="string">&quot;新增&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">footer</span>=<span class="string">&quot;no&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">successFn</span>=<span class="string">&#123;this.successFuc1&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          &#123;<span class="attr">...vvaaa.form</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">ref</span>=<span class="string">&#123;this.dialogRef2&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        &gt;</span><span class="tag">&lt;/<span class="name">Dialog</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<h2 id="组件效果"><a href="#组件效果" class="headerlink" title="组件效果"></a>组件效果</h2><p><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/e6c9d24egy1h1xjiiysbwj20l70kljrz.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="最后效果"> </p>
+
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicm07ih54j20zk0m84qp.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/06/框架/react/React_表格组件/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>&lt;React&gt; Antd 表格组件</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+React 表格组件 用的最多的
+
+
+
+在写一个后台项目的时候,用的最多的就是表格了,但是直接用 antd 给你的表格
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gipeybxm1pj20zk0m8niv.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/04/框架/react/React_搭建项目/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>&lt;React&gt; 搭建项目</div>
+      </div>
+      <!-- <div class="content">
+        
+React 后台系统是怎么搭建的?
+
+
+
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+    <script>
+      $(".toc-aside").css({'width': 0, 'padding': 0});
+      $(".toc-content").css({'width': 0});
+      $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+      $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+    </script>
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('false' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

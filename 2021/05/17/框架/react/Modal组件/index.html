@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;React&gt; Antd Modal组件 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giclxxcb6rj20zk0m8b29.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      &lt;React&gt; Antd Modal组件
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2021-05-17</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>弹弹弹</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="为什么要写"><a href="#为什么要写" class="headerlink" title="为什么要写"></a>为什么要写</h2><p>用了 Antd 为什么要写 Modal 组件?不是调用一下就完事了吗<br>但是你想想,一个弹窗里面可以有表单,可以有表格,可以有搜索框,他们可以随意组合<br>你用组件给你的东西代码不是一串一串的,写个有搜索表格功能的弹窗光设置就要写一堆<br>这个东西又是很常用的东西,所以写个组件只要写好设置文件就可以高枕无忧</p>
+<h2 id="动机是什么"><a href="#动机是什么" class="headerlink" title="动机是什么"></a>动机是什么</h2><p>我前段时间不是写了个模态框+表单的组合组件吗,被说你这个东西用的范围太小了,一个组件做一件事然后组件之间互相利用才是能最大化的<br>我突然觉得好有道理,所以我打算把 Modal+Form 的组件拆了重置一下<br>form 表单的组件也重置一下,这样就可以脱离模态框也使用 form 表单了</p>
+<div class="tagLink"><a class="link-card" title="Antd Form组件" href="/my_bolg/2021/05/17/框架/react/Form组件/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Form组件</p><p class="url">/my_bolg/2021/05/17/框架/react/Form组件/</p></div></a></div>
+
+<h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><p>分别有<code>table</code>,<code>search</code>,<code>form</code>三个功能<br>传一个设置列表过来,分别为他们的调用数据,循环它通过 type 判断要的是什么功能<br>再传给对应功能的组件调用他们</p>
+<h2 id="封装代码"><a href="#封装代码" class="headerlink" title="封装代码"></a>封装代码</h2><details info><summary> 封装代码 </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123;</span><br><span class="line">  useState,</span><br><span class="line">  forwardRef,</span><br><span class="line">  useImperativeHandle,</span><br><span class="line">  useRef,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Modal, Button, Spin &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> TableComp <span class="keyword">from</span> <span class="string">&quot;@/component/table_comp&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> Dialog <span class="keyword">from</span> <span class="string">&quot;@/component/angel/angelForm&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> SearchForm <span class="keyword">from</span> <span class="string">&quot;@/component/searchForm&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">angelModal</span>(<span class="params">props, ref</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> formRefMoadle = useRef(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">let</span> arrModal = <span class="built_in">Array</span>.isArray(props.modalType)</span><br><span class="line">    ? props.modalType</span><br><span class="line">    : [props.modalType];</span><br><span class="line">  <span class="keyword">const</span> &#123; title, successFn &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> [visible, setVisible] = useState(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> [tableData, setTableData] = useState(&#123;&#125;);</span><br><span class="line">  <span class="keyword">const</span> [editList, setEditList] = useState(&#123;&#125;);</span><br><span class="line">  <span class="keyword">const</span> [btnText, setBtnText] = useState(<span class="string">&quot;全选&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> [loadingModal, setLoadingModal] = useState(<span class="literal">false</span>);</span><br><span class="line">  useImperativeHandle(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">editModelRef</span>: editModal,</span><br><span class="line">    <span class="attr">showModelRef</span>: showModal,</span><br><span class="line">    <span class="attr">hideModelRef</span>: hideModal,</span><br><span class="line">    <span class="attr">getTableFormRef</span>: getMoadle,</span><br><span class="line">  &#125;));</span><br><span class="line">  <span class="comment">// 传给表格数据</span></span><br><span class="line">  <span class="keyword">let</span> getMoadle = <span class="function">(<span class="params">data, type</span>) =&gt;</span> &#123;</span><br><span class="line">    setTableData(&#123; <span class="attr">data</span>: &#123; data, <span class="attr">pageSize</span>: <span class="number">10</span> &#125;, <span class="attr">type</span>: type &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 关闭模态框</span></span><br><span class="line">  <span class="keyword">let</span> handleClose = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    hideModal();</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 打开模态框</span></span><br><span class="line">  <span class="keyword">let</span> showModal = <span class="function">(<span class="params">requestName, data, type</span>) =&gt;</span> &#123;</span><br><span class="line">    setVisible(&#123;</span><br><span class="line">      <span class="attr">visible</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">type</span>: type,</span><br><span class="line">      <span class="attr">data</span>: data,</span><br><span class="line">      <span class="attr">requestName</span>: requestName,</span><br><span class="line">    &#125;);</span><br><span class="line">    setBtnText(<span class="string">&quot;全选&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 修改模态框部分内容,不影响其他表单内容</span></span><br><span class="line">  <span class="keyword">let</span> editModal = <span class="function">(<span class="params">data, type</span>) =&gt;</span> &#123;</span><br><span class="line">    setVisible(&#123; ...visible, ...&#123; <span class="attr">type</span>: type &#125; &#125;);</span><br><span class="line">    setEditList(data);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 关闭模态框</span></span><br><span class="line">  <span class="keyword">let</span> hideModal = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setVisible(&#123; <span class="attr">visible</span>: <span class="literal">false</span>, <span class="attr">type</span>: <span class="string">&quot;&quot;</span> &#125;);</span><br><span class="line">    setEditList(&#123;&#125;);</span><br><span class="line">    setTableData(&#123;&#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">let</span> successForm = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (visible.requestName == <span class="string">&quot;add&quot;</span> || visible.requestName == <span class="string">&quot;edit&quot;</span>) &#123;</span><br><span class="line">      setLoadingModal(<span class="literal">true</span>);</span><br><span class="line">      <span class="keyword">let</span> api = arrModal.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (item.type == <span class="string">&quot;form&quot;</span> &amp;&amp; item.request != <span class="literal">false</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> item.request[visible.requestName];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="built_in">console</span>.log(api)</span><br><span class="line">      <span class="keyword">if</span> (api[<span class="number">0</span>]) &#123;</span><br><span class="line">        $http[api[<span class="number">0</span>].method](&#123;</span><br><span class="line">          <span class="attr">url</span>: api[<span class="number">0</span>].url,</span><br><span class="line">          <span class="attr">data</span>: data,</span><br><span class="line">        &#125;)</span><br><span class="line">          .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">            setLoadingModal(<span class="literal">false</span>);</span><br><span class="line">            successFn</span><br><span class="line">              ? successFn(&#123; <span class="attr">title</span>: visible.requestName, <span class="attr">data</span>: res &#125;)</span><br><span class="line">              : <span class="string">&quot;&quot;</span>;</span><br><span class="line">            ref.current.hideModelRef();</span><br><span class="line">          &#125;)</span><br><span class="line">          .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            setLoadingModal(<span class="literal">false</span>);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ref.current.hideModelRef();</span><br><span class="line">        setLoadingModal(<span class="literal">false</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (visible.requestName == <span class="string">&quot;other&quot;</span>) &#123;</span><br><span class="line">      successFn(data);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 表单专有设置</span></span><br><span class="line">  <span class="keyword">const</span> ModalList = <span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (item.type) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;table&quot;</span>:</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (tableData.type) &#123;</span><br><span class="line">            tableData.data.data.pageSize = <span class="number">10</span>;</span><br><span class="line">            formRefMoadle.current.getData(tableData.data.data);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            item.table.request.data = tableData.data;</span><br><span class="line">            item.table.request.data = &#123; <span class="attr">pageSize</span>: <span class="number">10</span> &#125;;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;formTableMoadle&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">TableComp</span> <span class="attr">ref</span>=<span class="string">&#123;formRefMoadle&#125;</span> <span class="attr">tableConfig</span>=<span class="string">&#123;item.table&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;search&quot;</span>:</span><br><span class="line">        <span class="keyword">let</span> searchData = item.form ? item.form : item;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">paddingTop:</span> &quot;<span class="attr">20px</span>&quot; &#125;&#125; <span class="attr">className</span>=<span class="string">&quot;SearchFormTow&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">SearchForm</span> &#123;<span class="attr">...searchData</span>&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;form&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Dialog</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              &#123;<span class="attr">...item</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">readOnly</span>=<span class="string">&#123;visible.type&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">initialValues</span>=<span class="string">&#123;visible.data&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">editList</span>=<span class="string">&#123;editList&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">successForm</span>=<span class="string">&#123;successForm&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">getRedux</span>=<span class="string">&#123;props.getRedux&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            /&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;export&quot;</span>:</span><br><span class="line">        <span class="keyword">let</span> checkboxData = item.detail[<span class="number">0</span>].data;</span><br><span class="line">        <span class="keyword">let</span> checkboxChange = item.detail[<span class="number">0</span>].opt;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> handelAllBtn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">let</span> checkbox = checkboxData.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> item.value;</span><br><span class="line">          &#125;);</span><br><span class="line">          <span class="keyword">let</span> isCheckedObj =</span><br><span class="line">            btnText == <span class="string">&quot;全选&quot;</span> ? &#123; <span class="attr">checkbox</span>: checkbox &#125; : &#123; <span class="attr">checkbox</span>: [] &#125;;</span><br><span class="line">          setBtnText(btnText == <span class="string">&quot;全选&quot;</span> ? <span class="string">&quot;全不选&quot;</span> : <span class="string">&quot;全选&quot;</span>);</span><br><span class="line">          editModal(isCheckedObj, <span class="string">&quot;saveOther&quot;</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        checkboxChange.onChange = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">          setBtnText(e.length == checkboxData.length ? <span class="string">&quot;全选&quot;</span> : <span class="string">&quot;全不选&quot;</span>);</span><br><span class="line">          <span class="keyword">if</span> (e.length != checkboxData.length) editModal(e);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;formModalExport&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;export-title&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">              选择导出字段</span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;<span class="name">Button</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">type</span>=<span class="string">&#123;btnText</span> == <span class="string">&quot;全选&quot;</span> ? &quot;<span class="attr">primary</span>&quot; <span class="attr">:</span> &quot;&quot;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">                <span class="attr">onClick</span>=<span class="string">&#123;handelAllBtn&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              &gt;</span></span></span><br><span class="line"><span class="xml">                &#123;btnText&#125;</span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Dialog</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              &#123;<span class="attr">...item</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">readOnly</span>=<span class="string">&#123;visible.type&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">initialValues</span>=<span class="string">&#123;visible.data&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">editList</span>=<span class="string">&#123;editList&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">              <span class="attr">successForm</span>=<span class="string">&#123;successForm&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            /&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;formModalBox&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">Modal</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">width</span>=<span class="string">&#123;600&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">visible</span>=<span class="string">&#123;visible.visible&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">maskClosable</span>=<span class="string">&#123;false&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">onCancel</span>=<span class="string">&#123;handleClose&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">destroyOnClose</span>=<span class="string">&#123;true&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">forceRender</span>=<span class="string">&#123;true&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">footer</span>=<span class="string">&#123;null&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">title</span>=<span class="string">&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">          <span class="attr">title</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            ? <span class="attr">title</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">:</span> <span class="attr">visible.requestName</span> == <span class="string">&quot;add&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            ? &quot;新增&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">:</span> <span class="attr">visible.requestName</span> == <span class="string">&quot;edit&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">            ? &quot;编辑&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">            <span class="attr">:</span> &quot;查看详情&quot;</span></span></span><br><span class="line"><span class="tag"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">request</span>=<span class="string">&#123;visible.request&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        &#123;<span class="attr">...props.opt</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="xml">      &gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spinning</span>=<span class="string">&#123;loadingModal&#125;</span> <span class="attr">delay</span>=<span class="string">&#123;100&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          &#123;visible != &quot;&quot;</span></span><br><span class="line"><span class="xml">            ? arrModal.map((item, index) =&gt; (</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> <span class="attr">className</span>=<span class="string">&#123;item.class&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                  &#123;ModalList(item, index)&#125;</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">              ))</span></span><br><span class="line"><span class="xml">            : &quot;&quot;&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">Spin</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">Modal</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> forwardRef(angelModal);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 只有一个searchTab的时候数组不用写,可以写成对象</span></span><br><span class="line"><span class="comment">当到了要打开模态框的时候,我们设置this.dialogRef1.current.showModelRef();</span></span><br><span class="line"><span class="comment">在表单里,如果有默认值可以放默认值进去this.dialogRef1.current.showModelRef(record);</span></span><br><span class="line"><span class="comment">在表单里,如果全部想变成已读功能this.dialogRef1.current.showModelRef(record,&#x27;readOnly&#x27;);</span></span><br><span class="line"><span class="comment">在表单里,如果想传回来一些表单里没有的值this.dialogRef1.current.showModelRef(record,&#x27;saveOther&#x27;);</span></span><br><span class="line"><span class="comment">在表单里,如果只想修改表单某几个值,不影响其他表单组件</span></span><br><span class="line"><span class="comment">this.dialogRef1.current.editModelRef(&#123;...obj&#125;,&quot;saveOther&quot;);</span></span><br><span class="line"><span class="comment">用到字典的时候直接</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    title: &quot;包装单位&quot;,</span></span><br><span class="line"><span class="comment">    field: &quot;prodPackage&quot;,</span></span><br><span class="line"><span class="comment">    type: &quot;dict&quot;,</span></span><br><span class="line"><span class="comment">    data: &quot;103&quot;, //字典号</span></span><br><span class="line"><span class="comment">&#125;,</span></span><br><span class="line"><span class="comment">  记得要传 getRedux=&#123;Redux&#125;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 只有一个searchTab的时候数组不用写,可以写成对象</span></span><br><span class="line"><span class="comment">当到了要打开模态框的时候,我们设置this.dialogRef1.current.showModelRef();</span></span><br><span class="line"><span class="comment">在表单里,如果有默认值可以放默认值进去this.dialogRef1.current.showModelRef(record);</span></span><br><span class="line"><span class="comment">在表单里,如果全部想变成已读功能this.dialogRef1.current.showModelRef(record,&#x27;readOnly&#x27;);</span></span><br><span class="line"><span class="comment">在表单里,如果想传回来一些表单里没有的值this.dialogRef1.current.showModelRef(record,&#x27;saveOther&#x27;);</span></span><br><span class="line"><span class="comment">在表单里,如果只想修改表单某几个值,不影响其他表单组件</span></span><br><span class="line"><span class="comment">this.dialogRef1.current.editModelRef(&#123;...obj&#125;,&quot;saveOther&quot;);</span></span><br><span class="line"><span class="comment">用到字典的时候直接</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    title: &quot;包装单位&quot;,</span></span><br><span class="line"><span class="comment">    field: &quot;prodPackage&quot;,</span></span><br><span class="line"><span class="comment">    type: &quot;dict&quot;,</span></span><br><span class="line"><span class="comment">    data: &quot;103&quot;, //字典号</span></span><br><span class="line"><span class="comment">&#125;,</span></span><br><span class="line"><span class="comment">  记得要传 getRedux=&#123;Redux&#125;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<h2 id="讲讲细节"><a href="#讲讲细节" class="headerlink" title="讲讲细节"></a>讲讲细节</h2><ol>
+<li>本来像<code>title</code>的设置这种功能是可以在设置表里写没有必要单拎出来的,但是很多时候面临着用一个模态框写编辑查看和新增三种状态<br>他们的<code>title</code>都不一样,也没必要因为先要改 title 就改变设置文件(毕竟这样挺累的)所以就把他拎出来设置就可以只变他自己了</li>
+<li>一进页面没有必要调用这个模态框组件,模态框组件要在点击打开的时候调用会比较好,特别是还有些涉及到接口什么的.<br>所以我在一开始设置循环的地方加了一个小设置,进来的时候我们把<code>visible</code>的初始值设置为空,点开的时候它自然会变<br>为空就意味着用户还没有要打开模态框的设置,就不让他把其他接口调用</li>
+<li><code>getTableFormRef</code>这个是表格的专属方法,因为表格在模态框的引用大多都是进来就查,但是传的值不一定是一样<br>比如我们写一个历史查询功能,每一条数据的历史都不一样,后端给的 id 也不一样,我们怎么才能在主页面把值拿过来呢<br><code> this.dialogRef2.current.getTableFormRef(&#123; content: data.content &#125;);</code><br>这样就可以给初始值了,模态组件拿到之后启动<code>setTableData()</code>方法设置表格调用的初始值,因为每次打开都是新的表格所以只用改变<br><code>request</code>的传值就可以了</li>
+</ol>
+<h2 id="怎么调用"><a href="#怎么调用" class="headerlink" title="怎么调用"></a>怎么调用</h2><p>这个另外开一篇把反正要写这个组件和form组件的文档,就把那个当成文档好了,写好了记得把链接貼过来</p>
+<div class="tagLink"><a class="link-card" title="Antd Modal组件说明" href="/my_bolg/2021/05/18/框架/react/angelForm说明/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Modal组件说明</p><p class="url">/my_bolg/2021/05/18/框架/react/angelForm说明/</p></div></a></div>
+
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giclj9410cj20zk0m8h12.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/17/框架/react/Form组件/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>&lt;React&gt; Antd Form组件</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+一切为了偷懒
+
+
+
+为什么要写前面写了一个关于 form 表单的组件,这里是吧前面的组件单拎出来了,不再依赖模态框可以
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giclfdu6exj20zk0m87hw.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/07/框架/react/React_取路由参数/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>&lt;React&gt; 取路由参数封装</div>
+      </div>
+      <!-- <div class="content">
+        
+React 用url传数据的时候就会用到
+
+
+封装文档
+如果直接调用getUrl()的话就拿到所有参数
+如果调用get
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+    <script>
+      $(".toc-aside").css({'width': 0, 'padding': 0});
+      $(".toc-content").css({'width': 0});
+      $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+      $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+    </script>
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('false' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

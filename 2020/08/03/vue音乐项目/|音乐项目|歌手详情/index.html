@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;从头来做一个音乐项目&gt;歌手详情 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giclg5ms2rj20zk0m8u0x.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      &lt;从头来做一个音乐项目&gt;歌手详情
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2020-08-03</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>歌手详情</p>
+</blockquote>
+<span id="more"></span>
+<p>需要写一个从歌手列表点进去的时候看到这个歌手热门歌曲,这种功能一般都是拿到歌手列表点击过来的id传过来用id调用详情接口拿到值,这里我们通过二级路由的方式去实现<br>先新建一个歌手详情的页面/<span class='btn info'><a class="button"  title='src/views/singer-detail.vue'>src/views/singer-detail.vue</a></span><br>然后我们去<code>route</code>去整一个娃,</p>
+<details info><summary> route </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/singer&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: Singer,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;:id&#x27;</span>,</span><br><span class="line">   nishiqian     component: SingerDetail</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"><span class="string">`1sdhjkas</span></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<ol>
+<li><p>歌手信息数据获取<br>在歌曲列表页面整个跳转,跳转到二级页面的详情页面去<br>我们要从列表的组件被点中的数据传给singer.vue,然后点击的时候,再把数据传给详情页面<br>在列表组件页面传出来,写在点击事件哦<br><code> emit(&#39;select&#39;, item)</code><br>在歌手页面用selectSinger拿到<br><code> &lt;index-list @select=&quot;selectSinger&quot;&gt;&lt;/index-list&gt;</code><br>为了写路由跳转整一个selectedSinger配合 <code>&lt;router-view :singer=&quot;selectedSinger&quot;&gt;</code><br>然后写跳转路径<br><code>selectSinger(singer) &#123; this.selectedSinger = singer this.$router.push(&#123;    path:</code>/singer/${singer.mid}<code>  &#125;) &#125;</code><br>最后在详情页面接收,并且this.singer传给接口拿到值</p>
+</li>
+<li><p>歌手歌曲列表信息获取<br>平平无奇的引入<code>import &#123; processSongs &#125; from &#39;@/service/song&#39;</code><br>普普通通的拿到数据 <code>this.songs = await processSongs(result.songs)</code><br>result是上面歌手信息的接口的信息,就简简单单的拿到了</p>
+</li>
+</ol>
+<p>这样的歌曲列表,上面在弄个图片的情况挺多的,所以就写个组件出来吧<br>为了数据的处理,我们需要增加这样一个插件  </p>
+<details info><summary> package.json </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;good-storage&quot;</span>: <span class="string">&quot;^1.1.1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<p>然后我们新建一个组件<span class='btn info'><a class="button"  title='src/components/music-list/music-list.vue'>src/components/music-list/music-list.vue</a></span><br>看看我们这个组件需要拿到哪些数据呢</p>
+<ol>
+<li>歌手名字 title</li>
+<li>歌单 songs</li>
+<li>歌手图片 pic<br>写个点击事件<code>this.$router.back()</code>处理一下返回歌手列表的按钮,设置一下歌手详情列表在往上滑动的时候图片收缩的和下拉的时候图片放大的动画效果在计算属性里计算亿下下,把效果直接return给style</li>
+</ol>
+<p>页面写到这里就大致出来了,但是刷新页面发现没有id可以传过来,拿不到id的话数据也出不来了,所以我们就用缓存的方式拿到id,这样刷新的时候也可以保留id调用接口了.这里我们需要用到一个插件<br>good-storage插件<br>缓存插件,为啥要进行一个封装呢,因为这个可以缓存一些对象啥的,而不是只能缓存字符串<br>用法</p>
+<details info><summary> package.json </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// localStorage</span></span><br><span class="line">storage.set(key,val)</span><br><span class="line">storage.get(key, def)</span><br><span class="line"></span><br><span class="line"><span class="comment">// sessionStorage</span></span><br><span class="line">storage.session.set(key, val)</span><br><span class="line">storage.session.get(key, val)</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<p>然后我们在singer页面<code>storage.session.set(&#39;KEY&#39;, singer)</code>一下,数据都储存一下吧!<br>在详情页面判断一下那没拿到组件传过来的那玩意,没有的话就从缓存拿<code>this.GSsinger = storage.session.get(&#39;KEY&#39;)</code><br>传给设置的GSsinger,这样就不怕在页面刷新啦<br>其实我想从路由直接取,但是这样有点沙雕<br>下面我们添加一个点路由切换动画切换效果<br>我们在全局样式中添加路由过渡的css<br>不懂的话可以看看这个</p>
+<div class="tagLink"><a class="link-card" title="路由transition组件" target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#transition"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">路由transition组件</p><p class="url">https://cn.vuejs.org/v2/api/#transition</p></div></a></div>
+<p>然后设置<code>appear</code>表示开始就执行动画,name设置为<code>slide</code>因为根据规则,我设置的css为</p>
+<details info><summary> src/assets/scss/base.scss </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.slide-enter-active, .slide-leave-active &#123;</span><br><span class="line">  <span class="attr">transition</span>: all <span class="number">0.</span>3s</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.slide-enter-<span class="keyword">from</span>, .slide-leave-to &#123;</span><br><span class="line">  <span class="attr">transform</span>: translate3d(<span class="number">100</span>%, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<p>最后相关页面代码为</p>
+<details info><summary> src/views/singer-detail.vue </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;singer-detail&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#123;&#123;title&#125;&#125; &#123;&#123;pic&#125;&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">music-list</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:songs</span>=<span class="string">&quot;songs&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:title</span>=<span class="string">&quot;title&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:pic</span>=<span class="string">&quot;pic&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:loading</span>=<span class="string">&quot;loading&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">    &gt;</span><span class="tag">&lt;/<span class="name">music-list</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> createDetailComponent <span class="keyword">from</span> <span class="string">&#x27;@/assets/js/create-detail-component&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> &#123; getSingerDetail &#125; <span class="keyword">from</span> <span class="string">&#x27;@/service/singer&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> &#123; SINGER_KEY &#125; <span class="keyword">from</span> <span class="string">&#x27;@/assets/js/constant&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">export</span> <span class="keyword">default</span> createDetailComponent(<span class="string">&#x27;singer-detail&#x27;</span>, SINGER_KEY, getSingerDetail)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="selector-class">.singer-detail</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">position</span>: fixed;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">z-index</span>: <span class="number">10</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">top</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">left</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">bottom</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">right</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">background</span>: $color-background;</span></span></span><br><span class="line"><span class="css"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<details info><summary> /src/components/music-list/music-list.vue </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;music-list&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;back&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;goBack&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;icon-back&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bg-image&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;bgImageStyle&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;bgImage&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;play-btn-wrapper&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;playBtnStyle&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-show</span>=<span class="string">&quot;songs.length &gt; 0&quot;</span> <span class="attr">class</span>=<span class="string">&quot;play-btn&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;random&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;icon-play&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;text&quot;</span>&gt;</span>随机播放全部 <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;filter&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;filterStyle&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">Scroll</span> <span class="attr">class</span>=<span class="string">&quot;list&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;scrollStyle&quot;</span> <span class="attr">:probe-type</span>=<span class="string">&quot;3&quot;</span> @<span class="attr">scroll</span>=<span class="string">&quot;onScroll&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;song-list-wrapper&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;meg&quot;</span> <span class="attr">v-show</span>=<span class="string">&quot;songs.length &lt; 0&quot;</span>&gt;</span>&#123;&#123; meg &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">song-list</span> <span class="attr">:songs</span>=<span class="string">&quot;songs&quot;</span> @<span class="attr">select</span>=<span class="string">&quot;selectItem&quot;</span> <span class="attr">:rank</span>=<span class="string">&quot;rank&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">song-list</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Scroll</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> SongList <span class="keyword">from</span> <span class="string">&#x27;@/components/base/song-list/song-list&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> Scroll <span class="keyword">from</span> <span class="string">&#x27;@/components/wrap-scroll&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    mapActions</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">const</span> RESERVED_HEIGHT = <span class="number">40</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">name</span>: <span class="string">&#x27;music-list&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      SongList,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      Scroll</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">songs</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">type</span>: <span class="built_in">Array</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">default</span> () &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">return</span> []</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">title</span>: <span class="built_in">String</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">pic</span>: <span class="built_in">String</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">rank</span>: <span class="built_in">Boolean</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">imageHeight</span>: <span class="number">0</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">scrollY</span>: <span class="number">0</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">maxTranslateY</span>: <span class="number">0</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">meg</span>: <span class="string">&#x27;抱歉，没有找到可播放的歌曲&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">computed</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">playBtnStyle</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> display = <span class="string">&#x27;&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">if</span> (<span class="built_in">this</span>.scrollY &gt;= <span class="built_in">this</span>.maxTranslateY) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          display = <span class="string">&#x27;none&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          display</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">bgImageStyle</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">const</span> scrollY = <span class="built_in">this</span>.scrollY</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> zIndex = <span class="number">0</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> paddingTop = <span class="string">&#x27;70%&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> height = <span class="number">0</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> translateZ = <span class="number">0</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">if</span> (scrollY &gt; <span class="built_in">this</span>.maxTranslateY) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          zIndex = <span class="number">10</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          paddingTop = <span class="number">0</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          height = <span class="string">`<span class="subst">$&#123;RESERVED_HEIGHT&#125;</span>px`</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          translateZ = <span class="number">1</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> scale = <span class="number">1</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">if</span> (scrollY &lt; <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          scale = <span class="number">1</span> + <span class="built_in">Math</span>.abs(scrollY / <span class="built_in">this</span>.imageHeight)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          zIndex,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          paddingTop,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          height,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="attr">backgroundImage</span>: <span class="string">`url(<span class="subst">$&#123;<span class="built_in">this</span>.pic&#125;</span>)`</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="attr">transform</span>: <span class="string">`scale(<span class="subst">$&#123;scale&#125;</span>)translateZ(<span class="subst">$&#123;translateZ&#125;</span>px)`</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">scrollStyle</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="comment">// const bottom = this.playlist.length ? &#x27;60px&#x27; : &#x27;0&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="attr">top</span>: <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.imageHeight&#125;</span>px`</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="comment">// bottom</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="built_in">this</span>.imageHeight = <span class="built_in">this</span>.$refs.bgImage.clientHeight</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="built_in">this</span>.maxTranslateY = <span class="built_in">this</span>.imageHeight - RESERVED_HEIGHT</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">goBack</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.$router.back()</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">onScroll</span>(<span class="params">pos</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.scrollY = -pos.y</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">selectItem</span>(<span class="params">&#123;</span></span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="javascript"><span class="xml">        song,</span></span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="javascript"><span class="xml">        index</span></span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="javascript"><span class="xml">      &#125;</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.selectPlay(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="attr">list</span>: <span class="built_in">this</span>.songs,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          index</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">random</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.randomPlay(<span class="built_in">this</span>.songs)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      ...mapActions([</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="string">&#x27;selectPlay&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="string">&#x27;randomPlay&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      ])</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="selector-class">.music-list</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">position</span>: relative;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">height</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="selector-class">.back</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">left</span>: <span class="number">6px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">z-index</span>: <span class="number">20</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">transform</span>: <span class="built_in">translateZ</span>(<span class="number">2px</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.icon-back</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">display</span>: block;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">padding</span>: <span class="number">10px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">font-size</span>: $font-size-large-x;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">color</span>: $color-theme;</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="selector-class">.title</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">left</span>: <span class="number">10%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">width</span>: <span class="number">80%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">z-index</span>: <span class="number">20</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">transform</span>: <span class="built_in">translateZ</span>(<span class="number">2px</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="keyword">@include</span> no-wrap();</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">text-align</span>: center;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">line-height</span>: <span class="number">40px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">font-size</span>: $font-size-large;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">color</span>: $color-text-ll;</span></span></span><br><span class="line"><span class="css"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="selector-class">.bg-image</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">position</span>: relative;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">transform-origin</span>: top;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">background-size</span>: cover;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.play-btn-wrapper</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">bottom</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">z-index</span>: <span class="number">10</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">width</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.play-btn</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">box-sizing</span>: border-box;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">width</span>: <span class="number">135px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">padding</span>: <span class="number">7px</span> <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">margin</span>: <span class="number">0</span> auto;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">text-align</span>: center;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">border</span>: <span class="number">1px</span> solid $color-theme;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">color</span>: $color-theme;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">border-radius</span>: <span class="number">100px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">font-size</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.icon-play</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">display</span>: inline-block;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">vertical-align</span>: middle;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">margin-right</span>: <span class="number">6px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">font-size</span>: $font-size-medium-x;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.text</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">display</span>: inline-block;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">vertical-align</span>: middle;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">font-size</span>: $font-size-small;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.filter</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">top</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">left</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">width</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">height</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">7</span>, <span class="number">17</span>, <span class="number">27</span>, <span class="number">0.4</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="selector-class">.list</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">bottom</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">z-index</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.song-list-wrapper</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">30px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">background</span>: $color-background;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.meg</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">text-align</span>: center;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">font-size</span>: $font-size-medium-x;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<details info><summary> src/components/base/song-list/song-list.vue </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;song-list&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">li</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">class</span>=<span class="string">&quot;item&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">v-for</span>=<span class="string">&quot;(song, index) in songs&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:key</span>=<span class="string">&quot;song.id&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      @<span class="attr">click</span>=<span class="string">&quot;selectItem(song, index)&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">    &gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;rank&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;rank&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">:class</span>=<span class="string">&quot;getRankCls(index)&quot;</span>&gt;</span>&#123;&#123; getRankText(index) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123;song.name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;desc&quot;</span>&gt;</span>&#123;&#123;getDesc(song)&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">name</span>: <span class="string">&#x27;song-list&#x27;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">songs</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">type</span>: <span class="built_in">Array</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="function"><span class="title">default</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">return</span> []</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">rank</span>: <span class="built_in">Boolean</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">emits</span>: [<span class="string">&#x27;select&#x27;</span>],</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">getDesc</span>(<span class="params">song</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;song.singer&#125;</span>·<span class="subst">$&#123;song.album&#125;</span>`</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">selectItem</span>(<span class="params">song, index</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.$emit(<span class="string">&#x27;select&#x27;</span>, &#123; song, index &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">getRankCls</span>(<span class="params">index</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">if</span> (index &lt;= <span class="number">2</span>) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">return</span> <span class="string">`icon icon<span class="subst">$&#123;index&#125;</span>`</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">return</span> <span class="string">&#x27;text&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">getRankText</span>(<span class="params">index</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">if</span> (index &gt; <span class="number">2</span>) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">          <span class="keyword">return</span> index + <span class="number">1</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="selector-class">.song-list</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="selector-class">.item</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">display</span>: flex;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">align-items</span>: center;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">box-sizing</span>: border-box;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">height</span>: <span class="number">64px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="attribute">font-size</span>: $font-size-medium;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.rank</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">25px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">width</span>: <span class="number">25px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">margin-right</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">text-align</span>: center;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.icon</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">display</span>: inline-block;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">width</span>: <span class="number">25px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">height</span>: <span class="number">24px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">background-size</span>: <span class="number">25px</span> <span class="number">24px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          &amp;<span class="selector-class">.icon0</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">            <span class="keyword">@include</span> bg-image(<span class="string">&#x27;first&#x27;</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml">          &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">          &amp;<span class="selector-class">.icon1</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">            <span class="keyword">@include</span> bg-image(<span class="string">&#x27;second&#x27;</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml">          &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">          &amp;<span class="selector-class">.icon2</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">            <span class="keyword">@include</span> bg-image(<span class="string">&#x27;third&#x27;</span>);</span></span></span><br><span class="line"><span class="css"><span class="xml">          &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.text</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">color</span>: $color-theme;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">font-size</span>: $font-size-large;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">      <span class="selector-class">.content</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">flex</span>: <span class="number">1</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">line-height</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="attribute">overflow</span>: hidden;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.name</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="keyword">@include</span> no-wrap();</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">color</span>: $color-text</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">        <span class="selector-class">.desc</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="keyword">@include</span> no-wrap();</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">margin-top</span>: <span class="number">4px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">          <span class="attribute">color</span>: $color-text-d;</span></span></span><br><span class="line"><span class="css"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giciukx8a7j20zk0m8aio.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/08/04/<音乐项目汇总>/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>&lt;从零写一个音乐项目&gt;</div>
+      </div>
+      
+      <!-- <div class="content">
+        从零写一个音乐项目汇总假装在好好学vue3.0
+
+
+搭建一个新的vue项目/my_bolg/2020/12/04/vue
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giclwrdwyaj20zk0m8are.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/08/01/vue音乐项目/|音乐项目|歌手列表/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>&lt;从头来做一个音乐项目&gt;歌手列表</div>
+      </div>
+      <!-- <div class="content">
+        
+歌手列表
+
+
+新建一个vue页面src/views/singer.vue写歌手列表主要的列表我们写在组件里
+ src/
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+    <script>
+      $(".toc-aside").css({'width': 0, 'padding': 0});
+      $(".toc-content").css({'width': 0});
+      $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+      $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+    </script>
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('false' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

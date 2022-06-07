@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;从头来做一个音乐项目&gt;接口相关的配置 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1giciukx8a7j20zk0m8aio.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      &lt;从头来做一个音乐项目&gt;接口相关的配置
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2020-07-30</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>接口相关的配置</p>
+</blockquote>
+<span id="more"></span>
+<p>因为有跨域,所以我们必须要通过node来进行后端的调用避免跨域<br>我们新建一个backend文件夹放后端的文件<br>/backend/router.js<br>因为这不是前端知识,所以没有必要说太多,抄就完事了</p>
+<details info><summary> /backend/router.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br><span class="line">731</span><br><span class="line">732</span><br><span class="line">733</span><br><span class="line">734</span><br><span class="line">735</span><br><span class="line">736</span><br><span class="line">737</span><br><span class="line">738</span><br><span class="line">739</span><br><span class="line">740</span><br><span class="line">741</span><br><span class="line">742</span><br><span class="line">743</span><br><span class="line">744</span><br><span class="line">745</span><br><span class="line">746</span><br><span class="line">747</span><br><span class="line">748</span><br><span class="line">749</span><br><span class="line">750</span><br><span class="line">751</span><br><span class="line">752</span><br><span class="line">753</span><br><span class="line">754</span><br><span class="line">755</span><br><span class="line">756</span><br><span class="line">757</span><br><span class="line">758</span><br><span class="line">759</span><br><span class="line">760</span><br><span class="line">761</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 该文件是运行在 Node.js 端的，获取数据的基本的思路就是后端代理，即提供接口路由供前端页面使用，然后在路由内部，我们接收到前端请求后，再发送 HTTP 请求到第三方服务接口，携带相应的请求参数，包括签名的参数字段等等。</span></span><br><span class="line"><span class="comment"> * 对于从第三方接口返回的数据，我们会做一层数据处理，最终提供给前端的数据前端可以直接使用，无需再处理。这样也比较符合真实企业项目的开发规范，即数据的处理放在后端做，前端只做数据渲染和交互。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> pinyin = <span class="built_in">require</span>(<span class="string">&#x27;pinyin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> Base64 = <span class="built_in">require</span>(<span class="string">&#x27;js-base64&#x27;</span>).Base64</span><br><span class="line"><span class="comment">// 获取签名方法</span></span><br><span class="line"><span class="keyword">const</span> getSecuritySign = <span class="built_in">require</span>(<span class="string">&#x27;./sign&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ERR_OK = <span class="number">0</span></span><br><span class="line"><span class="keyword">const</span> token = <span class="number">5381</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 歌曲图片加载失败时使用的默认图片</span></span><br><span class="line"><span class="keyword">const</span> fallbackPicUrl = <span class="string">&#x27;https://y.gtimg.cn/mediastyle/music_v11/extra/default_300x300.jpg?max_age=31536000&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 公共参数</span></span><br><span class="line"><span class="keyword">const</span> commonParams = &#123;</span><br><span class="line">  <span class="attr">g_tk</span>: token,</span><br><span class="line">  <span class="attr">loginUin</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">hostUin</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">inCharset</span>: <span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line">  <span class="attr">outCharset</span>: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">  <span class="attr">notice</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">needNewCode</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">  <span class="attr">platform</span>: <span class="string">&#x27;yqq.json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取一个随机数值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRandomVal</span>(<span class="params">prefix = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> prefix + (<span class="built_in">Math</span>.random() + <span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;0.&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取一个随机 uid</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUid</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> t = (<span class="keyword">new</span> <span class="built_in">Date</span>()).getUTCMilliseconds()</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span> + <span class="built_in">Math</span>.round(<span class="number">2147483647</span> * <span class="built_in">Math</span>.random()) * t % <span class="number">1e10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 axios get 请求的封装</span></span><br><span class="line"><span class="comment">// 修改请求的 headers 值，合并公共请求参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">url, params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> axios.get(url, &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">referer</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="attr">origin</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">params</span>: <span class="built_in">Object</span>.assign(&#123;&#125;, commonParams, params)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 axios post 请求的封装</span></span><br><span class="line"><span class="comment">// 修改请求的 headers 值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">post</span>(<span class="params">url, params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> axios.post(url, params, &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">referer</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="attr">origin</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理歌曲列表</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleSongList</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> songList = []</span><br><span class="line"></span><br><span class="line">  list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> info = item.songInfo || item</span><br><span class="line">    <span class="keyword">if</span> (info.pay.pay_play !== <span class="number">0</span> || !info.interval) &#123;</span><br><span class="line">      <span class="comment">// 过滤付费歌曲和获取不到时长的歌曲</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造歌曲的数据结构</span></span><br><span class="line">    <span class="keyword">const</span> song = &#123;</span><br><span class="line">      <span class="attr">id</span>: info.id,</span><br><span class="line">      <span class="attr">mid</span>: info.mid,</span><br><span class="line">      <span class="attr">name</span>: info.name,</span><br><span class="line">      <span class="attr">singer</span>: mergeSinger(info.singer),</span><br><span class="line">      <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 在另一个接口获取</span></span><br><span class="line">      <span class="attr">duration</span>: info.interval,</span><br><span class="line">      <span class="attr">pic</span>: info.album.mid ? <span class="string">`https://y.gtimg.cn/music/photo_new/T002R800x800M000<span class="subst">$&#123;info.album.mid&#125;</span>.jpg?max_age=2592000`</span> : fallbackPicUrl,</span><br><span class="line">      <span class="attr">album</span>: info.album.name</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    songList.push(song)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> songList</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并多个歌手的姓名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSinger</span>(<span class="params">singer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ret = []</span><br><span class="line">  <span class="keyword">if</span> (!singer) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  singer.forEach(<span class="function">(<span class="params">s</span>) =&gt;</span> &#123;</span><br><span class="line">    ret.push(s.name)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> ret.join(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册后端路由</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerRouter</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  registerRecommend(app)</span><br><span class="line"></span><br><span class="line">  registerSingerList(app)</span><br><span class="line"></span><br><span class="line">  registerSingerDetail(app)</span><br><span class="line"></span><br><span class="line">  registerSongsUrl(app)</span><br><span class="line"></span><br><span class="line">  registerLyric(app)</span><br><span class="line"></span><br><span class="line">  registerAlbum(app)</span><br><span class="line"></span><br><span class="line">  registerTopList(app)</span><br><span class="line"></span><br><span class="line">  registerTopDetail(app)</span><br><span class="line"></span><br><span class="line">  registerHotKeys(app)</span><br><span class="line"></span><br><span class="line">  registerSearch(app)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册推荐列表接口路由</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerRecommend</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getRecommend&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 第三方服务接口 url</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造请求 data 参数</span></span><br><span class="line">    <span class="keyword">const</span> data = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">recomPlaylist</span>: &#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;get_hot_recommend&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">async</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">cmd</span>: <span class="number">2</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;playlist.HotRecommendServer&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">focus</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;music.musicHall.MusicHallPlatform&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetFocus&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 随机数值</span></span><br><span class="line">    <span class="keyword">const</span> randomVal = getRandomVal(<span class="string">&#x27;recom&#x27;</span>)</span><br><span class="line">    <span class="comment">// 计算签名值</span></span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(data)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送 get 请求</span></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomVal,</span><br><span class="line">      data</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="comment">// 处理轮播图数据</span></span><br><span class="line">        <span class="keyword">const</span> focusList = data.focus.data.shelf.v_niche[<span class="number">0</span>].v_card</span><br><span class="line">        <span class="keyword">const</span> sliders = []</span><br><span class="line">        <span class="keyword">const</span> jumpPrefixMap = &#123;</span><br><span class="line">          <span class="number">10002</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/album/&#x27;</span>,</span><br><span class="line">          <span class="number">10014</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/playlist/&#x27;</span>,</span><br><span class="line">          <span class="number">10012</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/mv/v/&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最多获取 10 条数据</span></span><br><span class="line">        <span class="keyword">const</span> len = <span class="built_in">Math</span>.min(focusList.length, <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = focusList[i]</span><br><span class="line">          <span class="keyword">const</span> sliderItem = &#123;&#125;</span><br><span class="line">          <span class="comment">// 单个轮播图数据包括 id、pic、link 等字段</span></span><br><span class="line">          sliderItem.id = item.id</span><br><span class="line">          sliderItem.pic = item.cover</span><br><span class="line">          <span class="keyword">if</span> (jumpPrefixMap[item.jumptype]) &#123;</span><br><span class="line">            sliderItem.link = jumpPrefixMap[item.jumptype] + (item.subid || item.id) + <span class="string">&#x27;.html&#x27;</span></span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item.jumptype === <span class="number">3001</span>) &#123;</span><br><span class="line">            sliderItem.link = item.id</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          sliders.push(sliderItem)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理推荐歌单数据</span></span><br><span class="line">        <span class="keyword">const</span> albumList = data.recomPlaylist.data.v_hot</span><br><span class="line">        <span class="keyword">const</span> albums = []</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; albumList.length; i++) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = albumList[i]</span><br><span class="line">          <span class="keyword">const</span> albumItem = &#123;&#125;</span><br><span class="line">          <span class="comment">// 推荐歌单数据包括 id、username、title、pic 等字段</span></span><br><span class="line">          albumItem.id = item.content_id</span><br><span class="line">          albumItem.username = item.username</span><br><span class="line">          albumItem.title = item.title</span><br><span class="line">          albumItem.pic = item.cover</span><br><span class="line"></span><br><span class="line">          albums.push(albumItem)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 往前端发送一个标准格式的响应数据，包括成功错误码和数据</span></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            sliders,</span><br><span class="line">            albums</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌手列表接口路由</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSingerList</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getSingerList&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> HOT_NAME = <span class="string">&#x27;热&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">singerList</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;Music.SingerListServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;get_singer_list&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">area</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">sex</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">genre</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">index</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">sin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">cur_page</span>: <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = getRandomVal(<span class="string">&#x27;getUCGI&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(data)</span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="comment">// 处理歌手列表数据</span></span><br><span class="line">        <span class="keyword">const</span> singerList = data.singerList.data.singerlist</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构造歌手 Map 数据结构</span></span><br><span class="line">        <span class="keyword">const</span> singerMap = &#123;</span><br><span class="line">          <span class="attr">hot</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: HOT_NAME,</span><br><span class="line">            <span class="attr">list</span>: map(singerList.slice(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        singerList.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 把歌手名转成拼音</span></span><br><span class="line">          <span class="keyword">const</span> p = pinyin(item.singer_name)</span><br><span class="line">          <span class="keyword">if</span> (!p || !p.length) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">// 获取歌手名拼音的首字母</span></span><br><span class="line">          <span class="keyword">const</span> key = p[<span class="number">0</span>][<span class="number">0</span>].slice(<span class="number">0</span>, <span class="number">1</span>).toUpperCase()</span><br><span class="line">          <span class="keyword">if</span> (key) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!singerMap[key]) &#123;</span><br><span class="line">              singerMap[key] = &#123;</span><br><span class="line">                <span class="attr">title</span>: key,</span><br><span class="line">                <span class="attr">list</span>: []</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 每个字母下面会有多名歌手</span></span><br><span class="line">            singerMap[key].list.push(map([item])[<span class="number">0</span>])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 热门歌手</span></span><br><span class="line">        <span class="keyword">const</span> hot = []</span><br><span class="line">        <span class="comment">// 字母歌手</span></span><br><span class="line">        <span class="keyword">const</span> letter = []</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历处理 singerMap，让结果有序</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> singerMap) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = singerMap[key]</span><br><span class="line">          <span class="keyword">if</span> (item.title.match(<span class="regexp">/[a-zA-Z]/</span>)) &#123;</span><br><span class="line">            letter.push(item)</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item.title === HOT_NAME) &#123;</span><br><span class="line">            hot.push(item)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 按字母顺序排序</span></span><br><span class="line">        letter.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> a.title.charCodeAt(<span class="number">0</span>) - b.title.charCodeAt(<span class="number">0</span>)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">singers</span>: hot.concat(letter)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 做一层数据映射，构造单个 singer 数据结构</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">singerList</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> singerList.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">id</span>: item.singer_id,</span><br><span class="line">        <span class="attr">mid</span>: item.singer_mid,</span><br><span class="line">        <span class="attr">name</span>: item.singer_name,</span><br><span class="line">        <span class="attr">pic</span>: item.singer_pic.replace(<span class="regexp">/\.webp$/</span>, <span class="string">&#x27;.jpg&#x27;</span>).replace(<span class="string">&#x27;150x150&#x27;</span>, <span class="string">&#x27;800x800&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌手详情接口路由</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSingerDetail</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getSingerDetail&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">singerSongList</span>: &#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetSingerSongList&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">order</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">singerMid</span>: req.query.mid,</span><br><span class="line">          <span class="attr">begin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">num</span>: <span class="number">100</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musichall.song_list_server&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = getRandomVal(<span class="string">&#x27;getSingerSong&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(data)</span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.singerSongList.data.songList</span><br><span class="line">        <span class="comment">// 歌单详情、榜单详情接口都有类似处理逻辑，固封装成函数</span></span><br><span class="line">        <span class="keyword">const</span> songList = handleSongList(list)</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌曲 url 获取接口路由</span></span><br><span class="line"><span class="comment">// 因为歌曲的 url 每天都在变化，所以需要单独的接口根据歌曲的 mid 获取</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSongsUrl</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getSongsUrl&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> mid = req.query.mid</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> midGroup = []</span><br><span class="line">    <span class="comment">// 第三方接口只支持最多处理 100 条数据，所以如果超过 100 条数据，我们要把数据按每组 100 条切割，发送多个请求</span></span><br><span class="line">    <span class="keyword">if</span> (mid.length &gt; <span class="number">100</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> groupLen = <span class="built_in">Math</span>.ceil(mid.length / <span class="number">100</span>)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; groupLen; i++) &#123;</span><br><span class="line">        midGroup.push(mid.slice(i * <span class="number">100</span>, (<span class="number">100</span> * (i + <span class="number">1</span>))))</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      midGroup = [mid]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以歌曲的 mid 为 key，存储歌曲 URL</span></span><br><span class="line">    <span class="keyword">const</span> urlMap = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理返回的 mid</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">mid</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">const</span> data = &#123;</span><br><span class="line">        <span class="attr">req_0</span>: &#123;</span><br><span class="line">          <span class="attr">module</span>: <span class="string">&#x27;vkey.GetVkeyServer&#x27;</span>,</span><br><span class="line">          <span class="attr">method</span>: <span class="string">&#x27;CgiGetVkey&#x27;</span>,</span><br><span class="line">          <span class="attr">param</span>: &#123;</span><br><span class="line">            <span class="attr">guid</span>: getUid(),</span><br><span class="line">            <span class="attr">songmid</span>: mid,</span><br><span class="line">            <span class="attr">songtype</span>: <span class="keyword">new</span> <span class="built_in">Array</span>(mid.length).fill(<span class="number">0</span>),</span><br><span class="line">            <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="attr">loginflag</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">platform</span>: <span class="string">&#x27;23&#x27;</span>,</span><br><span class="line">            <span class="attr">h5to</span>: <span class="string">&#x27;speed&#x27;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">comm</span>: &#123;</span><br><span class="line">          <span class="attr">g_tk</span>: token,</span><br><span class="line">          <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">          <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">          <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> sign = getSecuritySign(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`https://u.y.qq.com/cgi-bin/musics.fcg?_=<span class="subst">$&#123;getRandomVal()&#125;</span>&amp;sign=<span class="subst">$&#123;sign&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 发送 post 请求</span></span><br><span class="line">      <span class="keyword">return</span> post(url, data).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> data = response.data</span><br><span class="line">        <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">          <span class="keyword">const</span> midInfo = data.req_0.data.midurlinfo</span><br><span class="line">          <span class="keyword">const</span> sip = data.req_0.data.sip</span><br><span class="line">          <span class="keyword">const</span> domain = sip[sip.length - <span class="number">1</span>]</span><br><span class="line">          midInfo.forEach(<span class="function">(<span class="params">info</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 获取歌曲的真实播放 URL</span></span><br><span class="line">            urlMap[info.songmid] = domain + info.purl</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造多个 Promise 请求</span></span><br><span class="line">    <span class="keyword">const</span> requests = midGroup.map(<span class="function">(<span class="params">mid</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> process(mid)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 并行发送多个请求</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(requests).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 所有请求响应完毕，urlMap 也就构造完毕了</span></span><br><span class="line">      res.json(&#123;</span><br><span class="line">        <span class="attr">code</span>: ERR_OK,</span><br><span class="line">        <span class="attr">result</span>: &#123;</span><br><span class="line">          <span class="attr">map</span>: urlMap</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌词接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerLyric</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getLyric&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: <span class="string">&#x27;MusicJsonCallback_lrc&#x27;</span>,</span><br><span class="line">      <span class="attr">pcachetime</span>: +<span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">      <span class="attr">songmid</span>: req.query.mid,</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">lyric</span>: Base64.decode(data.lyric)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌单专辑接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerAlbum</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getAlbum&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;</span><br><span class="line">      <span class="attr">req_0</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;srf_diss_info.DissInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;CgiGetDiss&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">disstid</span>: <span class="built_in">Number</span>(req.query.id),</span><br><span class="line">          <span class="attr">onlysonglist</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">song_begin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">song_num</span>: <span class="number">100</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">g_tk</span>: token,</span><br><span class="line">        <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">        <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">        <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`https://u.y.qq.com/cgi-bin/musics.fcg?_=<span class="subst">$&#123;getRandomVal()&#125;</span>&amp;sign=<span class="subst">$&#123;sign&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">    post(url, data).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.req_0.data.songlist</span><br><span class="line">        <span class="keyword">const</span> songList = handleSongList(list)</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册排行榜接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerTopList</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getTopList&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">toplist</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musicToplist.ToplistInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetAll&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = getRandomVal(<span class="string">&#x27;recom&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(data)</span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">const</span> topList = []</span><br><span class="line">        <span class="keyword">const</span> group = data.toplist.data.group</span><br><span class="line"></span><br><span class="line">        group.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          item.toplist.forEach(<span class="function">(<span class="params">listItem</span>) =&gt;</span> &#123;</span><br><span class="line">            topList.push(&#123;</span><br><span class="line">              <span class="attr">id</span>: listItem.topId,</span><br><span class="line">              <span class="attr">pic</span>: listItem.frontPicUrl,</span><br><span class="line">              <span class="attr">name</span>: listItem.title,</span><br><span class="line">              <span class="attr">period</span>: listItem.period,</span><br><span class="line">              <span class="attr">songList</span>: listItem.song.map(<span class="function">(<span class="params">songItem</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                  <span class="attr">id</span>: songItem.songId,</span><br><span class="line">                  <span class="attr">singerName</span>: songItem.singerName,</span><br><span class="line">                  <span class="attr">songName</span>: songItem.title</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            topList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册排行榜详情接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerTopDetail</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getTopDetail&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">      id,</span><br><span class="line">      period</span><br><span class="line">    &#125; = req.query</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      <span class="attr">detail</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musicToplist.ToplistInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetDetail&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">topId</span>: <span class="built_in">Number</span>(id),</span><br><span class="line">          <span class="attr">offset</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">num</span>: <span class="number">100</span>,</span><br><span class="line">          period</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = getRandomVal(<span class="string">&#x27;getUCGI&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = getSecuritySign(data)</span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.detail.data.songInfoList</span><br><span class="line">        <span class="keyword">const</span> songList = handleSongList(list)</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册热门搜索接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerHotKeys</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/getHotKeys&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    get(url, &#123;</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">hotKeys</span>: data.data.hotkey.map(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> &#123;</span><br><span class="line">                <span class="attr">key</span>: key.k,</span><br><span class="line">                <span class="attr">id</span>: key.n</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;).slice(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册搜索查询接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册搜索查询接口</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSearch</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line">  app.get(<span class="string">&#x27;/api/search&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// const url = &#x27;https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp&#x27;</span></span><br><span class="line">    <span class="comment">// const url = &#x27;https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">      query,</span><br><span class="line">      page,</span><br><span class="line">      showSinger</span><br><span class="line">    &#125; = req.query</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = &#123;</span><br><span class="line">      <span class="attr">_</span>: getRandomVal(),</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token,</span><br><span class="line">      <span class="attr">key</span>: query,</span><br><span class="line">      <span class="attr">p</span>: page,</span><br><span class="line">      <span class="attr">perpage</span>: <span class="number">20</span>,</span><br><span class="line">      <span class="attr">n</span>: <span class="number">20</span>,</span><br><span class="line">      <span class="attr">zhidaqu</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">catZhida</span>: showSinger === <span class="string">&#x27;true&#x27;</span> ? <span class="number">1</span> : <span class="number">0</span>,</span><br><span class="line">      <span class="attr">t</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">flag</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">ie</span>: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">      <span class="attr">sem</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">aggr</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">remoteplace</span>: <span class="string">&#x27;txt.mqq.all&#x27;</span>,</span><br><span class="line">      <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">      <span class="attr">needNewCode</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span>,</span><br><span class="line">      <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    get(url, data).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.data</span><br><span class="line">      <span class="keyword">if</span> (data.code === ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">const</span> songList = []</span><br><span class="line">        <span class="keyword">const</span> songData = data.data.song</span><br><span class="line">        <span class="keyword">const</span> list = songData.itemlist</span><br><span class="line">        <span class="comment">// console.log(songData)</span></span><br><span class="line">        list.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> info = item</span><br><span class="line">          <span class="comment">// if (info.pay.payplay !== 0 || !info.interval) &#123;</span></span><br><span class="line">          <span class="comment">//   // 过滤付费歌曲</span></span><br><span class="line">          <span class="comment">//   return</span></span><br><span class="line">          <span class="comment">// &#125;</span></span><br><span class="line">          <span class="comment">// song</span></span><br><span class="line">          <span class="keyword">const</span> song = &#123;</span><br><span class="line">            <span class="attr">id</span>: info.id,</span><br><span class="line">            <span class="attr">mid</span>: info.mid,</span><br><span class="line">            <span class="attr">name</span>: info.name,</span><br><span class="line">            <span class="attr">singer</span>: info.singer,</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">duration</span>: info.interval,</span><br><span class="line">            <span class="attr">pic</span>: info.albummid ? <span class="string">`https://y.gtimg.cn/music/photo_new/T002R800x800M000<span class="subst">$&#123;info.albummid&#125;</span>.jpg?max_age=2592000`</span> : fallbackPicUrl,</span><br><span class="line">            <span class="attr">album</span>: info.albumname,</span><br><span class="line">            <span class="attr">song</span>: &#123;</span><br><span class="line">              <span class="attr">mid</span>: info.songmid</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          songList.push(song)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">var</span> singer = songList.splice(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">          curnum,</span><br><span class="line">          curpage,</span><br><span class="line">          totalnum</span><br><span class="line">        &#125; = songData</span><br><span class="line">        <span class="keyword">const</span> hasMore = <span class="number">20</span> * (curpage - <span class="number">1</span>) + curnum &lt; totalnum</span><br><span class="line"></span><br><span class="line">        res.json(&#123;</span><br><span class="line">          <span class="attr">code</span>: ERR_OK,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList,</span><br><span class="line">            singer,</span><br><span class="line">            hasMore</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.json(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = registerRouter</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<span class='btn info'><a class="button"  title='vue.config.js'>vue.config.js</a></span>
+<p>/vue.config.js<br>我们通过devServer来完成接口链接,设置服务\</p>
+<details info><summary> vue.config.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> registerRouter = <span class="built_in">require</span>(<span class="string">&#x27;./backend/router&#x27;</span>)</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="function"><span class="title">before</span>(<span class="params">app</span>)</span> &#123;</span><br><span class="line">      registerRouter(app)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<span class='btn info'><a class="button"  title='vue.config.js'>vue.config.js</a></span>
+
+<p>引入了后端接口之后前端这边需要对接口做一个封装<br>新建一个src/serve作为接口封装的文件夹,新建base.js</p>
+<details info><summary> vue.config.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ERR_OK = <span class="number">0</span> <span class="comment">//code为0的时候表示接口调用成功了</span></span><br><span class="line"><span class="keyword">const</span> baseURL = process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;http://ustbhuangyi.com/music-next/&#x27;</span> : <span class="string">&#x27;/&#x27;</span> <span class="comment">//设置跟路径</span></span><br><span class="line"></span><br><span class="line">axios.defaults.baseURL = baseURL</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">url, params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> axios.get(url, &#123;</span><br><span class="line">    params</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> serverData = res.data</span><br><span class="line">    <span class="keyword">if</span> (serverData.code === ERR_OK) &#123;</span><br><span class="line">      <span class="keyword">return</span> serverData.result</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;).catch(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gipetv6p75j20zk0m8x6p.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/07/31/vue音乐项目/|音乐项目|首页热门音乐榜单/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>&lt;从头来做一个音乐项目&gt;首页热门音乐榜单</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+首页热门音乐榜单
+
+
+榜单的接口和轮播图是一样的,拿的是albums,那么我们先把albums拿到data中然后再进行
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicitzannuj20zk0m8b29.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/07/30/vue音乐项目/|音乐项目|轮播图/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>&lt;从头来做一个音乐项目&gt;轮播图</div>
+      </div>
+      <!-- <div class="content">
+        
+轮播图
+
+
+前面我设置了后端的接口请求并且在前端这里封装了get请求,这样我们就可以来写页面了我们来回顾一下route
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+    <script>
+      $(".toc-aside").css({'width': 0, 'padding': 0});
+      $(".toc-content").css({'width': 0});
+      $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+      $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+    </script>
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('false' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

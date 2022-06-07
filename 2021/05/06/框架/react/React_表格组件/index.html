@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;React&gt; Antd 表格组件 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicm07ih54j20zk0m84qp.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      &lt;React&gt; Antd 表格组件
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2021-05-06</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>React 表格组件 用的最多的</p>
+</blockquote>
+<span id="more"></span>
+
+<p>在写一个后台项目的时候,用的最多的就是表格了,但是直接用 antd 给你的表格又不太好用,这个时候就要封装成你想要的样子<br>功能</p>
+<ul>
+<li>表格初始化(指进来就调一次接口)</li>
+<li>表格刷新</li>
+<li>分页 表格扩展 表格选择功能</li>
+<li>拿表格参数</li>
+</ul>
+<h2 id="组件文档"><a href="#组件文档" class="headerlink" title="组件文档"></a>组件文档</h2><ol>
+<li>表格初始化<br>request: false | 不传 | 自定义</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request: &#123;</span><br><span class="line">     <span class="attr">url</span>: <span class="string">&#x27;/api/test/&#x27;</span>,</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">  <span class="attr">data</span>: &#123;<span class="attr">p1</span>: <span class="number">666</span>,<span class="attr">p2</span>: <span class="number">777</span>&#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>表格刷新</li>
+</ol>
+<p><code>refTable.current.getData()</code></p>
+<ol start="3">
+<li>分页 表格扩展 表格选择功能</li>
+</ol>
+<p><code>pagination: false</code>传了就不分页了,不传就分页<br>扩展</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">const</span> cardConfig = &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;用户列表&#x27;</span>,</span><br><span class="line">    <span class="attr">span</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="attr">extra</span>: <span class="xml"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123; testCardMore() &#125;&#125;&gt;more<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表格选择功能 <code>rowSelection: true</code><br>获取选择参数 <code>refTable.current.selectedRowKeys</code></p>
+<ol start="4">
+<li>拿表格参数</li>
+</ol>
+<p><code>refTable.current.queryParams</code></p>
+<h2 id="组件代码"><a href="#组件代码" class="headerlink" title="组件代码"></a>组件代码</h2><details info><summary> 组件代码 </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123;</span><br><span class="line">  useState,</span><br><span class="line">  useEffect,</span><br><span class="line">  useRef,</span><br><span class="line">  useContext,</span><br><span class="line">  useImperativeHandle,</span><br><span class="line">  forwardRef,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Table, Input, Form &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TableComp = forwardRef(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; tableConfig = &#123;&#125; &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> [hightLine, setHightLine] = useState(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> defaultP=tableConfig.request ? tableConfig.request.data : &#123;&#125;;</span><br><span class="line">  <span class="keyword">const</span> queryParams = useRef(defaultP)</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [selectedRowKeys, setSelectedRowKeys] = useState([]);</span><br><span class="line">  <span class="keyword">const</span> [mixinTableConfig, setMixinTableConfig] = useState(&#123;</span><br><span class="line">    <span class="attr">bordered</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">rowKey</span>: <span class="string">&quot;id&quot;</span>,</span><br><span class="line">    <span class="attr">dataSource</span>: [],</span><br><span class="line">    <span class="attr">onRow</span>: <span class="function">(<span class="params">record, index</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">onClick</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        setHightLine(record.id);</span><br><span class="line">        tableConfig.onClick &amp;&amp; tableConfig.onClick(record, index)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">pagination</span>: &#123;</span><br><span class="line">      <span class="attr">current</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">pageSize</span>:<span class="number">15</span>,</span><br><span class="line">      <span class="attr">showQuickJumper</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">total</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">showSizeChanger</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">position</span>: [<span class="string">&quot;bottomRight&quot;</span>],</span><br><span class="line">      <span class="attr">onChange</span>: <span class="function">(<span class="params">page, pageSize</span>) =&gt;</span> &#123;</span><br><span class="line">        getData(&#123; <span class="attr">pageNum</span>: page, pageSize &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">showTotal</span>: <span class="function">(<span class="params">total, range</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`共<span class="subst">$&#123;total&#125;</span>条`</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    ...tableConfig.table</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> rowSelection = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;checkbox&quot;</span>,</span><br><span class="line">    <span class="attr">preserveSelectedRowKeys</span>: <span class="literal">true</span>,</span><br><span class="line">    selectedRowKeys,</span><br><span class="line">    <span class="attr">onChange</span>: <span class="function">(<span class="params">keys</span>) =&gt;</span> &#123;</span><br><span class="line">      setSelectedRowKeys(keys);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> rowClassName = <span class="function">(<span class="params">record</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> record.id == hightLine ? <span class="string">&#x27;ant-table-row-selected&#x27;</span> : <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> getData = <span class="function">(<span class="params">query=&#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; pageNum = mixinTableConfig.pagination.current, pageSize = mixinTableConfig.pagination.pageSize, ...restParams &#125; = query;</span><br><span class="line">    queryParams.current = &#123;</span><br><span class="line">      ...defaultP,</span><br><span class="line">      ...restParams,</span><br><span class="line">      pageSize,</span><br><span class="line">      <span class="attr">pageNum</span>: query === <span class="literal">true</span> ? <span class="number">1</span> : pageNum,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tableConfig.request) &#123;</span><br><span class="line">      <span class="keyword">const</span> _request = $http[tableConfig.request.method] || $http.get;</span><br><span class="line">      setLoading(<span class="literal">true</span>)</span><br><span class="line">      _request(&#123; <span class="attr">url</span>: tableConfig.request.url, <span class="attr">data</span>: queryParams.current &#125;).then(</span><br><span class="line">        <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">          setLoading(<span class="literal">false</span>);</span><br><span class="line">          mixinTableConfig.dataSource = res.data.list || res.data;</span><br><span class="line">          <span class="keyword">if</span> (mixinTableConfig.pagination) &#123;</span><br><span class="line">            mixinTableConfig.pagination.total = res.data.total;</span><br><span class="line">            mixinTableConfig.pagination.current = queryParams.current.pageNum;</span><br><span class="line">            mixinTableConfig.pagination.pageSize = queryParams.current.pageSize;</span><br><span class="line">          &#125;</span><br><span class="line">          setMixinTableConfig(&#123; ...mixinTableConfig &#125;);</span><br><span class="line">          tableConfig.callback &amp;&amp; tableConfig.callback(data, setHightLine);</span><br><span class="line">        &#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    getData();</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  useImperativeHandle(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    queryParams,</span><br><span class="line">    selectedRowKeys,</span><br><span class="line">    getData,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">Table</span> <span class="attr">loading</span>=<span class="string">&#123;loading&#125;</span> <span class="attr">rowClassName</span>=<span class="string">&#123;rowClassName&#125;</span> <span class="attr">rowSelection</span>=<span class="string">&#123;rowSelection&#125;</span> &#123;<span class="attr">...mixinTableConfig</span>&#125; /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> TableComp;</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<h2 id="用法代码"><a href="#用法代码" class="headerlink" title="用法代码"></a>用法代码</h2><details info><summary> 用法代码 </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect,useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Row, Space, Button &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> TableComp <span class="keyword">from</span> <span class="string">&quot;.&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> Test = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> refTable = useRef(<span class="literal">null</span>);</span><br><span class="line">	<span class="keyword">const</span> [rowData, setRowData] = useState(&#123;&#125;);</span><br><span class="line">    <span class="keyword">const</span> [selectedRowKeyArr, setSelectedRowKeyArr] = useState([]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> add = <span class="function">(<span class="params">record,v</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;add&#x27;</span>,record,v)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> remove = <span class="function">(<span class="params">record</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;remove&#x27;</span>,record)</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">const</span> tableConfig = &#123;</span><br><span class="line">		<span class="attr">request</span>: &#123;</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;/api/test/&#x27;</span>,</span><br><span class="line">			<span class="attr">method</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">			<span class="attr">data</span>: &#123;<span class="attr">p1</span>: <span class="number">666</span>,<span class="attr">p2</span>: <span class="number">777</span>&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">table</span>: &#123;</span><br><span class="line">			<span class="attr">columns</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;序号&quot;</span>,</span><br><span class="line">					<span class="attr">render</span>: <span class="function">(<span class="params">text, record, index</span>) =&gt;</span> &#123;</span><br><span class="line">						<span class="keyword">return</span> index + <span class="number">1</span>;</span><br><span class="line">					&#125;,</span><br><span class="line">				&#125;,</span><br><span class="line">                &#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;法人&quot;</span>,</span><br><span class="line">					<span class="attr">dataIndex</span>: <span class="string">&quot;userName&quot;</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">                &#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;手机号&quot;</span>,</span><br><span class="line">					<span class="attr">dataIndex</span>: <span class="string">&quot;phone&quot;</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;地址&quot;</span>,</span><br><span class="line">					<span class="attr">dataIndex</span>: <span class="string">&quot;address&quot;</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">                &#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;公司名称&quot;</span>,</span><br><span class="line">					<span class="attr">dataIndex</span>: <span class="string">&quot;companyName&quot;</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">                &#123;</span><br><span class="line">					<span class="attr">title</span>: <span class="string">&quot;创建时间&quot;</span>,</span><br><span class="line">					<span class="attr">dataIndex</span>: <span class="string">&quot;createDate&quot;</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">title</span>: <span class="string">&#x27;操作&#x27;</span>,</span><br><span class="line">                    <span class="attr">width</span>: <span class="number">200</span>,</span><br><span class="line">                    <span class="attr">render</span>: <span class="function">(<span class="params">text, record, index</span>) =&gt;</span> &#123;</span><br><span class="line">                      <span class="keyword">return</span> (</span><br><span class="line">                        <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;btn-group&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> add(record, 3)&#125;&gt;编辑<span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> remove(record)&#125;&gt;删除<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">                            &#123;record.resourceType != 3 ? <span class="tag">&lt;<span class="name">span</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> add(record, 2)&#125;&gt;添加下级<span class="tag">&lt;/<span class="name">span</span>&gt;</span> : &#x27;&#x27;&#125; <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">                      )</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">			],</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;;</span><br><span class="line">    <span class="keyword">const</span> testCardMore = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;more&#x27;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">const</span> cardConfig = &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;用户列表&#x27;</span>,</span><br><span class="line">        <span class="attr">span</span>: <span class="number">12</span>,</span><br><span class="line">        <span class="attr">extra</span>: <span class="xml"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123; testCardMore() &#125;&#125;&gt;more<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">const</span> handleRowClick = <span class="function">(<span class="params">v</span>) =&gt;</span> &#123;</span><br><span class="line">		setRowData(&#123; ...v &#125;);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">const</span> handleSelectChange = <span class="function">(<span class="params">v</span>) =&gt;</span> &#123;</span><br><span class="line">        setSelectedRowKeyArr([...v])</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> getQueryParams = <span class="function">()=&gt;</span> &#123; <span class="built_in">console</span>.log(<span class="string">&#x27;queryParams&#x27;</span>, refTable.current.queryParams) &#125;;</span><br><span class="line">    <span class="keyword">const</span> getSelectedRowKeys = <span class="function">()=&gt;</span> &#123; <span class="built_in">console</span>.log(<span class="string">&#x27;selectedRowKeys&#x27;</span>, refTable.current.selectedRowKeys) &#125;;</span><br><span class="line">    <span class="keyword">const</span> getData = <span class="function">()=&gt;</span> &#123; <span class="built_in">console</span>.log(<span class="string">&#x27;refreshTable&#x27;</span>); refTable.current.getData() &#125;;</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">        <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Row</span> <span class="attr">gutter</span>=<span class="string">&#123;12&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">TableComp</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">ref</span>=<span class="string">&#123;refTable&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                    <span class="attr">tableConfig</span>=<span class="string">&#123;tableConfig&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">                &gt;</span><span class="tag">&lt;/<span class="name">TableComp</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">Space</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> getQueryParams()&#125;&gt;获取表格参数<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> getSelectedRowKeys()&#125;&gt;获取选中项rowkey数组<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> getData()&#125;&gt;刷新表格<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">Space</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">	);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Test;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+
+<h2 id="组件效果"><a href="#组件效果" class="headerlink" title="组件效果"></a>组件效果</h2><p><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/e6c9d24egy1h1xlfeanlrj21it0u0ah5.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="最后效果"> </p>
+
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gipetv6p75j20zk0m8x6p.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/07/框架/react/React_antd列表/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>&lt;React&gt; Antd 多层表格最后children为空数组</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+Antd 不好用的地方
+
+原因众所周知,写后台项目就会有很多那种可以展开的表格拉,可以展开的列表拉.Antd 作为一个
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicit4jrvuj20zk0m8785.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2021/05/05/框架/react/React_antd模态Form/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>&lt;React&gt; Antd 模态Form表单组件</div>
+      </div>
+      <!-- <div class="content">
+        
+Antd 还是挺好用的
+
+
+
+Antd组件库官网https://ant.design/components/table
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+    <script>
+      $(".toc-aside").css({'width': 0, 'padding': 0});
+      $(".toc-content").css({'width': 0});
+      $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+      $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+    </script>
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('false' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

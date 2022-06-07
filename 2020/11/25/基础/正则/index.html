@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>常用的正则公式 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicivghyooj20zk0m8dir.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      常用的正则公式
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2020-11-25</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        <div class="tags">
+          <i class="iconfont icontag"></i>
+          
+            <a href="tags/正则/" class="">
+              正则
+            </a>
+          
+        </div>
+        
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>众所周知本人从来不学正则,要用就是百度</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="常用正则功能"><a href="#常用正则功能" class="headerlink" title="常用正则功能"></a>常用正则功能</h2><ul>
+<li>怎么用正则表达式进行判断呢<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkPhone</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">var</span> phone = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;phone&#x27;</span>).value;</span><br><span class="line">    <span class="keyword">if</span>(!(<span class="regexp">/^1[3456789]\d&#123;9&#125;$/</span>.test(phone)))&#123; </span><br><span class="line">        alert(<span class="string">&quot;手机号码有误，请重填&quot;</span>);  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>用正则获取某个特定字符前面和后面的内容<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> original= <span class="string">&quot;fromt 前面的内容/back后面的内容&quot;</span></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/([/][^/]+)$/</span>;</span><br><span class="line"><span class="keyword">var</span> fromt = original.replace(reg, <span class="string">&quot;&quot;</span>); </span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/([^/]+)$/</span>; </span><br><span class="line"><span class="keyword">var</span> back= original.match(reg2)[<span class="number">1</span>];</span><br></pre></td></tr></table></figure></li>
+<li>手机号隐藏中间4位<br><code>&#39;11954644318&#39;.replace(/(\d&#123;3&#125;)(\d&#123;4&#125;)/, &#39;$1****&#39;)</code></li>
+<li>校验密码强度<br>密码的强度必须是包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间<br><code>^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).&#123;8,10&#125;$</code></li>
+<li>校验中文<br>字符串仅能是中文<br><code>^[\\u4e00-\\u9fa5]&#123;0,&#125;$</code></li>
+<li>由数字、26个英文字母或下划线组成的字符串<br><code>^\\w+$</code></li>
+<li>校验E-Mail 地址<br><code>/\w+@[a-z0-9]+\.[a-z]&#123;2,4&#125;/;</code></li>
+<li>校验身份证号码<br>15位：<br><code>^[1-9]\\d&#123;7&#125;((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d&#123;3&#125;$</code><br>18位：<br><code>^[1-9]\\d&#123;5&#125;[1-9]\\d&#123;3&#125;((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d&#123;3&#125;([0-9]|X)$</code></li>
+<li>校验日期<br>“yyyy-mm-dd“ 格式的日期校验，已考虑平闰年。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^(?:(?!<span class="number">0000</span>)[<span class="number">0</span>-<span class="number">9</span>]&#123;<span class="number">4</span>&#125;-(?:(?:<span class="number">0</span>[<span class="number">1</span>-<span class="number">9</span>]|<span class="number">1</span>[<span class="number">0</span>-<span class="number">2</span>])-(?:<span class="number">0</span>[<span class="number">1</span>-<span class="number">9</span>]|<span class="number">1</span>[<span class="number">0</span>-<span class="number">9</span>]|<span class="number">2</span>[<span class="number">0</span>-<span class="number">8</span>])</span><br><span class="line">|(?:<span class="number">0</span>[<span class="number">13</span>-<span class="number">9</span>]|<span class="number">1</span>[<span class="number">0</span>-<span class="number">2</span>])-(?:<span class="number">29</span>|<span class="number">30</span>)|(?:<span class="number">0</span>[<span class="number">13578</span>]|<span class="number">1</span>[<span class="number">02</span>])-<span class="number">31</span>)|(?:[<span class="number">0</span>-<span class="number">9</span>]&#123;<span class="number">2</span>&#125;(?:<span class="number">0</span>[<span class="number">48</span>]|[<span class="number">2468</span>][<span class="number">048</span>]|[<span class="number">13579</span>][<span class="number">26</span>])</span><br><span class="line">|(?:<span class="number">0</span>[<span class="number">48</span>]|[<span class="number">2468</span>][<span class="number">048</span>]|[<span class="number">13579</span>][<span class="number">26</span>])<span class="number">00</span>)-<span class="number">02</span>-<span class="number">29</span>)$</span><br></pre></td></tr></table></figure></li>
+<li>校验金额<br>金额校验，精确到2位小数。<br><code>^[0-9]+(.[0-9]&#123;2&#125;)?$</code></li>
+<li>校验手机号<br>下面是国内 13、15、18开头的手机号正则表达式。（可根据目前国内收集号扩展前两位开头号码）<br><code>^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d&#123;8&#125;$</code></li>
+<li>判断IE的版本<br><code>^.*MSIE [5-8](?:\\.[0-9]+)?(?!.*Trident\\/[5-9]\\.0).*$</code></li>
+<li>检查URL的前缀<br>应用开发中很多时候需要区分请求是HTTPS还是HTTP，通过下面的表达式可以取出一个url的前缀然后再逻辑判断<br><code>url:(https?|ftp|file)://[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]</code></li>
+<li>提取URL链接<br>下面的这个表达式可以筛选出一段文本中的URL<br><code>^(f|ht)&#123;1&#125;(tp|tps):\\/\\/([\\w-]+\\.)+[\\w-]+(\\/[\\w- ./?%&amp;=]*)?</code></li>
+<li>文件路径及扩展名校验<br>验证windows下文件路径和扩展名（下面的例子中为.txt文件）<br><code>^([a-zA-Z]\\:|\\\\)\\\\([^\\\\]+\\\\)*[^\\/:*?&quot;&lt;&gt;|]+\\.txt(l)?$</code></li>
+<li>提取网页图片<br>假若你想提取网页中所有图片信息，可以利用下面的表达式<br><code>\\&lt; *[img][^\\\\&gt;]*[src] *= *[\\&quot;\\&#39;]&#123;0,1&#125;([^\\&quot;\\&#39;\\ &gt;]*)</code></li>
+</ul>
+<h2 id="常用正则"><a href="#常用正则" class="headerlink" title="常用正则"></a>常用正则</h2><ul>
+<li>校验数字表达式</li>
+</ul>
+<ol>
+<li>数字：<code>^[0-9]*$</code></li>
+<li>n位的数字：<code>^\d&#123;n&#125;$</code></li>
+<li>至少n位的数字：<code>^\d&#123;n,&#125;$</code></li>
+<li>m-n位的数字：<code>^\d&#123;m,n&#125;$</code></li>
+<li>零和非零开头的数字：<code>^(0|[1-9][0-9]*)$</code></li>
+<li>非零开头的最多带两位小数的数字：<code>^([1-9][0-9]*)+(.[0-9]&#123;1,2&#125;)?$</code></li>
+<li>带1-2位小数的正数或负数：<code>^(\-)?\d+(\.\d&#123;1,2&#125;)?$</code></li>
+<li>正数、负数、和小数：<code>^(\-|\+)?\d+(\.\d+)?$</code></li>
+<li>有两位小数的正实数：<code>^[0-9]+(.[0-9]&#123;2&#125;)?$</code></li>
+<li>有1~3位小数的正实数：<code>^[0-9]+(.[0-9]&#123;1,3&#125;)?$</code></li>
+<li>非零的正整数：<code>^[1-9]\d*$ 或 ^([1-9][0-9]*)&#123;1,3&#125;$ 或 ^\+?[1-9][0-9]*$</code></li>
+<li>非零的负整数：<code>^\-[1-9][]0-9&quot;*$ 或 ^-[1-9]\d*$</code></li>
+<li>非负整数：<code>^\d+$ 或 ^[1-9]\d*|0$</code></li>
+<li>非正整数：<code>^-[1-9]\d*|0$ 或 ^((-\d+)|(0+))$</code></li>
+<li>非负浮点数：<code>^\d+(\.\d+)?$ 或 ^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$</code></li>
+<li>非正浮点数：<code>^((-\d+(\.\d+)?)|(0+(\.0+)?))$ 或 ^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$</code></li>
+<li>正浮点数：<code>^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$ 或 ^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$</code></li>
+<li>负浮点数：<code>^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$ 或 ^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$</code></li>
+<li>浮点数：<code>^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></li>
+</ol>
+<ul>
+<li>校验字符的表达式</li>
+</ul>
+<ol>
+<li>汉字：<code>^[\u4e00-\u9fa5]&#123;0,&#125;$</code></li>
+<li>英文和数字：<code>^[A-Za-z0-9]+$ 或 ^[A-Za-z0-9]&#123;4,40&#125;$</code></li>
+<li>长度为3-20的所有字符：<code>^.&#123;3,20&#125;$</code></li>
+<li>由26个英文字母组成的字符串：<code>^[A-Za-z]+$</code></li>
+<li>由26个大写英文字母组成的字符串：<code>^[A-Z]+$</code></li>
+<li>由26个小写英文字母组成的字符串：<code>^[a-z]+$</code></li>
+<li>由数字和26个英文字母组成的字符串：<code>^[A-Za-z0-9]+$</code></li>
+<li>由数字、26个英文字母或者下划线组成的字符串：<code>^\w+$ 或 ^\w&#123;3,20&#125;$</code></li>
+<li>中文、英文、数字包括下划线：<code>^[\u4E00-\u9FA5A-Za-z0-9_]+$</code> </li>
+<li>中文、英文、数字但不包括下划线等符号：<code>^[\u4E00-\u9FA5A-Za-z0-9]+$ 或 ^[\u4E00-\u9FA5A-Za-z0-9]&#123;2,20&#125;$</code></li>
+<li>可以输入含有^%&amp;’,;=?$&quot;等字符：<code>[^%&amp;&#39;,;=?$\x22]+ 12 禁止输入含有~的字符：[^~\x22]+</code></li>
+</ol>
+<h2 id="直接在input上进行判断"><a href="#直接在input上进行判断" class="headerlink" title="直接在input上进行判断"></a>直接在input上进行判断</h2><ol>
+<li>文本框只能输入数字代码(小数点也不能输入)<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup=<span class="string">&quot;this.value=this.value.replace(/\D/g,&#x27;&#x27;)&quot;</span> onafterpaste=<span class="string">&quot;this.value=this.value.replace(/\D/g,&#x27;&#x27;)&quot;</span> /&gt;</span><br></pre></td></tr></table></figure></li>
+<li>只能输入数字,能输小数点.<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup=<span class="string">&quot;if(isNaN(value))execCommand(&#x27;undo&#x27;)&quot;</span> onafterpaste=<span class="string">&quot;if(isNaN(value))execCommand(&#x27;undo&#x27;)&quot;</span>/&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;txt1&quot;</span> <span class="attr">onchange</span>=<span class="string">&quot;if(/\D/.test(this.value))&#123;alert(&#x27;只能输入数字&#x27;);this.value=&#x27;&#x27;;&#125;&quot;</span>/&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+<li>数字和小数点方法二<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> </span><br><span class="line">onkeypress=<span class="string">&quot;if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value&quot;</span> </span><br><span class="line">onkeyup=<span class="string">&quot;if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value&quot;</span> </span><br><span class="line">onblur=<span class="string">&quot;if(!this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?|\.\d*?)?$/))this.value=this.o_value;else&#123;if(this.value.match(/^\.\d+$/))this.value=0+this.value;if(this.value.match(/^\.$/))this.value=0;this.o_value=this.value&#125;&quot;</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>只能输入字母和汉字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;value=value.replace(/[\d]/g,&#x27;&#x27;)&quot;</span> </span><br><span class="line">onbeforepaste=<span class="string">&quot;clipboardData.setData(&#x27;text&#x27;,clipboardData.getData(&#x27;text&#x27;).replace(/[\d]/g,&#x27;&#x27;))&quot;</span> maxlength=<span class="string">&quot;10&quot;</span> name=<span class="string">&quot;Numbers&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>只能输入英文字母和数字,不能输入中文<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;value=value.replace(/[^\w\.\/]/ig,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>只能输入数字和英文<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;value=value.replace(/[^\d|chun]/g,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,&#x27;$1$2.$3&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>输入中文:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>输入数字:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;this.value=this.value.replace(/\D/g,&#x27;&#x27;)&quot;</span>/&gt;  </span><br></pre></td></tr></table></figure></li>
+<li>输入英文:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;this.value=this.value.replace(/[^a-zA-Z]/g,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>三个合在一起<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;value=value.replace(/[^\w\u4E00-\u9FA5]/g, &#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>只输入数字和字母<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span>  onkeyup=<span class="string">&quot;value=value.replace(/[\W]/g,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>除了英文的标点符号以为 其他的人都可以中文，英文字母，数字，中文标点<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> onkeyup=<span class="string">&quot;this.value=this.value.replace(/^[^!@#$%^&amp;amp;*()-=+]/g,&#x27;&#x27;)&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicis081o9j20zk0m8dmr.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/11/28/基础/【JavaScript】ECMA5新增的数组方法/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>ECMA5新增的数组方法</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+😑😑😑虽然很常用还是总结一下
+
+
+
+indexOf() 查找某数在数组第一次出现的位置格式：数组.indexOf
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gipeudstjqj20zk0m8k3r.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/11/24/基础/JS扩展运算符的用途/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>ES6之👉 扩展运算符(...)</div>
+      </div>
+      <!-- <div class="content">
+        
+😆 😆 😆对象中的扩展运算符(…)用于取出参数对象中的所有可遍历属性，拷贝到当前对象之中
+
+
+
+扩展运算符是浅拷
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

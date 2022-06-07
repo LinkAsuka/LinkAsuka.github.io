@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+<!-- meta/link... -->
+
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>生成海报保存分享朋友圈 | jessica</title>
+
+  
+    
+<link rel="stylesheet" href="js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/png" href="/medias/logo.png">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="css/animate.min.css">
+
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <!-- 依赖于jquery和vue -->
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
+
+    <body>
+        <!-- 预加载动画 -->
+        <!-- 页面预加载动画 -->
+
+
+            <!-- 判断是否为暗黑风格 -->
+            <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+                <!-- 头部导航等 -->
+                
+    <header class="header " id="navHeader" style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;">
+        <div class="header-content">
+            <div class="bars">
+                <div id="appDrawer" class="sidebar-image">
+  <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
+      <h3 class="drawer-box-head_title">jessica</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/gallery" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                  
+                  <span class="name">图库</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/games" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  
+                  <span class="name">游戏</span>
+                </a>
+              
+            </li>
+          
+        
+        <li class="drawer-box-content_item">
+          <a href="/">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <span>Github</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+            </div>
+            <div class="blog-title" id="author-avatar">
+                
+                    <div class="avatar">
+                        <img src="/medias/logo.png" alt="logo">
+                    </div>
+                    
+                        <a href="/" class="logo">
+                            jessica
+                        </a>
+            </div>
+            <nav class="navbar">
+                <ul class="menu">
+                    
+                        
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/" class="menu-item-link">
+                                        
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            
+                                                <span class="name">首页</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/gallery" class="menu-item-link">
+                                        
+                                            <i class="fa fa-film" aria-hidden="true"></i>
+                                            
+                                                <span class="name">图库</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                            <li class="menu-item" style="position: relative;">
+                                
+                                    <a href="/games" class="menu-item-link">
+                                        
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            
+                                                <span class="name">游戏</span>
+                                    </a>
+                                    
+                            </li>
+                            
+                                
+                </ul>
+
+                
+                    <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+                        
+
+            </nav>
+        </div>
+
+        <!-- <a href="" class="github-corner color-primary" aria-label="View source on GitHub"><svg width="60" height="60" viewBox="0 0 250 250" style="fill:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> -->
+        <!--  -->
+
+        <!-- 当头部导航设置为背景透明的时候  -->
+        
+            <script src="/js/header/index.js"></script>
+            
+    </header>
+
+                    <!-- 内容区域 -->
+                    <main class="main" style="margin-top: 0;">
+                        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicljgocqbj20zk0m8e81.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="title-box">
+    <span class="title">
+      生成海报保存分享朋友圈
+    </span>
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-meta">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span class="post-time">2020-11-19</span>
+      </div>
+      
+      <div class="post-tags-categories">
+        
+        <div class="tags">
+          <i class="iconfont icontag"></i>
+          
+            <a href="tags/小程序/" class="">
+              小程序
+            </a>
+          
+        </div>
+        
+        
+        <div class="categories">
+          <i class="iconfont iconbookmark1"></i>
+          
+            <a href="categories/小程序/" class="">
+              小程序
+            </a>
+          
+        </div>
+        
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p>用画布生成海报保存成图片<br>虽然我觉得这种方法很蠢😫</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">&quot;formSubmit&quot;</span>&gt;</span>点击生成海报<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&#x27;imagePathBox&#x27;</span> <span class="attr">hidden</span>=<span class="string">&quot;&#123;&#123;maskHidden == false&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;imagePath&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&#x27;shengcheng&#x27;</span> &gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&#x27;baocun&#x27;</span> <span class="attr">bindtap</span>=<span class="string">&#x27;baocun&#x27;</span>&gt;</span>点击保存至相册,分享到朋友圈<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">hidden</span>=<span class="string">&quot;&#123;&#123;maskHidden == false&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;mask&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;canvas-box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span>  <span class="attr">style</span>=<span class="string">&quot;width:375px;height:670px;position:fixed;top:9999px&quot;</span> <span class="attr">canvas-id</span>=<span class="string">&quot;mycanvas&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="wxss"><a href="#wxss" class="headerlink" title="wxss"></a>wxss</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">page&#123; <span class="attribute">background</span>:<span class="number">#fff</span>;&#125;</span><br><span class="line"><span class="selector-class">.imagePathBox</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.7</span>);</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">9999</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.mask</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">9000</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.shengcheng</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">80%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50</span>rpx;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">40%</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.baocun</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">80%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">80</span>rpx;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">80</span>rpx;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">50</span>rpx;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">10%</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#45be8d</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">32</span>rpx;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">44</span>rpx;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="selector-class">.shareFriends</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">80%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">104</span>rpx;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">80</span>rpx;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">50</span>rpx;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">10%</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#45be8d</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">211</span>, <span class="number">208</span>, <span class="number">208</span>);</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">32</span>rpx;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">44</span>rpx;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">button</span><span class="selector-attr">[class=<span class="string">&quot;baocun&quot;</span>]</span><span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br></pre></td><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">evalatImage</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">bgBanner</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">imagePath</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">maskHidden</span>:<span class="literal">false</span>,</span><br><span class="line">    <span class="attr">qrcode_image</span>:<span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 生命周期函数--监听页面显示</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="attr">onShow</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span>  that = <span class="built_in">this</span>;</span><br><span class="line">    wx.getImageInfo(&#123;</span><br><span class="line">      <span class="attr">src</span>: <span class="string">&quot;https://m.xinjuenet.com/images/banner/b-xldh.jpg&quot;</span>,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;banner临时路径:&quot;</span> + res.path);</span><br><span class="line">        that.setData(&#123;</span><br><span class="line">          <span class="attr">evalatImage</span>: res.path</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    wx.getImageInfo(&#123;</span><br><span class="line">      <span class="attr">src</span>: <span class="string">&quot;https://m.xinjuenet.com/images/banner/b-xldh.jpg&quot;</span>,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;海报底部背景:&quot;</span> + res.path);</span><br><span class="line">        that.setData(&#123;</span><br><span class="line">          <span class="attr">bgBanner</span>: res.path</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    that.qrcode_image();</span><br><span class="line">    wx.getImageInfo(&#123;</span><br><span class="line">      <span class="attr">src</span>: that.data.qrcode_image,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;二维码:&quot;</span> + res.path);</span><br><span class="line">        that.setData(&#123;</span><br><span class="line">          <span class="attr">qrcode_image</span>: res.path</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//点击生成海报</span></span><br><span class="line">  <span class="attr">formSubmit</span>: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">    wx.showToast(&#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;海报生成中...&#x27;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&#x27;loading&#x27;</span>,</span><br><span class="line">      <span class="attr">duration</span>: <span class="number">1000</span></span><br><span class="line">    &#125;);</span><br><span class="line">    that.createNewImg();</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      wx.hideToast()</span><br><span class="line">      that.setData(&#123;</span><br><span class="line">        <span class="attr">maskHidden</span>: <span class="literal">true</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//将canvas转换为图片保存到本地，然后将图片路径传给image图片的src</span></span><br><span class="line">  <span class="attr">createNewImg</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">    <span class="keyword">var</span> context = wx.createCanvasContext(<span class="string">&#x27;mycanvas&#x27;</span>);</span><br><span class="line">    context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">375</span>, <span class="number">660</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&quot;#fff&quot;</span>)</span><br><span class="line">    context.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">375</span>, <span class="number">660</span>)</span><br><span class="line">    context.save();</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> path = that.data.evalatImage;</span><br><span class="line">    context.drawImage(path, <span class="number">0</span>, <span class="number">0</span>, <span class="number">375</span>, <span class="number">183</span>);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> path1 = that.data.bgBanner;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;海报底部背景图&quot;</span> + path1);</span><br><span class="line">    <span class="keyword">var</span> path2 = that.data.qrcode_image;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;海报底部二维码&quot;</span> + path2);</span><br><span class="line">    context.setFontSize(<span class="number">16</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&#x27;#333&#x27;</span>);</span><br><span class="line">    context.setTextAlign(<span class="string">&#x27;left&#x27;</span>);</span><br><span class="line">    context.fillText(<span class="string">&quot;测试结果&quot;</span>, <span class="number">60</span>, <span class="number">230</span>);</span><br><span class="line">    context.stroke();</span><br><span class="line">    context.save();</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> titl = <span class="string">&quot;分享标题&quot;</span>;</span><br><span class="line">    context.setFontSize(<span class="number">18</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&#x27;#333&#x27;</span>);</span><br><span class="line">    context.setTextAlign(<span class="string">&#x27;left&#x27;</span>);</span><br><span class="line">    context.font = <span class="string">&#x27;normal bold 18px sans-serif&#x27;</span>;</span><br><span class="line">    context.fillText(titl, <span class="number">60</span>, <span class="number">270</span>);</span><br><span class="line">    context.stroke();</span><br><span class="line">    context.save();</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    context.setFontSize(<span class="number">16</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&#x27;#333&#x27;</span>);</span><br><span class="line">    context.setTextAlign(<span class="string">&#x27;left&#x27;</span>);</span><br><span class="line">    context.fillText(<span class="string">&quot;测试说明&quot;</span>, <span class="number">60</span>, <span class="number">320</span>);</span><br><span class="line">    context.stroke();</span><br><span class="line">    context.save();</span><br><span class="line">    context.drawImage(path1, <span class="number">0</span>, <span class="number">550</span>, <span class="number">375</span>, <span class="number">130</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> results = <span class="string">&quot;分享的文本信息，布上下文 canvasID&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 测试结果说明</span></span><br><span class="line">    that.dealWords(&#123;</span><br><span class="line">      <span class="attr">ctx</span>: context,              	    <span class="comment">//画布上下文 canvasID</span></span><br><span class="line">      <span class="attr">fontSize</span>: <span class="number">16</span>,         	   <span class="comment">//字体大小</span></span><br><span class="line">      <span class="attr">word</span>: results,  				  <span class="comment">//需要处理的文字</span></span><br><span class="line">      <span class="attr">maxWidth</span>: <span class="number">270</span>, 			 <span class="comment">//一行文字最大宽度</span></span><br><span class="line">      <span class="attr">x</span>: <span class="number">60</span>,  					<span class="comment">//文字在x轴要显示的位置</span></span><br><span class="line">      <span class="attr">y</span>: <span class="number">340</span>, 				 	   <span class="comment">//文字在y轴要显示的位置</span></span><br><span class="line">      <span class="attr">maxLine</span>: <span class="number">6</span>  			  <span class="comment">//文字最多显示的行数</span></span><br><span class="line">    &#125;);</span><br><span class="line">    context.stroke();</span><br><span class="line">    context.save(); <span class="comment">//保存之前的画布设置</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//绘制头像</span></span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.arc(<span class="number">50</span>, <span class="number">225</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">    context.setStrokeStyle(<span class="string">&quot;#c7eddd&quot;</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&quot;#44bf8c&quot;</span>);</span><br><span class="line">    context.clip(); <span class="comment">//裁剪上面的圆形</span></span><br><span class="line">    context.fill();<span class="comment">//填充</span></span><br><span class="line">    context.restore();<span class="comment">//因为clip是剪切了画布  则后面所有的操作都会限制在被裁减的区域内可见  用restore可以恢复之前的设置</span></span><br><span class="line">    context.closePath();</span><br><span class="line"> </span><br><span class="line">    context.save(); <span class="comment">//保存之前的画布设置</span></span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.arc(<span class="number">50</span>, <span class="number">315</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">    context.setStrokeStyle(<span class="string">&quot;#c7eddd&quot;</span>);</span><br><span class="line">    context.setFillStyle(<span class="string">&quot;#44bf8c&quot;</span>);</span><br><span class="line">    context.clip(); <span class="comment">//裁剪上面的圆形</span></span><br><span class="line">    context.fill();<span class="comment">//填充</span></span><br><span class="line">    context.restore();</span><br><span class="line">    context.closePath();</span><br><span class="line"> </span><br><span class="line">    context.save(); <span class="comment">//保存之前的画布设置</span></span><br><span class="line">    context.beginPath();</span><br><span class="line">    context.arc(<span class="number">55</span>, <span class="number">610</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">    context.setStrokeStyle(<span class="string">&quot;#ffe200&quot;</span>);</span><br><span class="line">    context.clip(); <span class="comment">//裁剪上面的圆形</span></span><br><span class="line">    context.drawImage(path2, <span class="number">5</span>, <span class="number">560</span>, <span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">    context.restore();</span><br><span class="line">    context.closePath();</span><br><span class="line"> </span><br><span class="line">    context.save(); <span class="comment">//保存之前的画布设置</span></span><br><span class="line">    context.beginPath();</span><br><span class="line">    <span class="comment">// context.setFontSize(16);</span></span><br><span class="line">    context.setFillStyle(<span class="string">&#x27;#fff&#x27;</span>);</span><br><span class="line">    context.setTextBaseline(<span class="string">&quot;top&quot;</span>);</span><br><span class="line">    context.setTextAlign(<span class="string">&#x27;left&#x27;</span>);</span><br><span class="line">    <span class="comment">// context.font = &#x27;normal 18px arial&#x27;;</span></span><br><span class="line">    <span class="comment">// context.fillText(&quot;预防疫情四大宅家心理健康测评&quot;, 115, 565);</span></span><br><span class="line">    <span class="comment">// context.fillText(&quot;预防疫情四大宅家心理健康测评&quot;, 115, 589);</span></span><br><span class="line">    that.dealWords(&#123;</span><br><span class="line">      <span class="attr">ctx</span>: context,              	    <span class="comment">//画布上下文 canvasID</span></span><br><span class="line">      <span class="attr">fontSize</span>: <span class="number">16</span>,         	   <span class="comment">//字体大小</span></span><br><span class="line">      <span class="attr">word</span>: titl,  				  <span class="comment">//需要处理的文字</span></span><br><span class="line">      <span class="attr">maxWidth</span>: <span class="number">240</span>, 			 <span class="comment">//一行文字最大宽度</span></span><br><span class="line">      <span class="attr">x</span>: <span class="number">115</span>,  					<span class="comment">//文字在x轴要显示的位置</span></span><br><span class="line">      <span class="attr">y</span>: <span class="number">540</span>, 				 	   <span class="comment">//文字在y轴要显示的位置</span></span><br><span class="line">      <span class="attr">maxLine</span>: <span class="number">2</span>  			  <span class="comment">//文字最多显示的行数</span></span><br><span class="line">    &#125;);</span><br><span class="line">    context.stroke();</span><br><span class="line">    context.closePath();</span><br><span class="line">    context.save(); <span class="comment">//保存之前的画布设置</span></span><br><span class="line">    context.draw(<span class="literal">true</span>);<span class="comment">//true表示保留之前绘制内容</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="comment">//将生成好的图片保存到本地，需要延迟一会，绘制期间耗时</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      wx.canvasToTempFilePath(&#123;</span><br><span class="line">        <span class="attr">canvasId</span>: <span class="string">&#x27;mycanvas&#x27;</span>,</span><br><span class="line">        <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">var</span> tempFilePath = res.tempFilePath;</span><br><span class="line">          that.setData(&#123;</span><br><span class="line">            <span class="attr">imagePath</span>: tempFilePath</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">fail</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(res);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//文本换行</span></span><br><span class="line">  <span class="function"><span class="title">dealWords</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">    options.ctx.setFontSize(options.fontSize);<span class="comment">//设置字体大小</span></span><br><span class="line">    <span class="keyword">var</span> allRow = <span class="built_in">Math</span>.ceil(options.ctx.measureText(options.word).width / options.maxWidth);<span class="comment">//实际总共能分多少行</span></span><br><span class="line">    <span class="keyword">var</span> count = allRow &gt;= options.maxLine ? options.maxLine : allRow;<span class="comment">//实际能分多少行与设置的最大显示行数比，谁小就用谁做循环次数</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> endPos = <span class="number">0</span>;<span class="comment">//当前字符串的截断点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; count; j++) &#123;</span><br><span class="line">      <span class="keyword">var</span> nowStr = options.word.slice(endPos);<span class="comment">//当前剩余的字符串</span></span><br><span class="line">      <span class="keyword">var</span> rowWid = <span class="number">0</span>;<span class="comment">//每一行当前宽度    </span></span><br><span class="line">      <span class="keyword">if</span> (options.ctx.measureText(nowStr).width &gt; options.maxWidth) &#123;<span class="comment">//如果当前的字符串宽度大于最大宽度，然后开始截取</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> m = <span class="number">0</span>; m &lt; nowStr.length; m++) &#123;</span><br><span class="line">          rowWid += options.ctx.measureText(nowStr[m]).width;<span class="comment">//当前字符串总宽度</span></span><br><span class="line">          <span class="keyword">if</span> (rowWid &gt; options.maxWidth) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j === options.maxLine - <span class="number">1</span>) &#123; <span class="comment">//如果是最后一行</span></span><br><span class="line">              options.ctx.fillText(nowStr.slice(<span class="number">0</span>, m - <span class="number">1</span>) + <span class="string">&#x27;...&#x27;</span>, options.x, options.y + (j + <span class="number">1</span>) * <span class="number">25</span>);    <span class="comment">//(j+1)*20这是每一行的高度        </span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              options.ctx.fillText(nowStr.slice(<span class="number">0</span>, m), options.x, options.y + (j + <span class="number">1</span>) * <span class="number">25</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            endPos += m;<span class="comment">//下次截断点</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;<span class="comment">//如果当前的字符串宽度小于最大宽度就直接输出</span></span><br><span class="line">        options.ctx.fillText(nowStr.slice(<span class="number">0</span>), options.x, options.y + (j + <span class="number">1</span>) * <span class="number">25</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//点击保存到相册</span></span><br><span class="line">  <span class="attr">baocun</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="built_in">this</span></span><br><span class="line">    wx.saveImageToPhotosAlbum(&#123;</span><br><span class="line">      <span class="attr">filePath</span>: that.data.imagePath,</span><br><span class="line">      <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">        wx.showModal(&#123;</span><br><span class="line">          <span class="attr">content</span>: <span class="string">&#x27;图片已保存到相册，赶紧晒一下吧~&#x27;</span>,</span><br><span class="line">          <span class="attr">showCancel</span>: <span class="literal">false</span>,</span><br><span class="line">          <span class="attr">confirmText</span>: <span class="string">&#x27;好的&#x27;</span>,</span><br><span class="line">          <span class="attr">confirmColor</span>: <span class="string">&#x27;#333&#x27;</span>,</span><br><span class="line">          <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (res.confirm) &#123;</span><br><span class="line">              <span class="built_in">console</span>.log(<span class="string">&#x27;用户点击确定&#x27;</span>);</span><br><span class="line">              <span class="comment">/* 该隐藏的隐藏 */</span></span><br><span class="line">              that.setData(&#123;</span><br><span class="line">                <span class="attr">maskHidden</span>: <span class="literal">false</span></span><br><span class="line">              &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;, <span class="attr">fail</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">11111</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">qrcode_image</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> that = <span class="built_in">this</span>;</span><br><span class="line">    wx.request(&#123;</span><br><span class="line">      <span class="attr">url</span>: <span class="string">&#x27;https://api.weixin.qq.com/cgi-bin/token&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">grant_type</span>: <span class="string">&#x27;client_credential&#x27;</span>,</span><br><span class="line">        <span class="attr">appid</span>: <span class="string">&#x27;你的APPID&#x27;</span>, <span class="comment">//不能缺少</span></span><br><span class="line">        <span class="attr">secret</span>: <span class="string">&#x27;你的APPID秘钥&#x27;</span> <span class="comment">//不能缺少</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">        wx.request(&#123;</span><br><span class="line">          <span class="attr">url</span>: <span class="string">&#x27;https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=&#x27;</span> + res.data.access_token,</span><br><span class="line">          <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="string">&quot;path&quot;</span>: <span class="string">&quot;pages/index/index&quot;</span>, <span class="comment">//默认跳转到主页:pages/index/index，可指定</span></span><br><span class="line">            <span class="string">&quot;width&quot;</span>: <span class="number">200</span>,</span><br><span class="line">            <span class="string">&quot;scene&quot;</span>: <span class="string">&quot;type=0&amp;evaId=&quot;</span> + that.data.id,</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">responseType</span>: <span class="string">&#x27;arraybuffer&#x27;</span>, <span class="comment">// 这行很重要,转为二进制数组</span></span><br><span class="line">          <span class="attr">header</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/json;charset=utf-8&#x27;</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">          <span class="function"><span class="title">success</span>(<span class="params">res</span>)</span> &#123;</span><br><span class="line">            <span class="comment">//转为base64</span></span><br><span class="line">            <span class="keyword">let</span> bin64 = wx.arrayBufferToBase64(res.data);</span><br><span class="line"> </span><br><span class="line">            that.setData(&#123;</span><br><span class="line">              <span class="comment">//base 64设置到页面上</span></span><br><span class="line">              <span class="attr">qrcode_image</span>: <span class="string">&quot;data:image/png;base64,&quot;</span> + bin64</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gipeu1usa7j20zk0m8b29.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/11/19/基础/【知识】常用的前端对象/" class="post-nav-link">
+      <div class="title">
+        <i class="fa fa-angle-left"></i> 上一篇:
+        <div>常用的前端对象</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+😫 window对象😫 JavaScript 对象
+
+
+window对象
+打开关闭窗口12window.open(
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="https://tva3.sinaimg.cn/mw690/6833939bly1gicivghyooj20zk0m8dir.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="2020/11/16/插件/hexo的相关命令行与操作/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div>hexo的相关命令行与操作</div>
+      </div>
+      <!-- <div class="content">
+        
+😑😑😑hexo的基本使用和码云的部署
+
+
+
+hexo的基本使用一、新建
+
+新建博客hexo new title
+
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MzYwOS8zMDA4Mg==" style="margin: 30px;">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') {
+                return;
+            }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        <div class="toc-open-close">本文目录</div>
+      </div>
+      <div class="toc-content">
+        <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+<div class="toc"></div>
+
+<script>
+  if ($('.toc').length > 0) {
+    var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: content,
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: headerEl,
+      scrollSmooth: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: -($(window).height() * 0.4 - 45),
+      positionFixedSelector: '.toc-main',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  }
+
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+.toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+}
+</style>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+    let open = eval('' || 'true');
+    openOrCloseBtn.click(function() {
+      if (open === true) {
+        $(".toc-aside").css({'width': 0, 'padding': 0});
+        $(".toc-content").css({'width': 0});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+        $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+        open = false;
+      } else {
+        $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+        $(".toc-content").css({'width': '300px'});
+        $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+        $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+        open = true;
+      }
+    });
+  </script>
+
+
+  <!-- 渲染issues标签里的内容 -->
+  <script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) return;
+    document.write('<script type="text/javascript" src="/js/issues/index.js"><\/script>');
+  };
+  loadIssuesJS();
+</script>
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/my_bolg/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+                    </main>
+
+                    <!-- 页脚 -->
+                    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+    </div>
+    <div class="footer-copyright">
+      <p>jessica</p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+  </div>
+</div>
+
+
+                        <!-- 渲染暗黑按钮 -->
+                        
+                            <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+                                
+                                    <!-- 渲染回到顶部按钮 -->
+                                    
+                                        <div class="goTop top-btn-color border-color">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+                                            
+                                                <!-- 渲染左下角音乐播放器 -->
+                                                
+
+                                                            <!-- 图片放大 -->
+                                                            
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                
+
+                                                                    <!-- 鼠标点击特效 -->
+                                                                    <!-- 爱心点击 -->
+
+
+
+                                                                        <!-- 百度解析 -->
+                                                                        <!-- Baidu Analytics -->
+
+                                                                            <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+                                                                                <!-- 背景彩带 -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
+
+                                                                                <!-- div滚动到显示区域的动画 -->
+                                                                                
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    const themeOffset = parseInt('120') || 120;
+    const themeDelay = parseInt('0') || 0;
+    const themeDuration = parseInt('400') || 400;
+    const themeEasing = 'ease' || 'ease';
+    const themeOnce = eval('true') || false;
+    const themeMirror = eval('false') || false;
+    const themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+  </script>
+
+
+                                                                                    <!-- 复制提示 -->
+                                                                                    
+
+                                                                                        <!-- 输入框打字特效 -->
+                                                                                        <!-- 输入框打字特效 -->
+
+
+                                                                                            <!-- markdown代码一键复制功能 -->
+                                                                                            <!-- markdown代码一键复制功能 -->
+<script src="/js/clipboard/clipboard.min.js"></script>
+<script>
+  !function (e, t, a) {
+    var copy = '复制';
+    /* code */
+    var initCopyCode = function () {
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+      copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+      copyHtml += '</button>';
+      $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+      $(".post-detail pre").not('.gutter pre').before(copyHtml);
+      new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+                                                                                                <!-- 图片懒加载 -->
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "fadeIn",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+                                                                                                    <script src="/js/app.js"></script>
+
+    </body>
+
+</html>

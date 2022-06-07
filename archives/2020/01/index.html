@@ -15,25 +15,25 @@
 
   
     
-<link rel="stylesheet" href="/my_bolg/js/aos/aos.css">
+<link rel="stylesheet" href="/js/aos/aos.css">
 
   
 
-  <link rel="icon" type="image/png" href="/my_bolg/medias/logo.png">
+  <link rel="icon" type="image/png" href="/medias/logo.png">
   <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
   <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
   
   
-<link rel="stylesheet" href="/my_bolg/css/animate.min.css">
+<link rel="stylesheet" href="/css/animate.min.css">
 
   
-<link rel="stylesheet" href="/my_bolg/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
   
   
     
-<link rel="stylesheet" href="/my_bolg/js/fancybox/jquery.fancybox.min.css">
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
 
   
   
@@ -50,8 +50,8 @@
 
 
     <!-- 依赖于jquery和vue -->
-    <script src="/my_bolg/js/jquery3.5.1.js"></script>
-    <script src="/my_bolg/js/vue2.6.11.js"></script>
+    <script src="/js/jquery3.5.1.js"></script>
+    <script src="/js/vue2.6.11.js"></script>
 
     <body>
         <!-- 预加载动画 -->
@@ -82,7 +82,7 @@
   </transition>
   <div class="drawer-box" :class="{'active': visible}">
     <div class="drawer-box-head bg-color">
-      <img class="drawer-box-head_logo" src="/my_bolg/medias/logo.png" alt="logo">
+      <img class="drawer-box-head_logo" src="/medias/logo.png" alt="logo">
       <h3 class="drawer-box-head_title">jessica</h3>
       <h5 class="drawer-box-head_desc"></h5>
     </div>
@@ -93,7 +93,7 @@
           
             <li class="drawer-box-content_item" style="position: relative;">
               
-                <a href="/my_bolg/" class="drawer-menu-item-link">
+                <a href="/" class="drawer-menu-item-link">
                   
                     <i class="fa fa-home" aria-hidden="true"></i>
                   
@@ -104,7 +104,7 @@
           
             <li class="drawer-box-content_item" style="position: relative;">
               
-                <a href="/my_bolg/gallery" class="drawer-menu-item-link">
+                <a href="/gallery" class="drawer-menu-item-link">
                   
                     <i class="fa fa-film" aria-hidden="true"></i>
                   
@@ -115,7 +115,7 @@
           
             <li class="drawer-box-content_item" style="position: relative;">
               
-                <a href="/my_bolg/games" class="drawer-menu-item-link">
+                <a href="/games" class="drawer-menu-item-link">
                   
                     <i class="fa fa-link" aria-hidden="true"></i>
                   
@@ -126,7 +126,7 @@
           
         
         <li class="drawer-box-content_item">
-          <a href="/my_bolg/">
+          <a href="/">
             <i class="fa fa-github" aria-hidden="true"></i>
             <span>Github</span>
           </a>
@@ -185,10 +185,10 @@
             <div class="blog-title" id="author-avatar">
                 
                     <div class="avatar">
-                        <img src="/my_bolg/medias/logo.png" alt="logo">
+                        <img src="/medias/logo.png" alt="logo">
                     </div>
                     
-                        <a href="/my_bolg/" class="logo">
+                        <a href="/" class="logo">
                             jessica
                         </a>
             </div>
@@ -198,7 +198,7 @@
                         
                             <li class="menu-item" style="position: relative;">
                                 
-                                    <a href="/my_bolg/" class="menu-item-link">
+                                    <a href="/" class="menu-item-link">
                                         
                                             <i class="fa fa-home" aria-hidden="true"></i>
                                             
@@ -209,7 +209,7 @@
                             
                             <li class="menu-item" style="position: relative;">
                                 
-                                    <a href="/my_bolg/gallery" class="menu-item-link">
+                                    <a href="/gallery" class="menu-item-link">
                                         
                                             <i class="fa fa-film" aria-hidden="true"></i>
                                             
@@ -220,7 +220,7 @@
                             
                             <li class="menu-item" style="position: relative;">
                                 
-                                    <a href="/my_bolg/games" class="menu-item-link">
+                                    <a href="/games" class="menu-item-link">
                                         
                                             <i class="fa fa-link" aria-hidden="true"></i>
                                             
@@ -264,7 +264,7 @@
     </div>
   </transition>
 </div>
-<script src="/my_bolg/js/local_search.js"></script>
+<script src="/js/local_search.js"></script>
 <script>
   var body = document.body || document.documentElement || window;
   var vm = new Vue({
@@ -287,7 +287,7 @@
       },
       getSearchFile() {
         if (!this.searchInput) {
-          getSearchFile("/my_bolg/search.xml");
+          getSearchFile("/search.xml");
         }
       },
       cancelDialogVisible() {
@@ -317,7 +317,7 @@
 
         <!-- 当头部导航设置为背景透明的时候  -->
         
-            <script src="/my_bolg/js/header/index.js"></script>
+            <script src="/js/header/index.js"></script>
             
     </header>
 
@@ -341,7 +341,7 @@
 
 <div class="archive-video">
   <video class="full-video" autoplay loop muted>
-      <source style="width: 100%;height: 100vh;" src="/my_bolg/">
+      <source style="width: 100%;height: 100vh;" src="/">
   </video>
   <div class="video-header-title">
     archive
@@ -366,12 +366,12 @@
             
             <div class="year" data-aos="zoom-in-up">
                 <div class="bullet"></div>
-                <a href="/my_bolg/archives/2020">2020</a>
+                <a href="/archives/2020">2020</a>
             </div>
           
           <li class="post-item" data-aos="fade-left">
             <span class="post-date">01-04</span>
-            <a class="post-title" href="/my_bolg/2020/01/04/%3C%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%3E/">&lt;问题&gt;</a>
+            <a class="post-title" href="/2020/01/04/%3C%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%3E/">&lt;问题&gt;</a>
           </li>
         
       </ul>
@@ -453,14 +453,14 @@
                                         <div class="goTop top-btn-color border-color">
   <i class="fa fa-arrow-up" aria-hidden="true"></i>
 </div>
-<script src="/my_bolg/js/goTop.js"></script>
+<script src="/js/goTop.js"></script>
                                             
                                                 <!-- 渲染左下角音乐播放器 -->
                                                 
 
                                                             <!-- 图片放大 -->
                                                             
-                                                                <script src="/my_bolg/js/fancybox/jquery.fancybox.min.js"></script>
+                                                                <script src="/js/fancybox/jquery.fancybox.min.js"></script>
                                                                 
 
                                                                     <!-- 鼠标点击特效 -->
@@ -489,11 +489,11 @@
 
 
                                                                                 <!-- 背景彩带 -->
-                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/my_bolg/js/ribbon.min.js"></script> -->
+                                                                                <!-- <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script> -->
 
                                                                                 <!-- div滚动到显示区域的动画 -->
                                                                                 
-  <script src="/my_bolg/js/aos/aos.js"></script>
+  <script src="/js/aos/aos.js"></script>
   <script>
     // https://github.com/michalsnik/aos
     const themeOffset = parseInt('120') || 120;
@@ -536,7 +536,7 @@
 
                                                                                             <!-- markdown代码一键复制功能 -->
                                                                                             <!-- markdown代码一键复制功能 -->
-<script src="/my_bolg/js/clipboard/clipboard.min.js"></script>
+<script src="/js/clipboard/clipboard.min.js"></script>
 <script>
   !function (e, t, a) {
     var copy = '复制';
@@ -559,7 +559,7 @@
 </script>
 
                                                                                                 <!-- 图片懒加载 -->
-                                                                                                <script src="/my_bolg/js/lazyload/lazyload@1.9.1.js"></script>
+                                                                                                <script src="/js/lazyload/lazyload@1.9.1.js"></script>
 <script>
   $(function () {
     $("div.lazyload, img.lazyload, a.lazyload").lazyload(
@@ -571,7 +571,7 @@
   });
 </script>
 
-                                                                                                    <script src="/my_bolg/js/app.js"></script>
+                                                                                                    <script src="/js/app.js"></script>
 
     </body>
 

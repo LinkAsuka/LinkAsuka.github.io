@@ -374,7 +374,7 @@
 
 <h2 id="为什么要写"><a href="#为什么要写" class="headerlink" title="为什么要写"></a>为什么要写</h2><p>用了 Antd 为什么要写 Modal 组件?不是调用一下就完事了吗<br>但是你想想,一个弹窗里面可以有表单,可以有表格,可以有搜索框,他们可以随意组合<br>你用组件给你的东西代码不是一串一串的,写个有搜索表格功能的弹窗光设置就要写一堆<br>这个东西又是很常用的东西,所以写个组件只要写好设置文件就可以高枕无忧</p>
 <h2 id="动机是什么"><a href="#动机是什么" class="headerlink" title="动机是什么"></a>动机是什么</h2><p>我前段时间不是写了个模态框+表单的组合组件吗,被说你这个东西用的范围太小了,一个组件做一件事然后组件之间互相利用才是能最大化的<br>我突然觉得好有道理,所以我打算把 Modal+Form 的组件拆了重置一下<br>form 表单的组件也重置一下,这样就可以脱离模态框也使用 form 表单了</p>
-<div class="tagLink"><a class="link-card" title="Antd Form组件" href="/my_bolg/2021/05/17/框架/react/Form组件/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Form组件</p><p class="url">/my_bolg/2021/05/17/框架/react/Form组件/</p></div></a></div>
+<div class="tagLink"><a class="link-card" title="Antd Form组件" href="/2021/05/17/框架/react/Form组件/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Form组件</p><p class="url">/2021/05/17/框架/react/Form组件/</p></div></a></div>
 
 <h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><p>分别有<code>table</code>,<code>search</code>,<code>form</code>三个功能<br>传一个设置列表过来,分别为他们的调用数据,循环它通过 type 判断要的是什么功能<br>再传给对应功能的组件调用他们</p>
 <h2 id="封装代码"><a href="#封装代码" class="headerlink" title="封装代码"></a>封装代码</h2><details info><summary> 封装代码 </summary>
@@ -389,7 +389,7 @@
 <li><code>getTableFormRef</code>这个是表格的专属方法,因为表格在模态框的引用大多都是进来就查,但是传的值不一定是一样<br>比如我们写一个历史查询功能,每一条数据的历史都不一样,后端给的 id 也不一样,我们怎么才能在主页面把值拿过来呢<br><code> this.dialogRef2.current.getTableFormRef(&#123; content: data.content &#125;);</code><br>这样就可以给初始值了,模态组件拿到之后启动<code>setTableData()</code>方法设置表格调用的初始值,因为每次打开都是新的表格所以只用改变<br><code>request</code>的传值就可以了</li>
 </ol>
 <h2 id="怎么调用"><a href="#怎么调用" class="headerlink" title="怎么调用"></a>怎么调用</h2><p>这个另外开一篇把反正要写这个组件和form组件的文档,就把那个当成文档好了,写好了记得把链接貼过来</p>
-<div class="tagLink"><a class="link-card" title="Antd Modal组件说明" href="/my_bolg/2021/05/18/框架/react/angelForm说明/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Modal组件说明</p><p class="url">/my_bolg/2021/05/18/框架/react/angelForm说明/</p></div></a></div>
+<div class="tagLink"><a class="link-card" title="Antd Modal组件说明" href="/2021/05/18/框架/react/angelForm说明/"><div class="left"><img "" class="lazyload placeholder" data-original="https://tva1.sinaimg.cn/large/008i3skNgy1gs84mab97jj30lv0uyjvv.jpg" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"/></div><div class="right"><p class="text">Antd Modal组件说明</p><p class="url">/2021/05/18/框架/react/angelForm说明/</p></div></a></div>
 
       </div>
       

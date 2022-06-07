@@ -411,7 +411,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 有序列表项1</span><br><span class="line">2. 有序列表项2</span><br><span class="line">3. 有序列表项3</span><br></pre></td></tr></table></figure>
 
 <p><strong>六、图片</strong><br>在 Hexo 中插入图片，首先需要将图片放在 source/img/ 文件夹下，然后如下方式进行插入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![](https://timgsa.baidu.com.jpg)</span><br><span class="line">![](/my_bolg/img/1.png)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![](https://timgsa.baidu.com.jpg)</span><br><span class="line">![](/img/1.png)</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="部署码云"><a href="#部署码云" class="headerlink" title="部署码云"></a>部署码云</h2><p><strong>部署流程</strong></p>
@@ -420,7 +420,7 @@
 <li>然后在窗口输入 <code>git init</code>  这时候文件夹会多出一个.git文件夹，看不到文件夹的，点击鼠标右键选择“显示不显示隐藏的文件”就可以看到这个文件夹了</li>
 <li>进入码云新建的项目里面，复制框框里面的路径</li>
 <li>然后输入  <code>git remote add origin &#39;刚刚复制的路径&#39;</code></li>
-<li>继续输入<code>git pull origin master</code> ，将码云上的仓库pull到本地文件夹<br> 此时有可能会报错，提示you do not have permission to pull the repository）你没有这个权限<br> 进入你的码云 设置-SSH公匙-添加就行了    参考地址<a target="_blank" rel="noopener" href="https://gitee.com/help/articles/4191#article-header0">https://gitee.com/help/articles/4191#article-header0</a><br> 生成公匙步骤<br> ssh-keygen -t rsa -C “<a href="mailto:&#x78;&#x78;&#x78;&#x78;&#x78;&#64;&#120;&#120;&#x78;&#120;&#120;&#46;&#99;&#x6f;&#x6d;">&#x78;&#x78;&#x78;&#x78;&#x78;&#64;&#120;&#120;&#x78;&#120;&#120;&#46;&#99;&#x6f;&#x6d;</a>“  （你仓库地址）<br> 三次回车后<br> cat ~/.ssh/id_rsa.pub  可以查看你的公匙<br> 复制生成后的 ssh key，通过仓库主页 「管理」-&gt;「部署公钥管理」-&gt;「添加个人公钥」 ，添加生成的 public key 添加到仓库中。<br> 继续输入<code>git pull origin master</code></li>
+<li>继续输入<code>git pull origin master</code> ，将码云上的仓库pull到本地文件夹<br> 此时有可能会报错，提示you do not have permission to pull the repository）你没有这个权限<br> 进入你的码云 设置-SSH公匙-添加就行了    参考地址<a target="_blank" rel="noopener" href="https://gitee.com/help/articles/4191#article-header0">https://gitee.com/help/articles/4191#article-header0</a><br> 生成公匙步骤<br> ssh-keygen -t rsa -C “<a href="mailto:&#x78;&#120;&#120;&#x78;&#x78;&#x40;&#x78;&#120;&#120;&#x78;&#x78;&#x2e;&#99;&#111;&#x6d;">&#x78;&#120;&#120;&#x78;&#x78;&#x40;&#x78;&#120;&#120;&#x78;&#x78;&#x2e;&#99;&#111;&#x6d;</a>“  （你仓库地址）<br> 三次回车后<br> cat ~/.ssh/id_rsa.pub  可以查看你的公匙<br> 复制生成后的 ssh key，通过仓库主页 「管理」-&gt;「部署公钥管理」-&gt;「添加个人公钥」 ，添加生成的 public key 添加到仓库中。<br> 继续输入<code>git pull origin master</code></li>
 <li>将文件保存到缓存区<code>git add .</code></li>
 <li>‘描述’ <code>git commit -m</code>   </li>
 <li><code>git push origin master</code></li>

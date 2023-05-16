@@ -8574,6 +8574,7 @@ div.tabs .tab-content .tab-pane > .note:last-child {
   font-size: 16px;
   line-height: 1;
   overflow-x: hidden;
+  margin-top: 15px;
 }
 .tiger {
   position: relative;

@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html>
+  <!-- meta/link... -->
+  
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>&lt;从头来做一个音乐项目&gt;接口相关的配置 | Asuka</title>
+
+  <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/js/swiper/swiper@5.4.1.min.css" rel="stylesheet">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/animate.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+    
+
+    <!-- import link -->
+    
+        
+            
+        
+            
+        
+    
+    <!-- import script -->
+    
+        
+            
+        
+            
+        
+    
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+  
+  <!-- 依赖于jquery和vue -->
+  
+    
+<script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  
+
+  
+    
+<script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
+
+  
+  
+  <!-- 预加载动画 -->
+  <!-- 页面预加载动画 -->
+
+  
+    <div class="preloader-1" id="loader">
+  <div  aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+    <div class="wheel"></div>
+    <div class="hamster">
+      <div class="hamster__body">
+        <div class="hamster__head">
+          <div class="hamster__ear"></div>
+          <div class="hamster__eye"></div>
+          <div class="hamster__nose"></div>
+        </div>
+        <div class="hamster__limb hamster__limb--fr"></div>
+        <div class="hamster__limb hamster__limb--fl"></div>
+        <div class="hamster__limb hamster__limb--br"></div>
+        <div class="hamster__limb hamster__limb--bl"></div>
+        <div class="hamster__tail"></div>
+      </div>
+    </div>
+    <div class="spoke"></div>
+  </div>
+</div>
+  
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('DOMContentLoaded',endLoading);
+</script>
+
+  <body>
+    <!-- 判断是否为暗黑风格 -->
+    <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+    <!-- 需要在上面加载的js -->
+    <script>
+  function loadScript(src, cb) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var HEAD = document.getElementsByTagName("head")[0] || document.documentElement;
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        if (cb) {
+          if (JSON.stringify(cb)) {
+            for (let p in cb) {
+              if (p == "onload") {
+                script[p] = () => {
+                  cb[p]()
+                  resolve()
+                }
+              } else {
+                script[p] = cb[p]
+                script.onload = resolve
+              }
+            }
+          } else {
+            script.onload = () => {
+              cb()
+              resolve()
+            };
+          }
+        } else {
+          script.onload = resolve
+        }
+        script.setAttribute("src", src);
+        HEAD.appendChild(script);
+      });
+    });
+  }
+
+  //https://github.com/filamentgroup/loadCSS
+  var loadCSS = function (src) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.href = src;
+        link.onload = resolve;
+        document.getElementsByTagName("head")[0].appendChild(link);
+      });
+    });
+  };
+
+</script> 
+
+<!-- 轮播图所需要的js -->
+<script src="/js/swiper/swiper.min.js"></script>
+<script src="/js/swiper/vue-awesome-swiper.js"></script>
+<script src="/js/swiper/swiper.animate1.0.3.min.js"></script>
+
+<script type="text/javascript">
+  Vue.use(window.VueAwesomeSwiper)
+</script>
+
+
+  <script src="/js/vue-typed-js/index.js"></script>
+
+
+<!-- 首页的公告滚动插件的js需要重新加载 -->
+<script src="/js/vue-seamless-scroll/index.js"></script>
+
+<!-- 打字机效果js -->
+<script src="https://unpkg.com/typed.js@2.0.11"></script>
+
+
+    <div id="safearea">
+      <main class="main" id="pjax-container">
+        <!-- 头部导航 -->
+        
+<header class="header  " 
+  id="navHeader"
+  style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;"
+>
+  <div class="header-content">
+    <div class="bars">
+      <div id="appDrawer" class="sidebar-image">
+  <div class="drawer-box-icon">
+    <i class="fas fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  </div>
+  
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo lazyload placeholder" src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="logo">
+      <h3 class="drawer-box-head_title">Asuka</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+    </div>
+    <div class="blog-title" id="author-avatar">
+      
+        <div class="avatar">
+          <img src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="logo">
+        </div>
+      
+      <a href="/" class="logo">Asuka</a>
+    </div>
+    <nav class="navbar">
+      <ul class="menu">
+        
+      </ul>
+      
+      
+        <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fas fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <h2>
+          <span>
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fas fa-times close" pointer style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+      window.addEventListener('pjax:complete', () => {
+        this.cancelDialogVisible();
+      })
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("/search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+      
+
+    </nav>
+  </div>
+  
+  
+</header>
+        <!-- 内容区域 -->
+        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+
+  <!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header" id="thumbnail_canvas" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;background-image:url('https://pic3.zhimg.com/80/v2-7cfc909ebe8d83683909846edd6b5232_1440w.webp')">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        &lt;从头来做一个音乐项目&gt;接口相关的配置
+      </span>
+    </div>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fas fa-calendar"></i> 发表于：2020-07-30 |
+        </span>
+      
+
+      
+
+      
+    
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+
+
+<div class="post-detail-content post-row" 
+  style="padding-top: 0px;">
+  <div class="main-content">
+    <article class="post post-detail">
+      <div class="post-content">
+        <blockquote>
+<p>接口相关的配置</p>
+</blockquote>
+<span id="more"></span>
+<p>因为有跨域,所以我们必须要通过node来进行后端的调用避免跨域<br>我们新建一个backend文件夹放后端的文件<br>/backend/router.js<br>因为这不是前端知识,所以没有必要说太多,抄就完事了</p>
+<details info><summary pointer> /backend/router.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br><span class="line">731</span><br><span class="line">732</span><br><span class="line">733</span><br><span class="line">734</span><br><span class="line">735</span><br><span class="line">736</span><br><span class="line">737</span><br><span class="line">738</span><br><span class="line">739</span><br><span class="line">740</span><br><span class="line">741</span><br><span class="line">742</span><br><span class="line">743</span><br><span class="line">744</span><br><span class="line">745</span><br><span class="line">746</span><br><span class="line">747</span><br><span class="line">748</span><br><span class="line">749</span><br><span class="line">750</span><br><span class="line">751</span><br><span class="line">752</span><br><span class="line">753</span><br><span class="line">754</span><br><span class="line">755</span><br><span class="line">756</span><br><span class="line">757</span><br><span class="line">758</span><br><span class="line">759</span><br><span class="line">760</span><br><span class="line">761</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 该文件是运行在 Node.js 端的，获取数据的基本的思路就是后端代理，即提供接口路由供前端页面使用，然后在路由内部，我们接收到前端请求后，再发送 HTTP 请求到第三方服务接口，携带相应的请求参数，包括签名的参数字段等等。</span></span><br><span class="line"><span class="comment"> * 对于从第三方接口返回的数据，我们会做一层数据处理，最终提供给前端的数据前端可以直接使用，无需再处理。这样也比较符合真实企业项目的开发规范，即数据的处理放在后端做，前端只做数据渲染和交互。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> pinyin = <span class="built_in">require</span>(<span class="string">&#x27;pinyin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Base64</span> = <span class="built_in">require</span>(<span class="string">&#x27;js-base64&#x27;</span>).<span class="property">Base64</span></span><br><span class="line"><span class="comment">// 获取签名方法</span></span><br><span class="line"><span class="keyword">const</span> getSecuritySign = <span class="built_in">require</span>(<span class="string">&#x27;./sign&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ERR_OK</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">const</span> token = <span class="number">5381</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 歌曲图片加载失败时使用的默认图片</span></span><br><span class="line"><span class="keyword">const</span> fallbackPicUrl = <span class="string">&#x27;https://y.gtimg.cn/mediastyle/music_v11/extra/default_300x300.jpg?max_age=31536000&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 公共参数</span></span><br><span class="line"><span class="keyword">const</span> commonParams = &#123;</span><br><span class="line">  <span class="attr">g_tk</span>: token,</span><br><span class="line">  <span class="attr">loginUin</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">hostUin</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">inCharset</span>: <span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line">  <span class="attr">outCharset</span>: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">  <span class="attr">notice</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">needNewCode</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">  <span class="attr">platform</span>: <span class="string">&#x27;yqq.json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取一个随机数值</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getRandomVal</span>(<span class="params">prefix = <span class="string">&#x27;&#x27;</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> prefix + (<span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="string">&#x27;&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;0.&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取一个随机 uid</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getUid</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> t = (<span class="keyword">new</span> <span class="title class_">Date</span>()).<span class="title function_">getUTCMilliseconds</span>()</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span> + <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="number">2147483647</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>()) * t % <span class="number">1e10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 axios get 请求的封装</span></span><br><span class="line"><span class="comment">// 修改请求的 headers 值，合并公共请求参数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">get</span>(<span class="params">url, params</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> axios.<span class="title function_">get</span>(url, &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">referer</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="attr">origin</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">params</span>: <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, commonParams, params)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 axios post 请求的封装</span></span><br><span class="line"><span class="comment">// 修改请求的 headers 值</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">post</span>(<span class="params">url, params</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> axios.<span class="title function_">post</span>(url, params, &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">referer</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="attr">origin</span>: <span class="string">&#x27;https://y.qq.com/&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理歌曲列表</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleSongList</span>(<span class="params">list</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> songList = []</span><br><span class="line"></span><br><span class="line">  list.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> info = item.<span class="property">songInfo</span> || item</span><br><span class="line">    <span class="keyword">if</span> (info.<span class="property">pay</span>.<span class="property">pay_play</span> !== <span class="number">0</span> || !info.<span class="property">interval</span>) &#123;</span><br><span class="line">      <span class="comment">// 过滤付费歌曲和获取不到时长的歌曲</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造歌曲的数据结构</span></span><br><span class="line">    <span class="keyword">const</span> song = &#123;</span><br><span class="line">      <span class="attr">id</span>: info.<span class="property">id</span>,</span><br><span class="line">      <span class="attr">mid</span>: info.<span class="property">mid</span>,</span><br><span class="line">      <span class="attr">name</span>: info.<span class="property">name</span>,</span><br><span class="line">      <span class="attr">singer</span>: <span class="title function_">mergeSinger</span>(info.<span class="property">singer</span>),</span><br><span class="line">      <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">// 在另一个接口获取</span></span><br><span class="line">      <span class="attr">duration</span>: info.<span class="property">interval</span>,</span><br><span class="line">      <span class="attr">pic</span>: info.<span class="property">album</span>.<span class="property">mid</span> ? <span class="string">`https://y.gtimg.cn/music/photo_new/T002R800x800M000<span class="subst">$&#123;info.album.mid&#125;</span>.jpg?max_age=2592000`</span> : fallbackPicUrl,</span><br><span class="line">      <span class="attr">album</span>: info.<span class="property">album</span>.<span class="property">name</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    songList.<span class="title function_">push</span>(song)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> songList</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并多个歌手的姓名</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mergeSinger</span>(<span class="params">singer</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> ret = []</span><br><span class="line">  <span class="keyword">if</span> (!singer) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  singer.<span class="title function_">forEach</span>(<span class="function">(<span class="params">s</span>) =&gt;</span> &#123;</span><br><span class="line">    ret.<span class="title function_">push</span>(s.<span class="property">name</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> ret.<span class="title function_">join</span>(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册后端路由</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerRouter</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  <span class="title function_">registerRecommend</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerSingerList</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerSingerDetail</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerSongsUrl</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerLyric</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerAlbum</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerTopList</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerTopDetail</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerHotKeys</span>(app)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerSearch</span>(app)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册推荐列表接口路由</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerRecommend</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getRecommend&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 第三方服务接口 url</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造请求 data 参数</span></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">recomPlaylist</span>: &#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;get_hot_recommend&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">async</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">cmd</span>: <span class="number">2</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;playlist.HotRecommendServer&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">focus</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;music.musicHall.MusicHallPlatform&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetFocus&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 随机数值</span></span><br><span class="line">    <span class="keyword">const</span> randomVal = <span class="title function_">getRandomVal</span>(<span class="string">&#x27;recom&#x27;</span>)</span><br><span class="line">    <span class="comment">// 计算签名值</span></span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送 get 请求</span></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomVal,</span><br><span class="line">      data</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="comment">// 处理轮播图数据</span></span><br><span class="line">        <span class="keyword">const</span> focusList = data.<span class="property">focus</span>.<span class="property">data</span>.<span class="property">shelf</span>.<span class="property">v_niche</span>[<span class="number">0</span>].<span class="property">v_card</span></span><br><span class="line">        <span class="keyword">const</span> sliders = []</span><br><span class="line">        <span class="keyword">const</span> jumpPrefixMap = &#123;</span><br><span class="line">          <span class="number">10002</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/album/&#x27;</span>,</span><br><span class="line">          <span class="number">10014</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/playlist/&#x27;</span>,</span><br><span class="line">          <span class="number">10012</span>: <span class="string">&#x27;https://y.qq.com/n/yqq/mv/v/&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最多获取 10 条数据</span></span><br><span class="line">        <span class="keyword">const</span> len = <span class="title class_">Math</span>.<span class="title function_">min</span>(focusList.<span class="property">length</span>, <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = focusList[i]</span><br><span class="line">          <span class="keyword">const</span> sliderItem = &#123;&#125;</span><br><span class="line">          <span class="comment">// 单个轮播图数据包括 id、pic、link 等字段</span></span><br><span class="line">          sliderItem.<span class="property">id</span> = item.<span class="property">id</span></span><br><span class="line">          sliderItem.<span class="property">pic</span> = item.<span class="property">cover</span></span><br><span class="line">          <span class="keyword">if</span> (jumpPrefixMap[item.<span class="property">jumptype</span>]) &#123;</span><br><span class="line">            sliderItem.<span class="property">link</span> = jumpPrefixMap[item.<span class="property">jumptype</span>] + (item.<span class="property">subid</span> || item.<span class="property">id</span>) + <span class="string">&#x27;.html&#x27;</span></span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item.<span class="property">jumptype</span> === <span class="number">3001</span>) &#123;</span><br><span class="line">            sliderItem.<span class="property">link</span> = item.<span class="property">id</span></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          sliders.<span class="title function_">push</span>(sliderItem)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理推荐歌单数据</span></span><br><span class="line">        <span class="keyword">const</span> albumList = data.<span class="property">recomPlaylist</span>.<span class="property">data</span>.<span class="property">v_hot</span></span><br><span class="line">        <span class="keyword">const</span> albums = []</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; albumList.<span class="property">length</span>; i++) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = albumList[i]</span><br><span class="line">          <span class="keyword">const</span> albumItem = &#123;&#125;</span><br><span class="line">          <span class="comment">// 推荐歌单数据包括 id、username、title、pic 等字段</span></span><br><span class="line">          albumItem.<span class="property">id</span> = item.<span class="property">content_id</span></span><br><span class="line">          albumItem.<span class="property">username</span> = item.<span class="property">username</span></span><br><span class="line">          albumItem.<span class="property">title</span> = item.<span class="property">title</span></span><br><span class="line">          albumItem.<span class="property">pic</span> = item.<span class="property">cover</span></span><br><span class="line"></span><br><span class="line">          albums.<span class="title function_">push</span>(albumItem)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 往前端发送一个标准格式的响应数据，包括成功错误码和数据</span></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            sliders,</span><br><span class="line">            albums</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌手列表接口路由</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerSingerList</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getSingerList&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">HOT_NAME</span> = <span class="string">&#x27;热&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">singerList</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;Music.SingerListServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;get_singer_list&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">area</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">sex</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">genre</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">index</span>: -<span class="number">100</span>,</span><br><span class="line">          <span class="attr">sin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">cur_page</span>: <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = <span class="title function_">getRandomVal</span>(<span class="string">&#x27;getUCGI&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="comment">// 处理歌手列表数据</span></span><br><span class="line">        <span class="keyword">const</span> singerList = data.<span class="property">singerList</span>.<span class="property">data</span>.<span class="property">singerlist</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构造歌手 Map 数据结构</span></span><br><span class="line">        <span class="keyword">const</span> singerMap = &#123;</span><br><span class="line">          <span class="attr">hot</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="variable constant_">HOT_NAME</span>,</span><br><span class="line">            <span class="attr">list</span>: <span class="title function_">map</span>(singerList.<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        singerList.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 把歌手名转成拼音</span></span><br><span class="line">          <span class="keyword">const</span> p = <span class="title function_">pinyin</span>(item.<span class="property">singer_name</span>)</span><br><span class="line">          <span class="keyword">if</span> (!p || !p.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">// 获取歌手名拼音的首字母</span></span><br><span class="line">          <span class="keyword">const</span> key = p[<span class="number">0</span>][<span class="number">0</span>].<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">1</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line">          <span class="keyword">if</span> (key) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!singerMap[key]) &#123;</span><br><span class="line">              singerMap[key] = &#123;</span><br><span class="line">                <span class="attr">title</span>: key,</span><br><span class="line">                <span class="attr">list</span>: []</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 每个字母下面会有多名歌手</span></span><br><span class="line">            singerMap[key].<span class="property">list</span>.<span class="title function_">push</span>(<span class="title function_">map</span>([item])[<span class="number">0</span>])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 热门歌手</span></span><br><span class="line">        <span class="keyword">const</span> hot = []</span><br><span class="line">        <span class="comment">// 字母歌手</span></span><br><span class="line">        <span class="keyword">const</span> letter = []</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历处理 singerMap，让结果有序</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> singerMap) &#123;</span><br><span class="line">          <span class="keyword">const</span> item = singerMap[key]</span><br><span class="line">          <span class="keyword">if</span> (item.<span class="property">title</span>.<span class="title function_">match</span>(<span class="regexp">/[a-zA-Z]/</span>)) &#123;</span><br><span class="line">            letter.<span class="title function_">push</span>(item)</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item.<span class="property">title</span> === <span class="variable constant_">HOT_NAME</span>) &#123;</span><br><span class="line">            hot.<span class="title function_">push</span>(item)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 按字母顺序排序</span></span><br><span class="line">        letter.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> a.<span class="property">title</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - b.<span class="property">title</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">singers</span>: hot.<span class="title function_">concat</span>(letter)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 做一层数据映射，构造单个 singer 数据结构</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">map</span>(<span class="params">singerList</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> singerList.<span class="title function_">map</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">id</span>: item.<span class="property">singer_id</span>,</span><br><span class="line">        <span class="attr">mid</span>: item.<span class="property">singer_mid</span>,</span><br><span class="line">        <span class="attr">name</span>: item.<span class="property">singer_name</span>,</span><br><span class="line">        <span class="attr">pic</span>: item.<span class="property">singer_pic</span>.<span class="title function_">replace</span>(<span class="regexp">/\.webp$/</span>, <span class="string">&#x27;.jpg&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;150x150&#x27;</span>, <span class="string">&#x27;800x800&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌手详情接口路由</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerSingerDetail</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getSingerDetail&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">singerSongList</span>: &#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetSingerSongList&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">order</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">singerMid</span>: req.<span class="property">query</span>.<span class="property">mid</span>,</span><br><span class="line">          <span class="attr">begin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">num</span>: <span class="number">100</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musichall.song_list_server&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = <span class="title function_">getRandomVal</span>(<span class="string">&#x27;getSingerSong&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.<span class="property">singerSongList</span>.<span class="property">data</span>.<span class="property">songList</span></span><br><span class="line">        <span class="comment">// 歌单详情、榜单详情接口都有类似处理逻辑，固封装成函数</span></span><br><span class="line">        <span class="keyword">const</span> songList = <span class="title function_">handleSongList</span>(list)</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌曲 url 获取接口路由</span></span><br><span class="line"><span class="comment">// 因为歌曲的 url 每天都在变化，所以需要单独的接口根据歌曲的 mid 获取</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerSongsUrl</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getSongsUrl&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> mid = req.<span class="property">query</span>.<span class="property">mid</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> midGroup = []</span><br><span class="line">    <span class="comment">// 第三方接口只支持最多处理 100 条数据，所以如果超过 100 条数据，我们要把数据按每组 100 条切割，发送多个请求</span></span><br><span class="line">    <span class="keyword">if</span> (mid.<span class="property">length</span> &gt; <span class="number">100</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> groupLen = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(mid.<span class="property">length</span> / <span class="number">100</span>)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; groupLen; i++) &#123;</span><br><span class="line">        midGroup.<span class="title function_">push</span>(mid.<span class="title function_">slice</span>(i * <span class="number">100</span>, (<span class="number">100</span> * (i + <span class="number">1</span>))))</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      midGroup = [mid]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以歌曲的 mid 为 key，存储歌曲 URL</span></span><br><span class="line">    <span class="keyword">const</span> urlMap = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理返回的 mid</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">process</span>(<span class="params">mid</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> data = &#123;</span><br><span class="line">        <span class="attr">req_0</span>: &#123;</span><br><span class="line">          <span class="attr">module</span>: <span class="string">&#x27;vkey.GetVkeyServer&#x27;</span>,</span><br><span class="line">          <span class="attr">method</span>: <span class="string">&#x27;CgiGetVkey&#x27;</span>,</span><br><span class="line">          <span class="attr">param</span>: &#123;</span><br><span class="line">            <span class="attr">guid</span>: <span class="title function_">getUid</span>(),</span><br><span class="line">            <span class="attr">songmid</span>: mid,</span><br><span class="line">            <span class="attr">songtype</span>: <span class="keyword">new</span> <span class="title class_">Array</span>(mid.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="number">0</span>),</span><br><span class="line">            <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="attr">loginflag</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">platform</span>: <span class="string">&#x27;23&#x27;</span>,</span><br><span class="line">            <span class="attr">h5to</span>: <span class="string">&#x27;speed&#x27;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">comm</span>: &#123;</span><br><span class="line">          <span class="attr">g_tk</span>: token,</span><br><span class="line">          <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">          <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">          <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(data))</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`https://u.y.qq.com/cgi-bin/musics.fcg?_=<span class="subst">$&#123;getRandomVal()&#125;</span>&amp;sign=<span class="subst">$&#123;sign&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 发送 post 请求</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">post</span>(url, data).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">        <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">          <span class="keyword">const</span> midInfo = data.<span class="property">req_0</span>.<span class="property">data</span>.<span class="property">midurlinfo</span></span><br><span class="line">          <span class="keyword">const</span> sip = data.<span class="property">req_0</span>.<span class="property">data</span>.<span class="property">sip</span></span><br><span class="line">          <span class="keyword">const</span> domain = sip[sip.<span class="property">length</span> - <span class="number">1</span>]</span><br><span class="line">          midInfo.<span class="title function_">forEach</span>(<span class="function">(<span class="params">info</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 获取歌曲的真实播放 URL</span></span><br><span class="line">            urlMap[info.<span class="property">songmid</span>] = domain + info.<span class="property">purl</span></span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造多个 Promise 请求</span></span><br><span class="line">    <span class="keyword">const</span> requests = midGroup.<span class="title function_">map</span>(<span class="function">(<span class="params">mid</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">process</span>(mid)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 并行发送多个请求</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>(requests).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 所有请求响应完毕，urlMap 也就构造完毕了</span></span><br><span class="line">      res.<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">        <span class="attr">result</span>: &#123;</span><br><span class="line">          <span class="attr">map</span>: urlMap</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌词接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerLyric</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getLyric&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: <span class="string">&#x27;MusicJsonCallback_lrc&#x27;</span>,</span><br><span class="line">      <span class="attr">pcachetime</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">      <span class="attr">songmid</span>: req.<span class="property">query</span>.<span class="property">mid</span>,</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">lyric</span>: <span class="title class_">Base64</span>.<span class="title function_">decode</span>(data.<span class="property">lyric</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册歌单专辑接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerAlbum</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getAlbum&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;</span><br><span class="line">      <span class="attr">req_0</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;srf_diss_info.DissInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;CgiGetDiss&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">disstid</span>: <span class="title class_">Number</span>(req.<span class="property">query</span>.<span class="property">id</span>),</span><br><span class="line">          <span class="attr">onlysonglist</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">song_begin</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">song_num</span>: <span class="number">100</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">g_tk</span>: token,</span><br><span class="line">        <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">        <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">        <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(data))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`https://u.y.qq.com/cgi-bin/musics.fcg?_=<span class="subst">$&#123;getRandomVal()&#125;</span>&amp;sign=<span class="subst">$&#123;sign&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">post</span>(url, data).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.<span class="property">req_0</span>.<span class="property">data</span>.<span class="property">songlist</span></span><br><span class="line">        <span class="keyword">const</span> songList = <span class="title function_">handleSongList</span>(list)</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册排行榜接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerTopList</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getTopList&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">toplist</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musicToplist.ToplistInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetAll&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = <span class="title function_">getRandomVal</span>(<span class="string">&#x27;recom&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> topList = []</span><br><span class="line">        <span class="keyword">const</span> group = data.<span class="property">toplist</span>.<span class="property">data</span>.<span class="property">group</span></span><br><span class="line"></span><br><span class="line">        group.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          item.<span class="property">toplist</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">listItem</span>) =&gt;</span> &#123;</span><br><span class="line">            topList.<span class="title function_">push</span>(&#123;</span><br><span class="line">              <span class="attr">id</span>: listItem.<span class="property">topId</span>,</span><br><span class="line">              <span class="attr">pic</span>: listItem.<span class="property">frontPicUrl</span>,</span><br><span class="line">              <span class="attr">name</span>: listItem.<span class="property">title</span>,</span><br><span class="line">              <span class="attr">period</span>: listItem.<span class="property">period</span>,</span><br><span class="line">              <span class="attr">songList</span>: listItem.<span class="property">song</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">songItem</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                  <span class="attr">id</span>: songItem.<span class="property">songId</span>,</span><br><span class="line">                  <span class="attr">singerName</span>: songItem.<span class="property">singerName</span>,</span><br><span class="line">                  <span class="attr">songName</span>: songItem.<span class="property">title</span></span><br><span class="line">                &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            topList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册排行榜详情接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerTopDetail</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getTopDetail&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://u.y.qq.com/cgi-bin/musics.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">      id,</span><br><span class="line">      period</span><br><span class="line">    &#125; = req.<span class="property">query</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">detail</span>: &#123;</span><br><span class="line">        <span class="attr">module</span>: <span class="string">&#x27;musicToplist.ToplistInfoServer&#x27;</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GetDetail&#x27;</span>,</span><br><span class="line">        <span class="attr">param</span>: &#123;</span><br><span class="line">          <span class="attr">topId</span>: <span class="title class_">Number</span>(id),</span><br><span class="line">          <span class="attr">offset</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">num</span>: <span class="number">100</span>,</span><br><span class="line">          period</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">comm</span>: &#123;</span><br><span class="line">        <span class="attr">ct</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">cv</span>: <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> randomKey = <span class="title function_">getRandomVal</span>(<span class="string">&#x27;getUCGI&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> sign = <span class="title function_">getSecuritySign</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      sign,</span><br><span class="line">      <span class="string">&#x27;-&#x27;</span>: randomKey,</span><br><span class="line">      data</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> list = data.<span class="property">detail</span>.<span class="property">data</span>.<span class="property">songInfoList</span></span><br><span class="line">        <span class="keyword">const</span> songList = <span class="title function_">handleSongList</span>(list)</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册热门搜索接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerHotKeys</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/getHotKeys&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, &#123;</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">hotKeys</span>: data.<span class="property">data</span>.<span class="property">hotkey</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> &#123;</span><br><span class="line">                <span class="attr">key</span>: key.<span class="property">k</span>,</span><br><span class="line">                <span class="attr">id</span>: key.<span class="property">n</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;).<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册搜索查询接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册搜索查询接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerSearch</span>(<span class="params">app</span>) &#123;</span><br><span class="line">  app.<span class="title function_">get</span>(<span class="string">&#x27;/api/search&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// const url = &#x27;https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp&#x27;</span></span><br><span class="line">    <span class="comment">// const url = &#x27;https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">&#x27;https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">      query,</span><br><span class="line">      page,</span><br><span class="line">      showSinger</span><br><span class="line">    &#125; = req.<span class="property">query</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> data = &#123;</span><br><span class="line">      <span class="attr">_</span>: <span class="title function_">getRandomVal</span>(),</span><br><span class="line">      <span class="attr">g_tk_new_20200303</span>: token,</span><br><span class="line">      <span class="attr">key</span>: query,</span><br><span class="line">      <span class="attr">p</span>: page,</span><br><span class="line">      <span class="attr">perpage</span>: <span class="number">20</span>,</span><br><span class="line">      <span class="attr">n</span>: <span class="number">20</span>,</span><br><span class="line">      <span class="attr">zhidaqu</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">catZhida</span>: showSinger === <span class="string">&#x27;true&#x27;</span> ? <span class="number">1</span> : <span class="number">0</span>,</span><br><span class="line">      <span class="attr">t</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">flag</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">ie</span>: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">      <span class="attr">sem</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">aggr</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">remoteplace</span>: <span class="string">&#x27;txt.mqq.all&#x27;</span>,</span><br><span class="line">      <span class="attr">uin</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">      <span class="attr">needNewCode</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">platform</span>: <span class="string">&#x27;h5&#x27;</span>,</span><br><span class="line">      <span class="attr">format</span>: <span class="string">&#x27;json&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">get</span>(url, data).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = response.<span class="property">data</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> songList = []</span><br><span class="line">        <span class="keyword">const</span> songData = data.<span class="property">data</span>.<span class="property">song</span></span><br><span class="line">        <span class="keyword">const</span> list = songData.<span class="property">itemlist</span></span><br><span class="line">        <span class="comment">// console.log(songData)</span></span><br><span class="line">        list.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> info = item</span><br><span class="line">          <span class="comment">// if (info.pay.payplay !== 0 || !info.interval) &#123;</span></span><br><span class="line">          <span class="comment">//   // 过滤付费歌曲</span></span><br><span class="line">          <span class="comment">//   return</span></span><br><span class="line">          <span class="comment">// &#125;</span></span><br><span class="line">          <span class="comment">// song</span></span><br><span class="line">          <span class="keyword">const</span> song = &#123;</span><br><span class="line">            <span class="attr">id</span>: info.<span class="property">id</span>,</span><br><span class="line">            <span class="attr">mid</span>: info.<span class="property">mid</span>,</span><br><span class="line">            <span class="attr">name</span>: info.<span class="property">name</span>,</span><br><span class="line">            <span class="attr">singer</span>: info.<span class="property">singer</span>,</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">duration</span>: info.<span class="property">interval</span>,</span><br><span class="line">            <span class="attr">pic</span>: info.<span class="property">albummid</span> ? <span class="string">`https://y.gtimg.cn/music/photo_new/T002R800x800M000<span class="subst">$&#123;info.albummid&#125;</span>.jpg?max_age=2592000`</span> : fallbackPicUrl,</span><br><span class="line">            <span class="attr">album</span>: info.<span class="property">albumname</span>,</span><br><span class="line">            <span class="attr">song</span>: &#123;</span><br><span class="line">              <span class="attr">mid</span>: info.<span class="property">songmid</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          songList.<span class="title function_">push</span>(song)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">var</span> singer = songList.<span class="title function_">splice</span>(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">          curnum,</span><br><span class="line">          curpage,</span><br><span class="line">          totalnum</span><br><span class="line">        &#125; = songData</span><br><span class="line">        <span class="keyword">const</span> hasMore = <span class="number">20</span> * (curpage - <span class="number">1</span>) + curnum &lt; totalnum</span><br><span class="line"></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="variable constant_">ERR_OK</span>,</span><br><span class="line">          <span class="attr">result</span>: &#123;</span><br><span class="line">            <span class="attr">songs</span>: songList,</span><br><span class="line">            singer,</span><br><span class="line">            hasMore</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = registerRouter</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<span class='btn info'><a class="button"  title='vue.config.js'>vue.config.js</a></span>
+<p>/vue.config.js<br>我们通过devServer来完成接口链接,设置服务\</p>
+<details info><summary pointer> vue.config.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> registerRouter = <span class="built_in">require</span>(<span class="string">&#x27;./backend/router&#x27;</span>)</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="title function_">before</span>(<span class="params">app</span>) &#123;</span><br><span class="line">      <span class="title function_">registerRouter</span>(app)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+<span class='btn info'><a class="button"  title='vue.config.js'>vue.config.js</a></span>
+
+<p>引入了后端接口之后前端这边需要对接口做一个封装<br>新建一个src/serve作为接口封装的文件夹,新建base.js</p>
+<details info><summary pointer> vue.config.js </summary>
+              <div class='content'>
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ERR_OK</span> = <span class="number">0</span> <span class="comment">//code为0的时候表示接口调用成功了</span></span><br><span class="line"><span class="keyword">const</span> baseURL = process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;http://ustbhuangyi.com/music-next/&#x27;</span> : <span class="string">&#x27;/&#x27;</span> <span class="comment">//设置跟路径</span></span><br><span class="line"></span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">baseURL</span> = baseURL</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params">url, params</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> axios.<span class="title function_">get</span>(url, &#123;</span><br><span class="line">    params</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> serverData = res.<span class="property">data</span></span><br><span class="line">    <span class="keyword">if</span> (serverData.<span class="property">code</span> === <span class="variable constant_">ERR_OK</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> serverData.<span class="property">result</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+      </div>
+      <div class="post-tags-categories">
+        
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="https://pica.zhimg.com/80/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" class="lazyload placeholder" data-srcset="https://pica.zhimg.com/80/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="">
+    </div>
+    <a href="/2020/07/31/%E5%AE%9E%E8%B7%B5/vue%E9%9F%B3%E4%B9%90%E9%A1%B9%E7%9B%AE/%7C%E9%9F%B3%E4%B9%90%E9%A1%B9%E7%9B%AE%7C%E9%A6%96%E9%A1%B5%E7%83%AD%E9%97%A8%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/" class="post-nav-link">
+      <div class="title">
+        <i class="fas fa-angle-left"></i> 上一篇:
+        <div class="title-text">&lt;从头来做一个音乐项目&gt;首页热门音乐榜单</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+首页热门音乐榜单
+
+
+榜单的接口和轮播图是一样的,拿的是albums,那么我们先把albums拿到data中然后再进行
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="https://pic3.zhimg.com/v2-a5267dfbf175991d4b3a69b41f3f678a_b.jpg" class="lazyload placeholder" data-srcset="https://pic3.zhimg.com/v2-a5267dfbf175991d4b3a69b41f3f678a_b.jpg" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
+    </div>
+    <a href="/2020/07/30/%E5%AE%9E%E8%B7%B5/vue%E9%9F%B3%E4%B9%90%E9%A1%B9%E7%9B%AE/%7C%E9%9F%B3%E4%B9%90%E9%A1%B9%E7%9B%AE%7C%E8%BD%AE%E6%92%AD%E5%9B%BE/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fas fa-angle-right"></i>
+        <div class="title-text">&lt;从头来做一个音乐项目&gt;轮播图</div>
+      </div>
+      <!-- <div class="content">
+        
+轮播图
+
+
+前面我设置了后端的接口请求并且在前端这里封装了get请求,这样我们就可以来写页面了我们来回顾一下route
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <div id="gitment-container"></div>
+
+    
+  </div>
+
+<!-- comment script in themes\hexo-theme-bamboo\layout\_partial\scripts\index.ejs -->
+
+
+  </div>
+
+  <!-- 目录 -->
+  
+<aside id='l_side'>
+  
+    
+      
+        <section class="widget side_blogger" style="padding-bottom: 20px;">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img src='/medias/logo.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+          <h2>Asuka</h2>
+        
+        
+          <p>既胆小怕生 又死皮赖脸</p>
+
+        
+        
+      </div>
+    
+    
+  </div>
+</section>
+
+      
+    
+  
+  
+  
+
+  <div class="layout_sticky">    
+    
+      
+<section class="widget side_toc">
+  
+  <header>
+    
+      <i style="color: " class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+  <div class='content'>
+    <div class="toc-main">
+      <div class="toc-content">
+        <!--  -->
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 手机端目录按钮 -->
+<div id="toc-mobile-btn">
+  <i class="fas fa-list-ul" aria-hidden="true"></i>
+</div>
+
+      
+    
+  </div>
+</aside>
+
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"
+	:style="{'background-color': bgColor ? bgColor : 'transparent'}">
+	<transition-group tag="ul" :name="names">
+		<li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+			<img :src="image" class="bg-swiper-img no-lazy">
+		</li>
+	</transition-group>
+</div>
+<script>
+	var vm = new Vue({
+		el: '#appBgSwiper',
+		data: {
+			names: '' || 'fade' || 'fade', // translate-fade fade
+			mark: 0,
+			img: [],
+			bgColor: '',
+			time: null
+		},
+		methods: {   //添加方法
+			change(i, m) {
+				if (i > m) {
+					// this.names = 'fade';
+				} else if (i < m) {
+					// this.names = 'fade';
+				} else {
+					return;
+				}
+				this.mark = i;
+			},
+			prev() {
+				// this.names = 'fade';
+				this.mark--;
+				if (this.mark === -1) {
+					this.mark = 3;
+					return
+				}
+			},
+			next() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			autoPlay() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			play() {
+				let bgImgDelay = '' || '180000'
+				let delay = parseInt(bgImgDelay) || 180000;
+				this.time = setInterval(this.autoPlay, delay);
+			},
+			enter() {
+				clearInterval(this.time);
+			},
+			leave() {
+				this.play();
+			}
+		},
+		created() {
+			this.play()
+		},
+		beforeDestroy() {
+			clearInterval(this.time);
+		},
+		mounted() {
+			let prop = '' || '';
+			let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://')
+			if (isImg) {
+				let img = prop.split(',');
+				let configRoot = '/'
+				let arrImg = [];
+				img.forEach(el => {
+					var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+					var objExp = new RegExp(Expression);
+
+					if (objExp.test(el)) {
+						// http or https
+						arrImg.push(el);
+					} else {
+						// 非http or https开头
+						// 本地文件
+						let firstStr = el.charAt(0);
+						if (firstStr == '/') {
+							el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+						}
+						el = configRoot + el;
+						arrImg.push(el);
+					}
+				})
+				this.img = arrImg;
+			} else {
+				this.bgColor = prop;
+			}
+		}
+	})
+</script>
+
+<style>
+	.bg-swiper-box {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.bg-swiper-img {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+
+
+
+  <script>
+  function loadMermaid() {
+    if (document.getElementsByClassName('mermaid').length) {
+      if (window.mermaidJsLoad) mermaid.init()
+      else {
+        loadScript('https://unpkg.com/mermaid/dist/mermaid.min.js').then(() => {
+          window.mermaidJsLoad = true
+          mermaid.initialize({
+            theme: 'default',
+          })
+          if ('true') {
+            mermaid.init();
+          }
+        })
+      }
+    }
+  };
+  document.addEventListener("DOMContentLoaded", function () {
+    loadMermaid();
+  })
+
+  document.addEventListener('pjax:complete', function () {
+    loadMermaid();
+  })
+  
+</script>
+
+
+      </main>
+    </div>
+
+    <!-- 页脚 -->
+    
+  
+  
+    <!-- 底部鱼儿跳动效果，依赖于jquery-->
+<div id="j-fish-skip" style=" position: relative;height: 153px;width: auto;"></div>
+<script>
+  var RENDERER = {
+    POINT_INTERVAL: 5,
+    FISH_COUNT: 3,
+    MAX_INTERVAL_COUNT: 50,
+    INIT_HEIGHT_RATE: .5,
+    THRESHOLD: 50,
+    FISH_COLOR: '',
+    init: function () {
+      this.setFishColor(); this.setParameters(), this.reconstructMethods(), this.setup(), this.bindEvent(), this.render()
+    },
+    setFishColor: function () {
+      let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+      if (isDark) {
+        this.FISH_COLOR = '#222'; // 暗黑色，有时间把这整成一个变量
+      } else {
+        this.FISH_COLOR = '' || 'rgba(28,165,172,0.72)';
+      }
+    },
+    setParameters: function () {
+      this.$window = $(window), this.$container = $("#j-fish-skip"), this.$canvas = $("<canvas />"), this.context = this.$canvas.appendTo(this.$container).get(0).getContext("2d"), this.points = [], this.fishes = [], this.watchIds = []
+    },
+    createSurfacePoints: function () {
+      var t = Math.round(this.width / this.POINT_INTERVAL);
+      this.pointInterval = this.width / (t - 1), this.points.push(new SURFACE_POINT(this, 0));
+      for (var i = 1; i < t; i++) {
+        var e = new SURFACE_POINT(this, i * this.pointInterval),
+          h = this.points[i - 1];
+        e.setPreviousPoint(h), h.setNextPoint(e), this.points.push(e)
+      }
+    },
+    reconstructMethods: function () {
+      this.watchWindowSize = this.watchWindowSize.bind(this), this.jdugeToStopResize = this.jdugeToStopResize.bind(this), this.startEpicenter = this.startEpicenter.bind(this), this.moveEpicenter = this.moveEpicenter.bind(this), this.reverseVertical = this.reverseVertical.bind(this), this.render = this.render.bind(this)
+    },
+    setup: function () {
+      this.points.length = 0, this.fishes.length = 0, this.watchIds.length = 0, this.intervalCount = this.MAX_INTERVAL_COUNT, this.width = this.$container.width(), this.height = this.$container.height(), this.fishCount = this.FISH_COUNT * this.width / 500 * this.height / 500, this.$canvas.attr({
+        width: this.width,
+        height: this.height
+      }), this.reverse = !1, this.fishes.push(new FISH(this)), this.createSurfacePoints()
+    },
+    watchWindowSize: function () {
+      this.clearTimer(), this.tmpWidth = this.$window.width(), this.tmpHeight = this.$window.height(), this.watchIds.push(setTimeout(this.jdugeToStopResize, this.WATCH_INTERVAL))
+    },
+    clearTimer: function () {
+      for (; this.watchIds.length > 0;) clearTimeout(this.watchIds.pop())
+    },
+    jdugeToStopResize: function () {
+      var t = this.$window.width(),
+        i = this.$window.height(),
+        e = t == this.tmpWidth && i == this.tmpHeight;
+      this.tmpWidth = t, this.tmpHeight = i, e && this.setup()
+    },
+    bindEvent: function () {
+      this.$window.on("resize", this.watchWindowSize), this.$container.on("mouseenter", this.startEpicenter), this.$container.on("mousemove", this.moveEpicenter)
+    },
+    getAxis: function (t) {
+      var i = this.$container.offset();
+      return {
+        x: t.clientX - i.left + this.$window.scrollLeft(),
+        y: t.clientY - i.top + this.$window.scrollTop()
+      }
+    },
+    startEpicenter: function (t) {
+      this.axis = this.getAxis(t)
+    },
+    moveEpicenter: function (t) {
+      var i = this.getAxis(t);
+      this.axis || (this.axis = i), this.generateEpicenter(i.x, i.y, i.y - this.axis.y), this.axis = i
+    },
+    generateEpicenter: function (t, i, e) {
+      if (!(i < this.height / 2 - this.THRESHOLD || i > this.height / 2 + this.THRESHOLD)) {
+        var h = Math.round(t / this.pointInterval);
+        h < 0 || h >= this.points.length || this.points[h].interfere(i, e)
+      }
+    },
+    reverseVertical: function () {
+      this.reverse = !this.reverse;
+      for (var t = 0, i = this.fishes.length; t < i; t++) this.fishes[t].reverseVertical()
+    },
+    controlStatus: function () {
+      for (var t = 0, i = this.points.length; t < i; t++) this.points[t].updateSelf();
+      for (t = 0, i = this.points.length; t < i; t++) this.points[t].updateNeighbors();
+      this.fishes.length < this.fishCount && 0 == --this.intervalCount && (this.intervalCount = this.MAX_INTERVAL_COUNT, this.fishes.push(new FISH(this)))
+    },
+    render: function () {
+      requestAnimationFrame(this.render), this.controlStatus(), this.context.clearRect(0, 0, this.width, this.height), this.context.fillStyle = this.FISH_COLOR;
+      for (var t = 0, i = this.fishes.length; t < i; t++) this.fishes[t].render(this.context);
+      this.context.save(), this.context.globalCompositeOperation = "xor", this.context.beginPath(), this.context.moveTo(0, this.reverse ? 0 : this.height);
+      for (t = 0, i = this.points.length; t < i; t++) this.points[t].render(this.context);
+      this.context.lineTo(this.width, this.reverse ? 0 : this.height), this.context.closePath(), this.context.fill(), this.context.restore()
+    }
+  },
+  SURFACE_POINT = function (t, i) {
+    this.renderer = t, this.x = i, this.init()
+  };
+  SURFACE_POINT.prototype = {
+    SPRING_CONSTANT: .03,
+    SPRING_FRICTION: .9,
+    WAVE_SPREAD: .3,
+    ACCELARATION_RATE: .01,
+    init: function () {
+      this.initHeight = this.renderer.height * this.renderer.INIT_HEIGHT_RATE, this.height = this.initHeight, this.fy = 0, this.force = {
+        previous: 0,
+        next: 0
+      }
+    },
+    setPreviousPoint: function (t) {
+      this.previous = t
+    },
+    setNextPoint: function (t) {
+      this.next = t
+    },
+    interfere: function (t, i) {
+      this.fy = this.renderer.height * this.ACCELARATION_RATE * (this.renderer.height - this.height - t >= 0 ? -1 : 1) * Math.abs(i)
+    },
+    updateSelf: function () {
+      this.fy += this.SPRING_CONSTANT * (this.initHeight - this.height), this.fy *= this.SPRING_FRICTION, this.height += this.fy
+    },
+    updateNeighbors: function () {
+      this.previous && (this.force.previous = this.WAVE_SPREAD * (this.height - this.previous.height)), this.next && (this.force.next = this.WAVE_SPREAD * (this.height - this.next.height))
+    },
+    render: function (t) {
+      this.previous && (this.previous.height += this.force.previous, this.previous.fy += this.force.previous), this.next && (this.next.height += this.force.next, this.next.fy += this.force.next), t.lineTo(this.x, this.renderer.height - this.height)
+    }
+  };
+  var FISH = function (t) {
+    this.renderer = t, this.init()
+  };
+  FISH.prototype = {
+    GRAVITY: .4,
+    init: function () {
+      this.direction = Math.random() < .5, this.x = this.direction ? this.renderer.width + this.renderer.THRESHOLD : -this.renderer.THRESHOLD, this.previousY = this.y, this.vx = this.getRandomValue(4, 10) * (this.direction ? -1 : 1), this.renderer.reverse ? (this.y = this.getRandomValue(1 * this.renderer.height / 10, 4 * this.renderer.height / 10), this.vy = this.getRandomValue(2, 5), this.ay = this.getRandomValue(.05, .2)) : (this.y = this.getRandomValue(6 * this.renderer.height / 10, 9 * this.renderer.height / 10), this.vy = this.getRandomValue(-5, -2), this.ay = this.getRandomValue(-.2, -.05)), this.isOut = !1, this.theta = 0, this.phi = 0
+    },
+    getRandomValue: function (t, i) {
+      return t + (i - t) * Math.random()
+    },
+    reverseVertical: function () {
+      this.isOut = !this.isOut, this.ay *= -1
+    },
+    controlStatus: function (t) {
+      this.previousY = this.y, this.x += this.vx, this.y += this.vy, this.vy += this.ay, this.renderer.reverse ? this.y > this.renderer.height * this.renderer.INIT_HEIGHT_RATE ? (this.vy -= this.GRAVITY, this.isOut = !0) : (this.isOut && (this.ay = this.getRandomValue(.05, .2)), this.isOut = !1) : this.y < this.renderer.height * this.renderer.INIT_HEIGHT_RATE ? (this.vy += this.GRAVITY, this.isOut = !0) : (this.isOut && (this.ay = this.getRandomValue(-.2, -.05)), this.isOut = !1), this.isOut || (this.theta += Math.PI / 20, this.theta %= 2 * Math.PI, this.phi += Math.PI / 30, this.phi %= 2 * Math.PI), this.renderer.generateEpicenter(this.x + (this.direction ? -1 : 1) * this.renderer.THRESHOLD, this.y, this.y - this.previousY), (this.vx > 0 && this.x > this.renderer.width + this.renderer.THRESHOLD || this.vx < 0 && this.x < -this.renderer.THRESHOLD) && this.init()
+    },
+    render: function (t) {
+      t.save(), t.translate(this.x, this.y), t.rotate(Math.PI + Math.atan2(this.vy, this.vx)), t.scale(1, this.direction ? 1 : -1), t.beginPath(), t.moveTo(-30, 0), t.bezierCurveTo(-20, 15, 15, 10, 40, 0), t.bezierCurveTo(15, -10, -20, -15, -30, 0), t.fill(), t.save(), t.translate(40, 0), t.scale(.9 + .2 * Math.sin(this.theta), 1), t.beginPath(), t.moveTo(0, 0), t.quadraticCurveTo(5, 10, 20, 8), t.quadraticCurveTo(12, 5, 10, 0), t.quadraticCurveTo(12, -5, 20, -8), t.quadraticCurveTo(5, -10, 0, 0), t.fill(), t.restore(), t.save(), t.translate(-3, 0), t.rotate((Math.PI / 3 + Math.PI / 10 * Math.sin(this.phi)) * (this.renderer.reverse ? -1 : 1)), t.beginPath(), this.renderer.reverse ? (t.moveTo(5, 0), t.bezierCurveTo(10, 10, 10, 30, 0, 40), t.bezierCurveTo(-12, 25, -8, 10, 0, 0)) : (t.moveTo(-5, 0), t.bezierCurveTo(-10, -10, -10, -30, 0, -40), t.bezierCurveTo(12, -25, 8, -10, 0, 0)), t.closePath(), t.fill(), t.restore(), t.restore(), this.controlStatus(t)
+    }
+  }, $(function () {
+    RENDERER.init()
+    $('.dark').click(function () {
+      setTimeout(() => {
+        RENDERER.setFishColor();
+        RENDERER.context.fill();
+      });
+    })
+  });
+</script>
+  
+  <div class="footer bg-color" style="display:none">
+    <div class="footer-main">
+      
+    </div>
+  </div>
+
+
+
+    <!-- 渲染暗黑按钮 -->
+    
+      <div class="dark">
+  <div class="dark-content">
+    <i class="fas fa-moon" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+    
+    <!-- 渲染回到顶部按钮 -->
+    
+      <div class="goTop top-btn-color" pointer>
+  <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+
+    
+    <!-- 渲染左下角音乐播放器 -->
+    
+
+    <!-- 图片放大 -->
+    
+      <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+    
+
+    <!-- 百度解析 -->
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    <!-- 背景彩带 -->
+    
+
+    <script src="/js/utils/index.js"></script>
+    <script src="/js/app.js"></script>
+    
+    <!-- 文章目录所需js -->
+<!-- <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+
+<script>
+  var headerEl = 'h2, h3, h4',  //headers 
+    content = '.post-detail',//文章容器
+    idArr = {};  //标题数组以确定是否增加索引id
+  //add #id
+  var option = {
+    // Where to render the table of contents.
+    tocSelector: '.toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: content,
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: headerEl,
+    scrollSmooth: true,
+    scrollSmoothOffset: -70,
+    // headingsOffset: -($(window).height() * 0.4 - 45),
+    headingsOffset: -($(window).height() * 0.4 - 70),
+    // positionFixedSelector: '.toc-main',
+    // positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    activeLinkClass: 'is-active-link',
+    orderedList: true,
+    collapseDepth: 20,
+    // onClick: function (e) {},
+  }
+  if ($('.toc').length > 0) {
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      tocbot.init(option);
+      mobileTocClick();
+    });
+
+  }
+
+  window.tocScrollFn = function () {
+    return bamboo.throttle(function () {
+      findHeadPosition();
+    }, 100)()
+  }
+  window.addEventListener('scroll', tocScrollFn);
+
+  const findHeadPosition = function (top) {
+    if ($('.toc-list').length <= 0) {
+      return false;
+    }
+    setTimeout(() => {  // or DOMContentLoaded 
+      autoScrollToc();
+    }, 0);
+  }
+
+  const autoScrollToc = function () {
+    const $activeItem = document.querySelector('.is-active-link');
+    const $cardToc = document.querySelector('.toc-content');
+    const activePosition = $activeItem.getBoundingClientRect().top
+    const sidebarScrollTop = $cardToc.scrollTop
+    if (activePosition > (document.documentElement.clientHeight - 100)) {
+      $cardToc.scrollTop = sidebarScrollTop + 150
+    }
+    if (activePosition < 150) {
+      $cardToc.scrollTop = sidebarScrollTop - 150
+    }
+  }
+
+  document.addEventListener('pjax:send', function () {
+    if ($('.toc').length) {
+      tocbot.destroy();
+    }
+  });
+
+  document.addEventListener('pjax:complete', function () {
+    if ($('.toc').length) {
+      tocbot.init(option);
+      mobileTocClick();
+    }
+  });
+  
+  // 手机端toc按钮点击出现目录
+  const mobileTocClick = function () {
+    const $cardTocLayout = document.getElementsByClassName('side_toc')[0];
+    const $cardToc = $cardTocLayout.getElementsByClassName('toc-content')[0];
+    let right = '45px';
+    if (window.innerWidth >= 551 && window.innerWidth <= 992) {
+      right = '100px'
+    }
+    const mobileToc = {
+      open: () => {
+        $cardTocLayout.style.cssText = 'animation: toc-open .3s; opacity: 1; right: ' + right
+      },
+
+      close: () => {
+        $cardTocLayout.style.animation = 'toc-close .2s'
+        setTimeout(() => {
+          $cardTocLayout.style.cssText = "opacity:''; animation: ''; right: ''"
+        }, 100)
+      }
+    }
+    document.getElementById('toc-mobile-btn').addEventListener('click', () => {
+      if (window.getComputedStyle($cardTocLayout).getPropertyValue('opacity') === '0') mobileToc.open()
+      else mobileToc.close()
+    })
+
+    $cardToc.addEventListener('click', (e) => {
+      if (window.innerWidth < 992) { // 小于992px的时候
+        mobileToc.close()
+      }
+    })
+  }
+</script>
+
+<style>
+  /* .is-position-fixed {
+    position: sticky !important;
+    top: 74px;
+  }
+
+  .toc-main ul {
+    counter-reset: show-list;
+  }
+
+  .toc-main ul li::before {
+    content: counter(item)".";
+    display: block;
+    position: absolute;
+    left: 12px;
+    top: 0;
+  } */
+</style>
+ 
+
+<!-- 设置导航背景 -->
+<script>
+  let setHeaderClass = () => {
+    const nav = $('#navHeader');
+    const navTop = nav.outerHeight();
+    const winTop = $(window).scrollTop();
+    if(winTop > navTop) {
+      nav.addClass('header-bg-color');
+    }
+    else {
+      nav.removeClass('header-bg-color');
+    }
+  };
+
+  let scrollCollect = () => {
+    return bamboo.throttle(function (e) {
+      setHeaderClass();
+    }, 200)()
+  }
+
+  let initHeaderBg = () => {
+    setHeaderClass();
+  }
+
+  setHeaderClass();
+  window.addEventListener('scroll', scrollCollect);
+
+  document.addEventListener('pjax:send', function () {
+    window.removeEventListener('scroll', scrollCollect)
+  })
+  document.addEventListener('pjax:complete', function () {
+    window.addEventListener('scroll', scrollCollect);
+    setHeaderClass();
+  })
+</script> 
+
+<!-- 渲染issues标签里的内容 -->
+<script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/issues/index.js');
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof IssuesAPI == "undefined") {
+      loadIssuesJS();
+    }
+  })
+</script>
+
+<!-- 输入框打字特效 -->
+<!-- 输入框打字特效 -->
+
+
+<!-- markdown代码一键复制功能 -->
+
+
+<!-- 图片懒加载 -->
+<script defer src="https://unpkg.com/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+<!-- 卡片滚动动画 -->
+   
+
+<!-- 评论所需js -->
+
+  
+    <script type="text/javascript">
+  var utteranceCommon = {};
+
+  function check_utterance() {
+    let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+    if (isDark) {
+      utteranceCommon.Theme = 'github-dark';
+    } else {
+      utteranceCommon.Theme = 'github-light';
+    }
+
+    return document.getElementById("gitment-container");
+  }
+  comment_el = '#gitment-container';
+  load_utterance = function () {
+    if ($(comment_el).length) {
+      // 匿名函数，防止污染全局变量
+      const HEAD = check_utterance();
+
+      var utterances = document.createElement('script');
+      utterances.type = 'text/javascript';
+      utterances.async = true;
+      utterances.setAttribute('issue-term', 'pathname')
+      utterances.setAttribute('theme', utteranceCommon.Theme)
+      utterances.setAttribute('repo', 'LinkAsuka/LinkAsuka.github.io')
+      utterances.crossorigin = 'anonymous';
+      utterances.src = 'https://utteranc.es/client.js';
+      // content 是要插入评论的地方
+      document.getElementById('gitment-container').appendChild(utterances);
+
+    }
+  }
+
+  function dark_utterance() {
+    const HEAD = check_utterance();
+    if (!HEAD) return;
+    const message = {
+      type: 'set-theme',
+      theme: utteranceCommon.Theme
+    };
+    const utteranceIframe = document.querySelector('iframe');
+    utteranceIframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+
+  $(document).ready(load_utterance);
+  document.addEventListener('pjax:complete', function () {
+    load_utterance();
+  });
+
+  $('.dark').click(function () {
+    setTimeout(() => {
+      dark_utterance();
+    });
+  })
+
+</script>
+
+<style>
+  .utterances {
+    max-width: inherit !important;
+  }
+</style>
+  
+
+
+<!-- 鼠标点击特效 -->
+<!-- 爱心点击 -->
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" data-pjax></script>
+
+
+<!-- 轮播图标签 -->
+<script>
+  var bambooSwiperTag = {};
+  function load_swiper() {
+    if (!document.querySelectorAll(".post-swiper-container")[0]) return;
+    loadCSS("https://unpkg.com/swiper@6/swiper-bundle.min.css")
+    loadScript("https://unpkg.com/swiper@6/swiper-bundle.min.js").then(() => {
+      pjax_swiper();
+    });
+  }
+
+  load_swiper();
+
+  function pjax_swiper() {
+    bambooSwiperTag.swiper = new Swiper('.post-swiper-container', {
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      centeredSlides: true,
+      loop: true,
+      autoplay: true ? {
+        delay: 3000,
+        stopOnLastSlide: false,
+        disableOnInteraction: false,
+      } : false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      on:{
+        init: function(){
+          swiperAnimateCache(this); //隐藏动画元素 
+          swiperAnimate(this); //初始化完成开始动画
+        }, 
+        slideChangeTransitionEnd: function(){ 
+          swiperAnimate(this); //每个slide切换结束时也运行当前slide动画
+          //this.slides.eq(this.activeIndex).find('.ani').removeClass('ani'); 动画只展现一次，去除ani类名
+        } 
+      }
+    });
+  }
+
+  document.addEventListener('pjax:complete', function () {
+    if (!document.querySelectorAll(".post-swiper-container")[0]) return;
+    if (typeof bambooSwiperTag.swiper === "undefined") {
+      load_swiper();
+    } else {
+      pjax_swiper();
+    }
+  });
+</script>
+    <!-- pjax -->
+    
+
+<!-- pjax -->
+
+
+  <script src="/js/pjax@0.2.8/index.js"></script>
+  
+    <!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+	<script>
+    document.addEventListener('pjax:complete', function () {
+      window.HideLoading();
+    })
+    document.addEventListener('pjax:send', function () {
+      window.ShowLoading();
+    })
+    document.addEventListener('pjax:error', function () {
+      window.HideLoading();
+    })
+	</script>
+</div>
+
+  
+
+  <script>
+    var pjax = new Pjax({
+      elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([no-pjax])',   // 拦截正常带链接的 a 标签
+      selectors: ["#pjax-container","title"],                                   // 根据实际需要确认重载区域
+      cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+      timeout: 5000
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+
+    })
+    
+    document.addEventListener('pjax:complete', function () {
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.location.href = e.triggerElement.href;
+    })
+    
+    // 刷新不从顶部开始
+    document.addEventListener("DOMContentLoaded", function () {
+      history.scrollRestoration = 'auto';
+    })
+  </script>
+
+
+
+  </body>
+</html>

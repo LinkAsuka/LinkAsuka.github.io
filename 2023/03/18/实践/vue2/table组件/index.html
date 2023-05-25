@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html>
+  <!-- meta/link... -->
+  
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>table组件 | Asuka</title>
+
+  <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/js/swiper/swiper@5.4.1.min.css" rel="stylesheet">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/animate.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+    
+
+    <!-- import link -->
+    
+        
+            
+        
+            
+        
+    
+    <!-- import script -->
+    
+        
+            
+        
+            
+        
+    
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+  
+  <!-- 依赖于jquery和vue -->
+  
+    
+<script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  
+
+  
+    
+<script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
+
+  
+  
+  <!-- 预加载动画 -->
+  <!-- 页面预加载动画 -->
+
+  
+    <div class="preloader-1" id="loader">
+  <div  aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+    <div class="wheel"></div>
+    <div class="hamster">
+      <div class="hamster__body">
+        <div class="hamster__head">
+          <div class="hamster__ear"></div>
+          <div class="hamster__eye"></div>
+          <div class="hamster__nose"></div>
+        </div>
+        <div class="hamster__limb hamster__limb--fr"></div>
+        <div class="hamster__limb hamster__limb--fl"></div>
+        <div class="hamster__limb hamster__limb--br"></div>
+        <div class="hamster__limb hamster__limb--bl"></div>
+        <div class="hamster__tail"></div>
+      </div>
+    </div>
+    <div class="spoke"></div>
+  </div>
+</div>
+  
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('DOMContentLoaded',endLoading);
+</script>
+
+  <body>
+    <!-- 判断是否为暗黑风格 -->
+    <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+    <!-- 需要在上面加载的js -->
+    <script>
+  function loadScript(src, cb) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var HEAD = document.getElementsByTagName("head")[0] || document.documentElement;
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        if (cb) {
+          if (JSON.stringify(cb)) {
+            for (let p in cb) {
+              if (p == "onload") {
+                script[p] = () => {
+                  cb[p]()
+                  resolve()
+                }
+              } else {
+                script[p] = cb[p]
+                script.onload = resolve
+              }
+            }
+          } else {
+            script.onload = () => {
+              cb()
+              resolve()
+            };
+          }
+        } else {
+          script.onload = resolve
+        }
+        script.setAttribute("src", src);
+        HEAD.appendChild(script);
+      });
+    });
+  }
+
+  //https://github.com/filamentgroup/loadCSS
+  var loadCSS = function (src) {
+    return new Promise(resolve => {
+      setTimeout(function () {
+        var link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.href = src;
+        link.onload = resolve;
+        document.getElementsByTagName("head")[0].appendChild(link);
+      });
+    });
+  };
+
+</script> 
+
+<!-- 轮播图所需要的js -->
+<script src="/js/swiper/swiper.min.js"></script>
+<script src="/js/swiper/vue-awesome-swiper.js"></script>
+<script src="/js/swiper/swiper.animate1.0.3.min.js"></script>
+
+<script type="text/javascript">
+  Vue.use(window.VueAwesomeSwiper)
+</script>
+
+
+  <script src="/js/vue-typed-js/index.js"></script>
+
+
+<!-- 首页的公告滚动插件的js需要重新加载 -->
+<script src="/js/vue-seamless-scroll/index.js"></script>
+
+<!-- 打字机效果js -->
+<script src="https://unpkg.com/typed.js@2.0.11"></script>
+
+
+    <div id="safearea">
+      <main class="main" id="pjax-container">
+        <!-- 头部导航 -->
+        
+<header class="header  " 
+  id="navHeader"
+  style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;"
+>
+  <div class="header-content">
+    <div class="bars">
+      <div id="appDrawer" class="sidebar-image">
+  <div class="drawer-box-icon">
+    <i class="fas fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  </div>
+  
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo lazyload placeholder" src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="logo">
+      <h3 class="drawer-box-head_title">Asuka</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+    </div>
+    <div class="blog-title" id="author-avatar">
+      
+        <div class="avatar">
+          <img src="/medias/logo.png" class="lazyload placeholder" data-srcset="/medias/logo.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="logo">
+        </div>
+      
+      <a href="/" class="logo">Asuka</a>
+    </div>
+    <nav class="navbar">
+      <ul class="menu">
+        
+      </ul>
+      
+      
+        <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fas fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <h2>
+          <span>
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fas fa-times close" pointer style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+      window.addEventListener('pjax:complete', () => {
+        this.cancelDialogVisible();
+      })
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("/search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+      
+
+    </nav>
+  </div>
+  
+  
+</header>
+        <!-- 内容区域 -->
+        
+ <!-- prismjs 代码高亮 -->
+ 
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+
+  <!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header" id="thumbnail_canvas" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;background-image:url('https://picx.zhimg.com/80/v2-b44931ea513e5f7b3b06f2703f79653c_1440w.webp')">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        table组件
+      </span>
+    </div>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fas fa-calendar"></i> 发表于：2023-03-18 |
+        </span>
+      
+
+      
+
+      
+    
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+
+
+<div class="post-detail-content post-row" 
+  style="padding-top: 0px;">
+  <div class="main-content">
+    <article class="post post-detail">
+      <div class="post-content">
+        <span id="more"></span>
+
+<h2 id="table-普通调用"><a href="#table-普通调用" class="headerlink" title="table 普通调用"></a>table 普通调用</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><details info><summary pointer> table的使用 </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableData = &#123;</span><br><span class="line">    <span class="attr">height</span>:<span class="number">350</span>, <span class="comment">//高度,给就是这个高度不给就根据屏幕自适应</span></span><br><span class="line">    <span class="attr">rowId</span>: <span class="string">&quot;userId&quot;</span>, <span class="comment">//key-id</span></span><br><span class="line">    <span class="attr">selection</span>:<span class="literal">false</span>, <span class="comment">//是否多选</span></span><br><span class="line">    <span class="attr">current</span>: <span class="literal">true</span>, <span class="comment">//是否单选</span></span><br><span class="line">    <span class="attr">pagination</span>: <span class="literal">true</span>, <span class="comment">//是否分页</span></span><br><span class="line">    <span class="attr">request</span>: &#123; <span class="comment">//接口相关</span></span><br><span class="line">      <span class="attr">on</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">url</span>: <span class="title class_">Router</span>.<span class="title function_">share_get</span>(),</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123; <span class="comment">//接口初始值,分页状态下可以不传pageNum和pageSize</span></span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">columns</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;支付方式&quot;</span>,</span><br><span class="line">        <span class="attr">prop</span>: <span class="string">&quot;title&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;说明&quot;</span>,</span><br><span class="line">        <span class="attr">prop</span>: <span class="string">&quot;humancount&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;全网设置&quot;</span>,</span><br><span class="line">        <span class="attr">prop</span>: <span class="string">&quot;ck&quot;</span>,</span><br><span class="line">        <span class="attr">slot</span>: <span class="string">&quot;qy&quot;</span>, <span class="comment">//插槽</span></span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   &lt;div id=<span class="string">&quot;app&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;page&quot;</span>&gt;</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">Angeltable</span> <span class="attr">:data</span>=<span class="string">&quot;PAY_table&quot;</span> <span class="attr">:columns</span>=<span class="string">&quot;tableData&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;table&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="comment">&lt;!-- 插槽 --&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">template</span> #<span class="attr">qy</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123;&#123;scope.row.title&#125;&#125;</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;link&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;del(scope.row.title)&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Angeltable</span>&gt;</span></span></span><br><span class="line">   &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+<h3 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h3><ol>
+<li>this.$refs.table.setSearch(data);<br>搜索的时候拿到搜索的数据传给表格改变表格</li>
+<li>this.$refs.table.handleSizeChange();<br>刷新表格 通常用在打开模态框表格数据重置</li>
+<li>this.$refs.table.refreshTable();<br>刷新表格 不重置 pageNum</li>
+<li>this.$refs.table.setTable();<br>从外部更新表格的数据</li>
+</ol>
+<h2 id="table-组件代码"><a href="#table-组件代码" class="headerlink" title="table 组件代码"></a>table 组件代码</h2><details info><summary pointer> table组件 </summary>
+              <div class='content'>
+              <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&quot;Angeltable&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">inheritAttrs</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">data</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">mark</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="attr">checkedKeys</span>:<span class="literal">false</span>,</span><br><span class="line">      <span class="attr">maxHeight</span>: <span class="string">&quot;85vh&quot;</span>,</span><br><span class="line">      <span class="attr">itemKey</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">dataList</span>: [],</span><br><span class="line">      <span class="attr">selectionList</span>:[],</span><br><span class="line">      <span class="attr">selectionNum</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">currentRow</span>:&#123;&#125;,</span><br><span class="line">      <span class="attr">setData</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="attr">isCheck</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">rowId</span>:<span class="string">&quot;id&quot;</span>, <span class="comment">//row-key</span></span><br><span class="line">      <span class="attr">selection</span>:&#123;</span><br><span class="line">        <span class="comment">// mark:&quot;&quot; // 默认勾选属性名</span></span><br><span class="line">        <span class="comment">// location:&#x27;top&#x27;, //bottom</span></span><br><span class="line">        <span class="comment">// mateing:true //配对</span></span><br><span class="line">        <span class="comment">// init:true //进入就勾选当前页</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mateingList</span>:[], <span class="comment">//配对list</span></span><br><span class="line">      <span class="attr">tree</span>:&#123;</span><br><span class="line">        <span class="comment">// all: true, //是否展开</span></span><br><span class="line">        <span class="comment">// flag:false, //是否启用父子联动</span></span><br><span class="line">        <span class="comment">// treeProps: &#123; children: &quot;subcompanyList&quot; &#125;, //children名设置</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// request: &#123;</span></span><br><span class="line">      <span class="comment">//   on: true,</span></span><br><span class="line">      <span class="comment">//   noinit: true, //开始不调用接口</span></span><br><span class="line">      <span class="comment">//   url: Router.project_supplier(), //接口地址</span></span><br><span class="line">      <span class="comment">//   method: &quot;post&quot;,</span></span><br><span class="line">      <span class="comment">//   loadFilter: (data) =&gt; &#123;</span></span><br><span class="line">      <span class="comment">//     //修改接口返回结构</span></span><br><span class="line">      <span class="comment">//     return data.pageInfo;</span></span><br><span class="line">      <span class="comment">//   &#125;,</span></span><br><span class="line">      <span class="comment">//   data: &#123; //初始值</span></span><br><span class="line">      <span class="comment">//     keyWord: &quot;&quot;,</span></span><br><span class="line">      <span class="comment">//     projectId: &quot;&quot;</span></span><br><span class="line">      <span class="comment">//   &#125;,</span></span><br><span class="line">      <span class="comment">// &#125;,</span></span><br><span class="line">      <span class="attr">index</span>:<span class="literal">true</span>, <span class="comment">//是否显示序号</span></span><br><span class="line">      <span class="attr">height</span>:<span class="literal">null</span>, <span class="comment">// 高度</span></span><br><span class="line">      <span class="attr">tableClass</span>:<span class="string">&#x27;&#x27;</span>, <span class="comment">//自定义class</span></span><br><span class="line">      <span class="attr">current</span>:<span class="literal">false</span>, <span class="comment">//单选</span></span><br><span class="line">      <span class="attr">pagination</span>: &#123; <span class="comment">//分页</span></span><br><span class="line">        <span class="attr">pageNum</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">pageSize</span>: <span class="number">15</span>,</span><br><span class="line">        <span class="attr">total</span>: <span class="number">200</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">disabled</span>:<span class="literal">false</span>, <span class="comment">//是否取消编辑</span></span><br><span class="line">      <span class="attr">loading</span>:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">props</span>: [<span class="string">&quot;columns&quot;</span>, <span class="string">&quot;data&quot;</span>,<span class="string">&quot;init&quot;</span>,<span class="string">&quot;value&quot;</span>,<span class="string">&quot;matelist&quot;</span>,<span class="string">&quot;disabledTable&quot;</span>],</span><br><span class="line"></span><br><span class="line">  <span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">request</span>&amp;&amp;!<span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">request</span>.<span class="property">noinit</span>) <span class="variable language_">this</span>.<span class="title function_">setApi</span>();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> $this = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">initTable</span>();</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> h = $(<span class="string">&quot;#app&quot;</span>).<span class="title function_">height</span>();</span><br><span class="line">      h =$(<span class="string">&quot;.form-top:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.form-top:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.el-tabs__header&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.el-tabs__header&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.nav-tab-blue:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.nav-tab-blue:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.btn_region:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.btn_region:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.tb-pagination&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - ($(<span class="string">&quot;.tb-pagination&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>) + <span class="number">10</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.angel-form-select:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - ($(<span class="string">&quot;.angel-form-select:visible&quot;</span>).<span class="title function_">outerHeight</span>()+<span class="number">15</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.angel-air&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.angel-air&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h = h - <span class="number">40</span>;</span><br><span class="line">      $this.<span class="property">maxHeight</span> = h;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;resize&quot;</span>,<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">var</span> h = $(<span class="string">&quot;#app&quot;</span>).<span class="title function_">height</span>();</span><br><span class="line">      h =$(<span class="string">&quot;.form-top:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.form-top:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.el-tabs__header&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.el-tabs__header&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.nav-tab-blue:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.nav-tab-blue:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.btn_region:visible&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.btn_region:visible&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.tb-pagination&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - ($(<span class="string">&quot;.tb-pagination&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>) + <span class="number">10</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.angel-form-select&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - ($(<span class="string">&quot;.angel-form-select&quot;</span>).<span class="title function_">outerHeight</span>()+<span class="number">15</span>): h;</span><br><span class="line">      h =$(<span class="string">&quot;.angel-air&quot;</span>).<span class="title function_">size</span>() &gt; <span class="number">0</span>? h - $(<span class="string">&quot;.angel-air&quot;</span>).<span class="title function_">outerHeight</span>(<span class="literal">true</span>): h;</span><br><span class="line">      h = h - <span class="number">40</span>;</span><br><span class="line">      $this.<span class="property">maxHeight</span> = h;</span><br><span class="line">      &#125;,<span class="literal">true</span></span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// pagination</span></span><br><span class="line">    <span class="title function_">handleSizeChange</span>(<span class="params">val</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">pagination</span>.<span class="property">pageNum</span> = <span class="number">1</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">pagination</span>.<span class="property">pageSize</span> = val;</span><br><span class="line">      <span class="comment">// this.itemKey = !this.itemKey;</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentRow</span>=&#123;&#125;;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">setCurrentRow</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setApi</span>(<span class="variable language_">this</span>.<span class="property">setData</span>?<span class="variable language_">this</span>.<span class="property">setData</span>:<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">refreshTable</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentRow</span>=&#123;&#125;;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">setCurrentRow</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setApi</span>(<span class="variable language_">this</span>.<span class="property">setData</span>?<span class="variable language_">this</span>.<span class="property">setData</span>:<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">initTable</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">rowId</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">rowId</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">tree</span> =  <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">tree</span>?<span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">tree</span>:<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">selection</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">selection</span>?<span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">selection</span>:<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">mark</span> =<span class="variable language_">this</span>.<span class="property">selection</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">selection</span>.<span class="property">mark</span>||<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">itemKey</span> = !<span class="variable language_">this</span>.<span class="property">itemKey</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">index</span> =  <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">index</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">height</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">height</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">disabled</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">disabledTable</span> || <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">disabled</span> || <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">selection</span>&amp;&amp;<span class="variable language_">this</span>.<span class="property">selection</span>.<span class="property">mateing</span>)&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">mateingList</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">matelist</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">mateingList</span>.<span class="property">length</span> == <span class="number">0</span>)&#123;</span><br><span class="line">          <span class="variable language_">this</span>.$emit(<span class="string">&#x27;input&#x27;</span>,<span class="variable language_">this</span>.<span class="property">selectionList</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">mateingList</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">toggleRowSelection</span>(item, <span class="literal">true</span>)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">tableClass</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">class</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">current</span> = <span class="variable language_">this</span>.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">current</span>;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">setTable</span>(<span class="params">data1</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(data1) <span class="variable language_">this</span>.<span class="property">dataList</span> = data1;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">itemKey</span> = !<span class="variable language_">this</span>.<span class="property">itemKey</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleCurrentChange</span>(<span class="params">val</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">pagination</span>.<span class="property">pageNum</span> = val;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentRow</span>=&#123;&#125;;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">setCurrentRow</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setApi</span>(<span class="variable language_">this</span>.<span class="property">setData</span>?<span class="variable language_">this</span>.<span class="property">setData</span>:<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleTableCurrentChange</span>(<span class="params">val</span>)&#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentRow</span> = val;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">setSearch</span>(<span class="params">data</span>)&#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">pagination</span>.<span class="property">pageNum</span> = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">selection</span>&amp;&amp;<span class="variable language_">this</span>.<span class="property">selection</span>.<span class="property">renew</span>==<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">itemKey</span> = !<span class="variable language_">this</span>.<span class="property">itemKey</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">selectionList</span> =[];</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">setCurrentRow</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">setData</span> = data;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setApi</span>(<span class="variable language_">this</span>.<span class="property">setData</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">markList</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">let</span> $this = <span class="variable language_">this</span>;</span><br><span class="line">      <span class="comment">// this.itemKey = !this.itemKey;</span></span><br><span class="line">      $this.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>($this.<span class="property">tree</span> )&#123;</span><br><span class="line">         <span class="keyword">function</span> <span class="title function_">digui</span>(<span class="params">list</span>) &#123;</span><br><span class="line">            list.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">if</span>(item[$this.<span class="property">mark</span>])&#123;</span><br><span class="line">                $this.<span class="title function_">toggleSelection</span>(item, <span class="literal">true</span>)</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (item[$this.<span class="property">tree</span>.<span class="property">treeProps</span>.<span class="property">children</span>].<span class="property">length</span>) &#123;</span><br><span class="line">                <span class="title function_">digui</span>(item[$this.<span class="property">tree</span>.<span class="property">treeProps</span>.<span class="property">children</span>]);</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="title function_">digui</span>($this.<span class="property">dataList</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">selection</span>&amp;&amp;<span class="variable language_">this</span>.<span class="property">selection</span>.<span class="property">init</span>)&#123;</span><br><span class="line">              $this.<span class="property">dataList</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(item[$this.<span class="property">mark</span>])&#123;</span><br><span class="line">                  $this.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">toggleRowSelection</span>(item, <span class="literal">true</span>)</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">setApi</span>(<span class="params">getData</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> $this = <span class="variable language_">this</span>;</span><br><span class="line">      <span class="keyword">if</span> ($this.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">request</span>.<span class="property">on</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> request = $this.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">request</span>;</span><br><span class="line">        <span class="keyword">let</span> pagination = $this.<span class="property">$props</span>.<span class="property">columns</span>.<span class="property">pagination</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (pagination) &#123;</span><br><span class="line">          request.<span class="property">data</span>.<span class="property">pageNum</span> = $this.<span class="property">pagination</span>.<span class="property">pageNum</span>? $this.<span class="property">pagination</span>.<span class="property">pageNum</span>: <span class="number">1</span>;</span><br><span class="line">          request.<span class="property">data</span>.<span class="property">pageSize</span> = $this.<span class="property">pagination</span>.<span class="property">pageSize</span>? $this.<span class="property">pagination</span>.<span class="property">pageSize</span>: <span class="number">15</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> data = getData ? &#123; ...request.<span class="property">data</span>, ...getData &#125; : request.<span class="property">data</span>;</span><br><span class="line">        $this.<span class="property">loading</span> = <span class="literal">true</span>;</span><br><span class="line">        <span class="title class_">Jean</span>[request.<span class="property">method</span> ? request.<span class="property">method</span> : <span class="string">&quot;get&quot;</span>](&#123;</span><br><span class="line">          <span class="attr">url</span>: request.<span class="property">url</span>,</span><br><span class="line">          <span class="attr">data</span>: data ? <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; ...data &#125;) : &#123;&#125;,</span><br><span class="line">          <span class="attr">timeout</span>:<span class="number">200000</span>,</span><br><span class="line">          <span class="attr">loading</span>:<span class="literal">false</span>,</span><br><span class="line">        &#125;).<span class="title function_">done</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">          $this.<span class="property">loading</span> = <span class="literal">false</span>;</span><br><span class="line">          <span class="keyword">if</span>(request.<span class="property">loadFilter</span>)&#123;</span><br><span class="line">            res.<span class="property">data</span>=request.<span class="title function_">loadFilter</span>(res.<span class="property">data</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          $this.<span class="property">dataList</span> = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(res.<span class="property">data</span>)?res.<span class="property">data</span>:res.<span class="property">data</span>.<span class="property">list</span>;</span><br><span class="line">          <span class="keyword">let</span> page = res.<span class="property">data</span>.<span class="property">pageNum</span>?res.<span class="property">data</span>:res;</span><br><span class="line">          <span class="keyword">if</span> (pagination) &#123;</span><br><span class="line">            $this.<span class="property">pagination</span>.<span class="property">pageNum</span> = page.<span class="property">pageNum</span>;</span><br><span class="line">            $this.<span class="property">pagination</span>.<span class="property">pageSize</span> = page.<span class="property">pageSize</span>;</span><br><span class="line">            $this.<span class="property">pagination</span>.<span class="property">total</span> = page.<span class="property">total</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>($this.<span class="property">mark</span>) $this.<span class="title function_">markList</span>();</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $this.<span class="property">dataList</span> = $this.<span class="property">$props</span>.<span class="property">data</span>;</span><br><span class="line">        <span class="keyword">if</span>($this.<span class="property">mark</span>) $this.<span class="title function_">markList</span>();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 勾选 和 勾选树逻辑</span></span><br><span class="line">    <span class="title function_">setChildren</span>(<span class="params">children, type</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> title = <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="property">treeProps</span>.<span class="property">children</span>;</span><br><span class="line">      children.<span class="title function_">map</span>(<span class="function">(<span class="params">j</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">toggleSelection</span>(j, type);</span><br><span class="line">        <span class="keyword">if</span> (j[title]) &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="title function_">setChildren</span>(j[title], type);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">toggleSelection</span>(<span class="params">row, select</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (row) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span> &amp;&amp;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">singleTable</span>.<span class="title function_">toggleRowSelection</span>(row, select);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleSelectAll</span>(<span class="params">selection</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">tree</span>)&#123;</span><br><span class="line">      <span class="keyword">const</span> isSelect = selection.<span class="title function_">some</span>(<span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> tableDataIds = <span class="variable language_">this</span>.<span class="property">dataList</span>.<span class="title function_">map</span>(</span><br><span class="line">          <span class="function">(<span class="params">j</span>) =&gt;</span> j[<span class="variable language_">this</span>.<span class="property">rowId</span>]</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">return</span> tableDataIds.<span class="title function_">includes</span>(el[<span class="variable language_">this</span>.<span class="property">rowId</span>]);</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">const</span> isCancel = !<span class="variable language_">this</span>.<span class="property">dataList</span>.<span class="title function_">every</span>(<span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> selectIds = selection.<span class="title function_">map</span>(<span class="function">(<span class="params">j</span>) =&gt;</span> j[<span class="variable language_">this</span>.<span class="property">rowId</span>]);</span><br><span class="line">        <span class="keyword">return</span> selectIds.<span class="title function_">includes</span>(el[<span class="variable language_">this</span>.<span class="property">rowId</span>]);</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">const</span> title = <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="property">treeProps</span>.<span class="property">children</span>;</span><br><span class="line">      <span class="keyword">if</span> (isSelect) &#123;</span><br><span class="line">        selection.<span class="title function_">map</span>(<span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (el[title]) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">setChildren</span>(el[title], <span class="literal">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (isCancel) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">dataList</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (el[title]) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">setChildren</span>(el[title], <span class="literal">false</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleRowSelect</span>(<span class="params">selection, row</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">tree</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="property">flag</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> hasSelect = selection.<span class="title function_">some</span>(<span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> row[<span class="variable language_">this</span>.<span class="property">rowId</span>] === el[<span class="variable language_">this</span>.<span class="property">rowId</span>];</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">const</span> title = <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="property">treeProps</span>.<span class="property">children</span>;</span><br><span class="line">        <span class="keyword">if</span> (hasSelect) &#123;</span><br><span class="line">          <span class="keyword">if</span> (row[title]) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">setChildren</span>(row[title], <span class="literal">true</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (row[title]) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">setChildren</span>(row[title], <span class="literal">false</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleSelectionChange</span>(<span class="params">selection</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">tree</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="property">flag</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> arr = selection;</span><br><span class="line">        <span class="keyword">let</span> parArr = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">          parArr.<span class="title function_">push</span>(item[<span class="variable language_">this</span>.<span class="property">rowId</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">selectionList</span> = parArr;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">selectionList</span> = selection;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;input&#x27;</span>,<span class="variable language_">this</span>.<span class="property">selectionList</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">tableRowClassName</span>(<span class="params">&#123;row, rowIndex&#125;</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(row.<span class="property">color</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;warning_&#x27;</span>+row.<span class="property">color</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div &gt;</span></span><br><span class="line"><span class="string">    &lt;el-table</span></span><br><span class="line"><span class="string">      :key=&quot;itemKey&quot;</span></span><br><span class="line"><span class="string">      border</span></span><br><span class="line"><span class="string">      ref=&quot;singleTable&quot;</span></span><br><span class="line"><span class="string">      style=&quot;width: 100%&quot;</span></span><br><span class="line"><span class="string">      :class=&quot;tableClass&quot;</span></span><br><span class="line"><span class="string">      :row-key=&quot;rowId&quot;</span></span><br><span class="line"><span class="string">      :data=&quot;dataList&quot;</span></span><br><span class="line"><span class="string">      :max-height=&quot;columns.maxHeight&quot;</span></span><br><span class="line"><span class="string">      :height=&quot;columns.maxHeight?null:height?height:maxHeight&quot;</span></span><br><span class="line"><span class="string">      :highlight-current-row=&quot;current&quot;</span></span><br><span class="line"><span class="string">      :default-expand-all=&quot;tree&amp;&amp;tree.all&quot;</span></span><br><span class="line"><span class="string">      :tree-props=&quot;tree?tree.treeProps:&#123;&#125;&quot;</span></span><br><span class="line"><span class="string">      @current-change=&quot;handleTableCurrentChange&quot;</span></span><br><span class="line"><span class="string">      @select-all=&quot;handleSelectAll&quot;</span></span><br><span class="line"><span class="string">      @select=&quot;handleRowSelect&quot;</span></span><br><span class="line"><span class="string">      @selection-change=&quot;handleSelectionChange&quot;</span></span><br><span class="line"><span class="string">      :row-class-name=&quot;tableRowClassName&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">      v-loading=&quot;loading&quot;</span></span><br><span class="line"><span class="string">      element-loading-text=&quot;加载中,请稍等&quot;</span></span><br><span class="line"><span class="string">      element-loading-spinner=&quot;el-icon-loading&quot;</span></span><br><span class="line"><span class="string">      element-loading-background=&quot;#fff&quot;</span></span><br><span class="line"><span class="string">    &gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &lt;el-table-column class=&quot;selection&quot; type=&quot;selection&quot; :width=&quot;selection&amp;&amp;selection.selectionWidht||120&quot; v-if=&quot;selection&amp;&amp;(selection.location==&#x27;top&#x27; || !selection.location)&quot; reserve-selection&gt;&lt;/el-table-column&gt;</span></span><br><span class="line"><span class="string">    &lt;el-table-column label=&quot;序号&quot; type=&quot;index&quot; :width=&quot;55&quot; v-if=&quot;columns.index&quot;&gt;&lt;/el-table-column&gt;</span></span><br><span class="line"><span class="string">    &lt;el-table-column :width=&quot;item.width&quot;  :label=&quot;item.title&quot; :prop=&quot;item.prop&quot; v-for=&quot;(item,index)  in columns.columns&quot; :key=&quot;index&quot; :render-header=&quot;item.renderHeader&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;span v-if=&quot;item.prop==&#x27;index&#x27;&quot;&gt;&#123;&#123;index+1&#125;&#125;&lt;/span&gt;</span></span><br><span class="line"><span class="string">      &lt;template #default=&quot;scope&quot; v-if=&quot;item.slot || item.prefix  || (item.edit&amp;&amp;!disabled)&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;slot :name=&quot;item.slot&quot; :row=&quot;scope.row&quot; :index=&quot;scope.$index&quot; &gt;</span></span><br><span class="line"><span class="string">          &lt;span v-if=&quot;item.prefix == &#x27;¥&#x27;&quot; class=&quot;right-cell&quot; style=&quot;padding-right:10px&quot;&gt; ¥ &#123;&#123;scope.row[item.prop].toFixed(2)&#125;&#125;  &lt;/span&gt;</span></span><br><span class="line"><span class="string">          &lt;el-input v-if=&quot;item.edit&quot; class=&quot;editInput&quot;  v-model=&quot;dataList[scope.$index][item.prop]&quot;&gt;&lt;/el-input&gt;</span></span><br><span class="line"><span class="string">          &lt;span v-if=&quot;item.prefix &amp;&amp; item.prefix != &#x27;¥&#x27;&quot;&gt;&lt;span  v-html=&quot;item.prefix&quot;&gt;&lt;/span&gt;&#123;&#123;scope.row[item.prop]&#125;&#125;&lt;/span&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &lt;/slot&gt;</span></span><br><span class="line"><span class="string">      &lt;/template&gt;</span></span><br><span class="line"><span class="string">    &lt;/el-table-column&gt;</span></span><br><span class="line"><span class="string">    &lt;el-table-column class=&quot;selection&quot; type=&quot;selection&quot; v-if=&quot;selection&amp;&amp;selection.location==&#x27;bottom&#x27;&quot; :width=&quot;selection&amp;&amp;selection.selectionWidht||120&quot; reserve-selection&gt;&lt;/el-table-column&gt;</span></span><br><span class="line"><span class="string">    &lt;/el-table&gt;</span></span><br><span class="line"><span class="string">    &lt;div class=&quot;tb-pagination&quot; v-if=&quot;columns.pagination&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;el-pagination</span></span><br><span class="line"><span class="string">        @size-change=&quot;handleSizeChange&quot;</span></span><br><span class="line"><span class="string">        @current-change=&quot;handleCurrentChange&quot;</span></span><br><span class="line"><span class="string">        :current-page.sync=&quot;pagination.pageNum&quot;</span></span><br><span class="line"><span class="string">        :page-sizes=&quot;[15, 20, 30, 40, 50, 100, 150, 200]&quot;</span></span><br><span class="line"><span class="string">        :page-size=&quot;pagination.pageSize&quot;</span></span><br><span class="line"><span class="string">        layout=&quot;total, sizes, prev, pager, next, jumper&quot;</span></span><br><span class="line"><span class="string">        :total=&quot;pagination.total&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;/el-pagination&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">      `</span>,</span><br><span class="line">&#125;);</span><br><span class="line">      <span class="string">`,</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
+              </div>
+            </details>
+
+      </div>
+      <div class="post-tags-categories">
+        
+        <div class="tags">
+          
+            <a href="/tags/vue2/" class="">
+              vue2
+            </a>
+          
+        </div>
+        
+      </div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+  
+  <div class="post-nav-prev post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="https://pic3.zhimg.com/80/v2-7cfc909ebe8d83683909846edd6b5232_1440w.webp" class="lazyload placeholder" data-srcset="https://pic3.zhimg.com/80/v2-7cfc909ebe8d83683909846edd6b5232_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="">
+    </div>
+    <a href="/2023/03/18/%E5%AE%9E%E8%B7%B5/vue2/form%E7%BB%84%E4%BB%B6/" class="post-nav-link">
+      <div class="title">
+        <i class="fas fa-angle-left"></i> 上一篇:
+        <div class="title-text">form组件</div>
+      </div>
+      
+      <!-- <div class="content">
+        
+form组件调用使用 form组件 
+              
+              12345678910
+      </div> -->
+    </a>
+  </div>
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img" style="background-size: cover; 
+      background-position: center center;">
+      <img class="lazyload lazyload placeholder" src="https://pic3.zhimg.com/80/v2-5f7cb7e900b9dcf5354c3d4d2c5cc3c2_1440w.webp" class="lazyload placeholder" data-srcset="https://pic3.zhimg.com/80/v2-5f7cb7e900b9dcf5354c3d4d2c5cc3c2_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
+    </div>
+    <a href="/2023/03/15/%E5%B7%A5%E5%85%B7/netlify/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fas fa-angle-right"></i>
+        <div class="title-text">嫖的最好答案 netlify</div>
+      </div>
+      <!-- <div class="content">
+        
+想要快速建立一个静态网站,我们可以在github上用io的默认域名或者在码云上做静态部署但是,辣鸡网络github卡的
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      <div id="gitment-container"></div>
+
+    
+  </div>
+
+<!-- comment script in themes\hexo-theme-bamboo\layout\_partial\scripts\index.ejs -->
+
+
+  </div>
+
+  <!-- 目录 -->
+  
+<aside id='l_side'>
+  
+    
+      
+        <section class="widget side_blogger" style="padding-bottom: 20px;">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img src='/medias/logo.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+          <h2>Asuka</h2>
+        
+        
+          <p>既胆小怕生 又死皮赖脸</p>
+
+        
+        
+      </div>
+    
+    
+  </div>
+</section>
+
+      
+    
+  
+  
+  
+
+  <div class="layout_sticky">    
+    
+      
+<section class="widget side_toc">
+  
+  <header>
+    
+      <i style="color: " class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+  <div class='content'>
+    <div class="toc-main">
+      <div class="toc-content">
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#table-%E6%99%AE%E9%80%9A%E8%B0%83%E7%94%A8"><span class="toc-text">table 普通调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">常用的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#table-%E7%BB%84%E4%BB%B6%E4%BB%A3%E7%A0%81"><span class="toc-text">table 组件代码</span></a></li></ol> -->
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 手机端目录按钮 -->
+<div id="toc-mobile-btn">
+  <i class="fas fa-list-ul" aria-hidden="true"></i>
+</div>
+
+      
+    
+  </div>
+</aside>
+
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"
+	:style="{'background-color': bgColor ? bgColor : 'transparent'}">
+	<transition-group tag="ul" :name="names">
+		<li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+			<img :src="image" class="bg-swiper-img no-lazy">
+		</li>
+	</transition-group>
+</div>
+<script>
+	var vm = new Vue({
+		el: '#appBgSwiper',
+		data: {
+			names: '' || 'fade' || 'fade', // translate-fade fade
+			mark: 0,
+			img: [],
+			bgColor: '',
+			time: null
+		},
+		methods: {   //添加方法
+			change(i, m) {
+				if (i > m) {
+					// this.names = 'fade';
+				} else if (i < m) {
+					// this.names = 'fade';
+				} else {
+					return;
+				}
+				this.mark = i;
+			},
+			prev() {
+				// this.names = 'fade';
+				this.mark--;
+				if (this.mark === -1) {
+					this.mark = 3;
+					return
+				}
+			},
+			next() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			autoPlay() {
+				// this.names = 'fade';
+				this.mark++;
+				if (this.mark === this.img.length) {
+					this.mark = 0;
+					return
+				}
+			},
+			play() {
+				let bgImgDelay = '' || '180000'
+				let delay = parseInt(bgImgDelay) || 180000;
+				this.time = setInterval(this.autoPlay, delay);
+			},
+			enter() {
+				clearInterval(this.time);
+			},
+			leave() {
+				this.play();
+			}
+		},
+		created() {
+			this.play()
+		},
+		beforeDestroy() {
+			clearInterval(this.time);
+		},
+		mounted() {
+			let prop = '' || '';
+			let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://')
+			if (isImg) {
+				let img = prop.split(',');
+				let configRoot = '/'
+				let arrImg = [];
+				img.forEach(el => {
+					var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+					var objExp = new RegExp(Expression);
+
+					if (objExp.test(el)) {
+						// http or https
+						arrImg.push(el);
+					} else {
+						// 非http or https开头
+						// 本地文件
+						let firstStr = el.charAt(0);
+						if (firstStr == '/') {
+							el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+						}
+						el = configRoot + el;
+						arrImg.push(el);
+					}
+				})
+				this.img = arrImg;
+			} else {
+				this.bgColor = prop;
+			}
+		}
+	})
+</script>
+
+<style>
+	.bg-swiper-box {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.bg-swiper-img {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+
+
+
+  <script>
+  function loadMermaid() {
+    if (document.getElementsByClassName('mermaid').length) {
+      if (window.mermaidJsLoad) mermaid.init()
+      else {
+        loadScript('https://unpkg.com/mermaid/dist/mermaid.min.js').then(() => {
+          window.mermaidJsLoad = true
+          mermaid.initialize({
+            theme: 'default',
+          })
+          if ('true') {
+            mermaid.init();
+          }
+        })
+      }
+    }
+  };
+  document.addEventListener("DOMContentLoaded", function () {
+    loadMermaid();
+  })
+
+  document.addEventListener('pjax:complete', function () {
+    loadMermaid();
+  })
+  
+</script>
+
+
+      </main>
+    </div>
+
+    <!-- 页脚 -->
+    
+  
+  
+    <!-- 底部鱼儿跳动效果，依赖于jquery-->
+<div id="j-fish-skip" style=" position: relative;height: 153px;width: auto;"></div>
+<script>
+  var RENDERER = {
+    POINT_INTERVAL: 5,
+    FISH_COUNT: 3,
+    MAX_INTERVAL_COUNT: 50,
+    INIT_HEIGHT_RATE: .5,
+    THRESHOLD: 50,
+    FISH_COLOR: '',
+    init: function () {
+      this.setFishColor(); this.setParameters(), this.reconstructMethods(), this.setup(), this.bindEvent(), this.render()
+    },
+    setFishColor: function () {
+      let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+      if (isDark) {
+        this.FISH_COLOR = '#222'; // 暗黑色，有时间把这整成一个变量
+      } else {
+        this.FISH_COLOR = '' || 'rgba(28,165,172,0.72)';
+      }
+    },
+    setParameters: function () {
+      this.$window = $(window), this.$container = $("#j-fish-skip"), this.$canvas = $("<canvas />"), this.context = this.$canvas.appendTo(this.$container).get(0).getContext("2d"), this.points = [], this.fishes = [], this.watchIds = []
+    },
+    createSurfacePoints: function () {
+      var t = Math.round(this.width / this.POINT_INTERVAL);
+      this.pointInterval = this.width / (t - 1), this.points.push(new SURFACE_POINT(this, 0));
+      for (var i = 1; i < t; i++) {
+        var e = new SURFACE_POINT(this, i * this.pointInterval),
+          h = this.points[i - 1];
+        e.setPreviousPoint(h), h.setNextPoint(e), this.points.push(e)
+      }
+    },
+    reconstructMethods: function () {
+      this.watchWindowSize = this.watchWindowSize.bind(this), this.jdugeToStopResize = this.jdugeToStopResize.bind(this), this.startEpicenter = this.startEpicenter.bind(this), this.moveEpicenter = this.moveEpicenter.bind(this), this.reverseVertical = this.reverseVertical.bind(this), this.render = this.render.bind(this)
+    },
+    setup: function () {
+      this.points.length = 0, this.fishes.length = 0, this.watchIds.length = 0, this.intervalCount = this.MAX_INTERVAL_COUNT, this.width = this.$container.width(), this.height = this.$container.height(), this.fishCount = this.FISH_COUNT * this.width / 500 * this.height / 500, this.$canvas.attr({
+        width: this.width,
+        height: this.height
+      }), this.reverse = !1, this.fishes.push(new FISH(this)), this.createSurfacePoints()
+    },
+    watchWindowSize: function () {
+      this.clearTimer(), this.tmpWidth = this.$window.width(), this.tmpHeight = this.$window.height(), this.watchIds.push(setTimeout(this.jdugeToStopResize, this.WATCH_INTERVAL))
+    },
+    clearTimer: function () {
+      for (; this.watchIds.length > 0;) clearTimeout(this.watchIds.pop())
+    },
+    jdugeToStopResize: function () {
+      var t = this.$window.width(),
+        i = this.$window.height(),
+        e = t == this.tmpWidth && i == this.tmpHeight;
+      this.tmpWidth = t, this.tmpHeight = i, e && this.setup()
+    },
+    bindEvent: function () {
+      this.$window.on("resize", this.watchWindowSize), this.$container.on("mouseenter", this.startEpicenter), this.$container.on("mousemove", this.moveEpicenter)
+    },
+    getAxis: function (t) {
+      var i = this.$container.offset();
+      return {
+        x: t.clientX - i.left + this.$window.scrollLeft(),
+        y: t.clientY - i.top + this.$window.scrollTop()
+      }
+    },
+    startEpicenter: function (t) {
+      this.axis = this.getAxis(t)
+    },
+    moveEpicenter: function (t) {
+      var i = this.getAxis(t);
+      this.axis || (this.axis = i), this.generateEpicenter(i.x, i.y, i.y - this.axis.y), this.axis = i
+    },
+    generateEpicenter: function (t, i, e) {
+      if (!(i < this.height / 2 - this.THRESHOLD || i > this.height / 2 + this.THRESHOLD)) {
+        var h = Math.round(t / this.pointInterval);
+        h < 0 || h >= this.points.length || this.points[h].interfere(i, e)
+      }
+    },
+    reverseVertical: function () {
+      this.reverse = !this.reverse;
+      for (var t = 0, i = this.fishes.length; t < i; t++) this.fishes[t].reverseVertical()
+    },
+    controlStatus: function () {
+      for (var t = 0, i = this.points.length; t < i; t++) this.points[t].updateSelf();
+      for (t = 0, i = this.points.length; t < i; t++) this.points[t].updateNeighbors();
+      this.fishes.length < this.fishCount && 0 == --this.intervalCount && (this.intervalCount = this.MAX_INTERVAL_COUNT, this.fishes.push(new FISH(this)))
+    },
+    render: function () {
+      requestAnimationFrame(this.render), this.controlStatus(), this.context.clearRect(0, 0, this.width, this.height), this.context.fillStyle = this.FISH_COLOR;
+      for (var t = 0, i = this.fishes.length; t < i; t++) this.fishes[t].render(this.context);
+      this.context.save(), this.context.globalCompositeOperation = "xor", this.context.beginPath(), this.context.moveTo(0, this.reverse ? 0 : this.height);
+      for (t = 0, i = this.points.length; t < i; t++) this.points[t].render(this.context);
+      this.context.lineTo(this.width, this.reverse ? 0 : this.height), this.context.closePath(), this.context.fill(), this.context.restore()
+    }
+  },
+  SURFACE_POINT = function (t, i) {
+    this.renderer = t, this.x = i, this.init()
+  };
+  SURFACE_POINT.prototype = {
+    SPRING_CONSTANT: .03,
+    SPRING_FRICTION: .9,
+    WAVE_SPREAD: .3,
+    ACCELARATION_RATE: .01,
+    init: function () {
+      this.initHeight = this.renderer.height * this.renderer.INIT_HEIGHT_RATE, this.height = this.initHeight, this.fy = 0, this.force = {
+        previous: 0,
+        next: 0
+      }
+    },
+    setPreviousPoint: function (t) {
+      this.previous = t
+    },
+    setNextPoint: function (t) {
+      this.next = t
+    },
+    interfere: function (t, i) {
+      this.fy = this.renderer.height * this.ACCELARATION_RATE * (this.renderer.height - this.height - t >= 0 ? -1 : 1) * Math.abs(i)
+    },
+    updateSelf: function () {
+      this.fy += this.SPRING_CONSTANT * (this.initHeight - this.height), this.fy *= this.SPRING_FRICTION, this.height += this.fy
+    },
+    updateNeighbors: function () {
+      this.previous && (this.force.previous = this.WAVE_SPREAD * (this.height - this.previous.height)), this.next && (this.force.next = this.WAVE_SPREAD * (this.height - this.next.height))
+    },
+    render: function (t) {
+      this.previous && (this.previous.height += this.force.previous, this.previous.fy += this.force.previous), this.next && (this.next.height += this.force.next, this.next.fy += this.force.next), t.lineTo(this.x, this.renderer.height - this.height)
+    }
+  };
+  var FISH = function (t) {
+    this.renderer = t, this.init()
+  };
+  FISH.prototype = {
+    GRAVITY: .4,
+    init: function () {
+      this.direction = Math.random() < .5, this.x = this.direction ? this.renderer.width + this.renderer.THRESHOLD : -this.renderer.THRESHOLD, this.previousY = this.y, this.vx = this.getRandomValue(4, 10) * (this.direction ? -1 : 1), this.renderer.reverse ? (this.y = this.getRandomValue(1 * this.renderer.height / 10, 4 * this.renderer.height / 10), this.vy = this.getRandomValue(2, 5), this.ay = this.getRandomValue(.05, .2)) : (this.y = this.getRandomValue(6 * this.renderer.height / 10, 9 * this.renderer.height / 10), this.vy = this.getRandomValue(-5, -2), this.ay = this.getRandomValue(-.2, -.05)), this.isOut = !1, this.theta = 0, this.phi = 0
+    },
+    getRandomValue: function (t, i) {
+      return t + (i - t) * Math.random()
+    },
+    reverseVertical: function () {
+      this.isOut = !this.isOut, this.ay *= -1
+    },
+    controlStatus: function (t) {
+      this.previousY = this.y, this.x += this.vx, this.y += this.vy, this.vy += this.ay, this.renderer.reverse ? this.y > this.renderer.height * this.renderer.INIT_HEIGHT_RATE ? (this.vy -= this.GRAVITY, this.isOut = !0) : (this.isOut && (this.ay = this.getRandomValue(.05, .2)), this.isOut = !1) : this.y < this.renderer.height * this.renderer.INIT_HEIGHT_RATE ? (this.vy += this.GRAVITY, this.isOut = !0) : (this.isOut && (this.ay = this.getRandomValue(-.2, -.05)), this.isOut = !1), this.isOut || (this.theta += Math.PI / 20, this.theta %= 2 * Math.PI, this.phi += Math.PI / 30, this.phi %= 2 * Math.PI), this.renderer.generateEpicenter(this.x + (this.direction ? -1 : 1) * this.renderer.THRESHOLD, this.y, this.y - this.previousY), (this.vx > 0 && this.x > this.renderer.width + this.renderer.THRESHOLD || this.vx < 0 && this.x < -this.renderer.THRESHOLD) && this.init()
+    },
+    render: function (t) {
+      t.save(), t.translate(this.x, this.y), t.rotate(Math.PI + Math.atan2(this.vy, this.vx)), t.scale(1, this.direction ? 1 : -1), t.beginPath(), t.moveTo(-30, 0), t.bezierCurveTo(-20, 15, 15, 10, 40, 0), t.bezierCurveTo(15, -10, -20, -15, -30, 0), t.fill(), t.save(), t.translate(40, 0), t.scale(.9 + .2 * Math.sin(this.theta), 1), t.beginPath(), t.moveTo(0, 0), t.quadraticCurveTo(5, 10, 20, 8), t.quadraticCurveTo(12, 5, 10, 0), t.quadraticCurveTo(12, -5, 20, -8), t.quadraticCurveTo(5, -10, 0, 0), t.fill(), t.restore(), t.save(), t.translate(-3, 0), t.rotate((Math.PI / 3 + Math.PI / 10 * Math.sin(this.phi)) * (this.renderer.reverse ? -1 : 1)), t.beginPath(), this.renderer.reverse ? (t.moveTo(5, 0), t.bezierCurveTo(10, 10, 10, 30, 0, 40), t.bezierCurveTo(-12, 25, -8, 10, 0, 0)) : (t.moveTo(-5, 0), t.bezierCurveTo(-10, -10, -10, -30, 0, -40), t.bezierCurveTo(12, -25, 8, -10, 0, 0)), t.closePath(), t.fill(), t.restore(), t.restore(), this.controlStatus(t)
+    }
+  }, $(function () {
+    RENDERER.init()
+    $('.dark').click(function () {
+      setTimeout(() => {
+        RENDERER.setFishColor();
+        RENDERER.context.fill();
+      });
+    })
+  });
+</script>
+  
+  <div class="footer bg-color" style="display:none">
+    <div class="footer-main">
+      
+    </div>
+  </div>
+
+
+
+    <!-- 渲染暗黑按钮 -->
+    
+      <div class="dark">
+  <div class="dark-content">
+    <i class="fas fa-moon" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+    
+    <!-- 渲染回到顶部按钮 -->
+    
+      <div class="goTop top-btn-color" pointer>
+  <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+
+    
+    <!-- 渲染左下角音乐播放器 -->
+    
+
+    <!-- 图片放大 -->
+    
+      <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+    
+
+    <!-- 百度解析 -->
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    <!-- 背景彩带 -->
+    
+
+    <script src="/js/utils/index.js"></script>
+    <script src="/js/app.js"></script>
+    
+    <!-- 文章目录所需js -->
+<!-- <link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+
+<script>
+  var headerEl = 'h2, h3, h4',  //headers 
+    content = '.post-detail',//文章容器
+    idArr = {};  //标题数组以确定是否增加索引id
+  //add #id
+  var option = {
+    // Where to render the table of contents.
+    tocSelector: '.toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: content,
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: headerEl,
+    scrollSmooth: true,
+    scrollSmoothOffset: -70,
+    // headingsOffset: -($(window).height() * 0.4 - 45),
+    headingsOffset: -($(window).height() * 0.4 - 70),
+    // positionFixedSelector: '.toc-main',
+    // positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    activeLinkClass: 'is-active-link',
+    orderedList: true,
+    collapseDepth: 20,
+    // onClick: function (e) {},
+  }
+  if ($('.toc').length > 0) {
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      tocbot.init(option);
+      mobileTocClick();
+    });
+
+  }
+
+  window.tocScrollFn = function () {
+    return bamboo.throttle(function () {
+      findHeadPosition();
+    }, 100)()
+  }
+  window.addEventListener('scroll', tocScrollFn);
+
+  const findHeadPosition = function (top) {
+    if ($('.toc-list').length <= 0) {
+      return false;
+    }
+    setTimeout(() => {  // or DOMContentLoaded 
+      autoScrollToc();
+    }, 0);
+  }
+
+  const autoScrollToc = function () {
+    const $activeItem = document.querySelector('.is-active-link');
+    const $cardToc = document.querySelector('.toc-content');
+    const activePosition = $activeItem.getBoundingClientRect().top
+    const sidebarScrollTop = $cardToc.scrollTop
+    if (activePosition > (document.documentElement.clientHeight - 100)) {
+      $cardToc.scrollTop = sidebarScrollTop + 150
+    }
+    if (activePosition < 150) {
+      $cardToc.scrollTop = sidebarScrollTop - 150
+    }
+  }
+
+  document.addEventListener('pjax:send', function () {
+    if ($('.toc').length) {
+      tocbot.destroy();
+    }
+  });
+
+  document.addEventListener('pjax:complete', function () {
+    if ($('.toc').length) {
+      tocbot.init(option);
+      mobileTocClick();
+    }
+  });
+  
+  // 手机端toc按钮点击出现目录
+  const mobileTocClick = function () {
+    const $cardTocLayout = document.getElementsByClassName('side_toc')[0];
+    const $cardToc = $cardTocLayout.getElementsByClassName('toc-content')[0];
+    let right = '45px';
+    if (window.innerWidth >= 551 && window.innerWidth <= 992) {
+      right = '100px'
+    }
+    const mobileToc = {
+      open: () => {
+        $cardTocLayout.style.cssText = 'animation: toc-open .3s; opacity: 1; right: ' + right
+      },
+
+      close: () => {
+        $cardTocLayout.style.animation = 'toc-close .2s'
+        setTimeout(() => {
+          $cardTocLayout.style.cssText = "opacity:''; animation: ''; right: ''"
+        }, 100)
+      }
+    }
+    document.getElementById('toc-mobile-btn').addEventListener('click', () => {
+      if (window.getComputedStyle($cardTocLayout).getPropertyValue('opacity') === '0') mobileToc.open()
+      else mobileToc.close()
+    })
+
+    $cardToc.addEventListener('click', (e) => {
+      if (window.innerWidth < 992) { // 小于992px的时候
+        mobileToc.close()
+      }
+    })
+  }
+</script>
+
+<style>
+  /* .is-position-fixed {
+    position: sticky !important;
+    top: 74px;
+  }
+
+  .toc-main ul {
+    counter-reset: show-list;
+  }
+
+  .toc-main ul li::before {
+    content: counter(item)".";
+    display: block;
+    position: absolute;
+    left: 12px;
+    top: 0;
+  } */
+</style>
+ 
+
+<!-- 设置导航背景 -->
+<script>
+  let setHeaderClass = () => {
+    const nav = $('#navHeader');
+    const navTop = nav.outerHeight();
+    const winTop = $(window).scrollTop();
+    if(winTop > navTop) {
+      nav.addClass('header-bg-color');
+    }
+    else {
+      nav.removeClass('header-bg-color');
+    }
+  };
+
+  let scrollCollect = () => {
+    return bamboo.throttle(function (e) {
+      setHeaderClass();
+    }, 200)()
+  }
+
+  let initHeaderBg = () => {
+    setHeaderClass();
+  }
+
+  setHeaderClass();
+  window.addEventListener('scroll', scrollCollect);
+
+  document.addEventListener('pjax:send', function () {
+    window.removeEventListener('scroll', scrollCollect)
+  })
+  document.addEventListener('pjax:complete', function () {
+    window.addEventListener('scroll', scrollCollect);
+    setHeaderClass();
+  })
+</script> 
+
+<!-- 渲染issues标签里的内容 -->
+<script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/issues/index.js');
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof IssuesAPI == "undefined") {
+      loadIssuesJS();
+    }
+  })
+</script>
+
+<!-- 输入框打字特效 -->
+<!-- 输入框打字特效 -->
+
+
+<!-- markdown代码一键复制功能 -->
+
+
+<!-- 图片懒加载 -->
+<script defer src="https://unpkg.com/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+<!-- 卡片滚动动画 -->
+   
+
+<!-- 评论所需js -->
+
+  
+    <script type="text/javascript">
+  var utteranceCommon = {};
+
+  function check_utterance() {
+    let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+    if (isDark) {
+      utteranceCommon.Theme = 'github-dark';
+    } else {
+      utteranceCommon.Theme = 'github-light';
+    }
+
+    return document.getElementById("gitment-container");
+  }
+  comment_el = '#gitment-container';
+  load_utterance = function () {
+    if ($(comment_el).length) {
+      // 匿名函数，防止污染全局变量
+      const HEAD = check_utterance();
+
+      var utterances = document.createElement('script');
+      utterances.type = 'text/javascript';
+      utterances.async = true;
+      utterances.setAttribute('issue-term', 'pathname')
+      utterances.setAttribute('theme', utteranceCommon.Theme)
+      utterances.setAttribute('repo', 'LinkAsuka/LinkAsuka.github.io')
+      utterances.crossorigin = 'anonymous';
+      utterances.src = 'https://utteranc.es/client.js';
+      // content 是要插入评论的地方
+      document.getElementById('gitment-container').appendChild(utterances);
+
+    }
+  }
+
+  function dark_utterance() {
+    const HEAD = check_utterance();
+    if (!HEAD) return;
+    const message = {
+      type: 'set-theme',
+      theme: utteranceCommon.Theme
+    };
+    const utteranceIframe = document.querySelector('iframe');
+    utteranceIframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+
+  $(document).ready(load_utterance);
+  document.addEventListener('pjax:complete', function () {
+    load_utterance();
+  });
+
+  $('.dark').click(function () {
+    setTimeout(() => {
+      dark_utterance();
+    });
+  })
+
+</script>
+
+<style>
+  .utterances {
+    max-width: inherit !important;
+  }
+</style>
+  
+
+
+<!-- 鼠标点击特效 -->
+<!-- 爱心点击 -->
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" data-pjax></script>
+
+
+<!-- 轮播图标签 -->
+<script>
+  var bambooSwiperTag = {};
+  function load_swiper() {
+    if (!document.querySelectorAll(".post-swiper-container")[0]) return;
+    loadCSS("https://unpkg.com/swiper@6/swiper-bundle.min.css")
+    loadScript("https://unpkg.com/swiper@6/swiper-bundle.min.js").then(() => {
+      pjax_swiper();
+    });
+  }
+
+  load_swiper();
+
+  function pjax_swiper() {
+    bambooSwiperTag.swiper = new Swiper('.post-swiper-container', {
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      centeredSlides: true,
+      loop: true,
+      autoplay: true ? {
+        delay: 3000,
+        stopOnLastSlide: false,
+        disableOnInteraction: false,
+      } : false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      on:{
+        init: function(){
+          swiperAnimateCache(this); //隐藏动画元素 
+          swiperAnimate(this); //初始化完成开始动画
+        }, 
+        slideChangeTransitionEnd: function(){ 
+          swiperAnimate(this); //每个slide切换结束时也运行当前slide动画
+          //this.slides.eq(this.activeIndex).find('.ani').removeClass('ani'); 动画只展现一次，去除ani类名
+        } 
+      }
+    });
+  }
+
+  document.addEventListener('pjax:complete', function () {
+    if (!document.querySelectorAll(".post-swiper-container")[0]) return;
+    if (typeof bambooSwiperTag.swiper === "undefined") {
+      load_swiper();
+    } else {
+      pjax_swiper();
+    }
+  });
+</script>
+    <!-- pjax -->
+    
+
+<!-- pjax -->
+
+
+  <script src="/js/pjax@0.2.8/index.js"></script>
+  
+    <!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+	<script>
+    document.addEventListener('pjax:complete', function () {
+      window.HideLoading();
+    })
+    document.addEventListener('pjax:send', function () {
+      window.ShowLoading();
+    })
+    document.addEventListener('pjax:error', function () {
+      window.HideLoading();
+    })
+	</script>
+</div>
+
+  
+
+  <script>
+    var pjax = new Pjax({
+      elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([no-pjax])',   // 拦截正常带链接的 a 标签
+      selectors: ["#pjax-container","title"],                                   // 根据实际需要确认重载区域
+      cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+      timeout: 5000
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+
+    })
+    
+    document.addEventListener('pjax:complete', function () {
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.location.href = e.triggerElement.href;
+    })
+    
+    // 刷新不从顶部开始
+    document.addEventListener("DOMContentLoaded", function () {
+      history.scrollRestoration = 'auto';
+    })
+  </script>
+
+
+
+  </body>
+</html>

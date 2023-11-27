@@ -28,9 +28,7 @@
 
   
   
-    
-<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
-
+    <link href="/" rel="stylesheet">
   
   
   <style>
@@ -40,9 +38,18 @@
             }
         }
     </style>
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <script defer src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
     <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 
+    
+    
+    <!-- 依赖于jquery和vue -->
+    
+        <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
+    
+
+    
+        <script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
     
 
     <!-- import link -->
@@ -64,19 +71,6 @@
 
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  
-  <!-- 依赖于jquery和vue -->
-  
-    
-<script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
-
-  
-
-  
-    
-<script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
-
-  
   
   <!-- 预加载动画 -->
   <!-- 页面预加载动画 -->
@@ -531,12 +525,10 @@ export 组件调用使用 export组件
   </div>
 
   <!-- 目录 -->
-  
-<aside id='l_side'>
+  <aside id='l_side'>
   
     
-      
-        <section class="widget side_blogger" style="padding-bottom: 20px;">
+      <section class="widget side_blogger">
   <div class='content'>
     
       
@@ -551,7 +543,7 @@ export 组件调用使用 export组件
           <h2>Asuka</h2>
         
         
-          <p>既胆小怕生 又死皮赖脸</p>
+          <p>欢迎来到我的城堡,肯尼迪先生</p>
 
         
         
@@ -561,7 +553,6 @@ export 组件调用使用 export组件
   </div>
 </section>
 
-      
     
   
   
@@ -574,7 +565,7 @@ export 组件调用使用 export组件
   
   <header>
     
-      <i style="color: " class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <i style="color: " class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name' style="color: ">本文目录</span>
     
   </header>
 
@@ -597,7 +588,6 @@ export 组件调用使用 export组件
     
   </div>
 </aside>
-
 
   <!-- 图片放大 Wrap images with fancybox support -->
   <script src="/js/wrapImage.js"></script>
@@ -919,11 +909,7 @@ export 组件调用使用 export组件
   });
 </script>
   
-  <div class="footer bg-color" style="display:none">
-    <div class="footer-main">
-      
-    </div>
-  </div>
+  
 
 
 
@@ -985,10 +971,66 @@ export 组件调用使用 export组件
     
     <!-- 渲染左下角音乐播放器 -->
     
+      <link rel="stylesheet" href="/js/aplayer/APlayer@1.10.1.min.css">
+<style>
+.aplayer .aplayer-lrc p {
+  
+  display: none;
+  
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px !important;
+}
+
+.aplayer .aplayer-lrc p.aplayer-lrc-current {
+  
+  display: none;
+  
+  font-size: 15px;
+  color: #42b983;
+}
+
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+  left: -66px !important;
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+  left: 0px !important;
+}
+
+
+</style>
+<meting-js  
+  class=""
+  server="netease"
+  type="playlist"
+  id="6601676337"
+  fixed='true'
+  autoplay='false'
+  theme='#42b983'
+  loop='all'
+  order='random'
+  preload='auto'
+  volume='0.7'
+  list-folded='true'
+>
+</meting-js>
+
+<!-- <style>
+  #aplayer {
+    position: fixed;
+    left: 0;
+    bottom: 300px;
+  }
+</style> -->
+<script src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    
 
     <!-- 图片放大 -->
     
-      <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+      <script src="/"></script>
     
 
     <!-- 百度解析 -->
@@ -1207,6 +1249,61 @@ export 组件调用使用 export组件
   document.addEventListener('pjax:complete', function () {
     if (typeof IssuesAPI == "undefined") {
       loadIssuesJS();
+    }
+  })
+</script>
+
+<!-- 渲染远程json加载的图片标签(getPhotoOnline)里的内容 -->
+<script>
+  function loadPhotoOnlineJS() {
+    if ($(".post-detail").find(".getJsonPhoto-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/getPhotoOnline/index.js');
+  };
+  $(function () {
+    loadPhotoOnlineJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof getPhotoJson == "undefined") {
+      loadPhotoOnlineJS();
+    }
+  })
+</script>
+
+<!-- 渲染远程json加载的talk标签(getTalkOnline)里的内容 -->
+<script>
+  function loadTalkOnlineJS() {
+    if ($(".post-detail").find(".getJsonTalk-api").length == 0) {
+      return;
+    } 
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/waterfall.js/1.0.2/waterfall.min.js'); // 瀑布流插件，https://raphamorim.io/waterfall.js/
+    loadScript('/js/getTalkOnline/index.js');
+  };
+  $(function () {
+    loadTalkOnlineJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof getTalkJson == "undefined") {
+      loadTalkOnlineJS();
+    }
+  })
+</script>
+
+<!-- 渲染远程json加载的site-card标签(getSiteOnline)里的内容 -->
+<script>
+  function loadSiteOnlineJS() {
+    if ($(".post-detail").find(".getJsonSite-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/getSiteOnline/index.js');
+  };
+  $(function () {
+    loadSiteOnlineJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof getSiteJson == "undefined") {
+      loadSiteOnlineJS();
     }
   })
 </script>

@@ -65,7 +65,7 @@ const getTalkJson = {
 			let imgHtml = '';
 			if (url) {
 				linkHtml = `
-					<a class="link" href="${url}" rel="external nofollow" target="_blank" title="跳转到链接">
+					<a class="link" href="${url}" rel="external nofollow"  title="跳转到链接">
 						<i class="fa-solid fa-link"></i>
 						链接
 					</a>`;
@@ -103,9 +103,9 @@ const getTalkJson = {
 				imgHtml = `
 				<div class="img">
 					<div class="fancybox">
-						<a href="${img}" class="fancybox" data-fancybox="images">
+						
 							<img src="${img}" alt="${img}">
-						</a>
+		
 					</div>
 				</div>
 				`

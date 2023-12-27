@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>&lt;性能&gt; | Asuka</title>
+  <title>页面跳转不成功,复制到浏览器可以打开 | Asuka</title>
 
   <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
   <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
@@ -379,33 +379,24 @@
 
 
 <div class="post-detail-header" id="thumbnail_canvas" style="background-repeat: no-repeat; background-size: cover; 
-  background-position: center center;position: relative;background-image:url('https://pic1.zhimg.com/80/v2-65b42c39bee4308d9b685b52edcc4b4e_1440w.jpg')">
+  background-position: center center;position: relative;background-image:url('/img/big/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp')">
   <div class="post-detail-header-mask"></div>
   <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
   
   <div class="post-detail-header_info-box">
     <div class="title-box">
       <span class="title">
-        &lt;性能&gt;
+        页面跳转不成功,复制到浏览器可以打开
       </span>
     </div>
     
     
       
         <span class="post-detail-header_date">
-          <i class="fas fa-calendar"></i> 发表于：2023-01-04 |
+          <i class="fas fa-calendar"></i> 发表于：2023-12-27 |
         </span>
       
 
-      
-        <span class="post-detail-header_categories">
-          <i class="iconfont iconbookmark1"></i> 分类：
-          
-            <a href="/categories/%E6%80%A7%E8%83%BD/" class="post-detail-header_category">
-              性能
-            </a>
-          
-        </span>
       
 
       
@@ -426,12 +417,14 @@
   <div class="main-content">
     <article class="post post-detail">
       <div class="post-content">
-        <p>Front-end Performance</p>
-<span id="more"></span>
+        <span id="more"></span>
 
+<p>有些网站写 a 标签跳转后跳过去的的页面显示不成功,但是复制地址再到浏览器回车就能够显示出来<br><code>会出现这样的问题是因为有些网站为了防止爬虫做了处理</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.aaa.com/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;noopener noreferrer&quot;</span>&gt;</span></span><br><span class="line">  跳转到一个新页面</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<div class="link-group"><div class="tagLink"><a class="link-card" title="图片优化" href="/2023/05/24/性能/前端优化-图片优化/"><span class="link-card-backdrop" style="background-image: url(/img/02.png)"></span><div class="left"><img src="/img/02.png" class="lazyload placeholder" data-srcset="/img/02.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp"/></div><div class="right"><p class="text">图片优化</p><p class="url">/2023/05/24/性能/前端优化-图片优化/</p></div></a></div>
-</div>
+<p>加了<code>rel=&quot;noopener noreferrer&quot;</code>之后就能够跳过去</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>target=”_blank” 存在安全风险,新的页面可以通过window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL改成导航到其他页面<br>加入了rel=”noopener noreferrer”属性，就会window.opener会为null</p>
+
       </div>
       <div class="post-tags-categories">
         
@@ -445,48 +438,22 @@
 
 
 
-  
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img" style="background-size: cover; 
-      background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="https://pica.zhimg.com/80/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" class="lazyload placeholder" data-srcset="https://pica.zhimg.com/80/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="">
-    </div>
-    <a href="/2023/01/12/%E5%AE%9E%E8%B7%B5/%E7%94%A8%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96url%E7%9A%84%E4%BC%A0%E5%8F%82/" class="post-nav-link">
-      <div class="title">
-        <i class="fas fa-angle-left"></i> 上一篇:
-        <div class="title-text">用简单的方法获取URL传参</div>
-      </div>
-      
-      <!-- <div class="content">
-        
-URLSearchParams
-
-
-ES6 提供了URLSearchParams对象用来接收一个URL的查询字符串如果
-      </div> -->
-    </a>
-  </div>
-
 
 
   
   <div class="post-nav-next post-nav-item">
     <div class="post-nav-img" style="background-size: cover; 
       background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="https://pic3.zhimg.com/80/v2-f94047ce45907e0966a681089835c04d_1440w.jpg?source=1940ef5c" class="lazyload placeholder" data-srcset="https://pic3.zhimg.com/80/v2-f94047ce45907e0966a681089835c04d_1440w.jpg?source=1940ef5c" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
+      <img class="lazyload lazyload placeholder" src="/img/02.png" class="lazyload placeholder" data-srcset="/img/02.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
     </div>
-    <a href="/2022/12/04/%3C%E5%B7%A5%E5%85%B7%3E/" class="post-nav-link">
+    <a href="/2023/12/07/%E6%A1%86%E6%9E%B6/vue/ref%E4%BD%BF%E7%94%A8%E5%B0%81%E8%A3%85/" class="post-nav-link">
       <div class="title">
         下一篇: <i class="fas fa-angle-right"></i>
-        <div class="title-text">&lt;工具&gt;</div>
+        <div class="title-text">ref使用封装</div>
       </div>
       <!-- <div class="content">
-        Front-end Tools
-
-
-
-
-获取一些有用api的免费网站免费随机apihttps://api.vvhan.c
+        
+代码123456789101112131415161718import &#123; reactive, toRef 
       </div> -->
     </a>
   </div>
@@ -566,7 +533,7 @@ ES6 提供了URLSearchParams对象用来接收一个URL的查询字符串如果
   <div class='content'>
     <div class="toc-main">
       <div class="toc-content">
-        <!--  -->
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li></ol> -->
         <div class="toc"></div>
       </div>
     </div>

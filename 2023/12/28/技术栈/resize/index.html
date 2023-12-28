@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>原型与原型链 | Asuka</title>
+  <title>window.resize与window.addEventListener | Asuka</title>
 
   <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
   <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
@@ -379,21 +379,21 @@
 
 
 <div class="post-detail-header" id="thumbnail_canvas" style="background-repeat: no-repeat; background-size: cover; 
-  background-position: center center;position: relative;background-image:url('/img/02.png')">
+  background-position: center center;position: relative;background-image:url('/img/big/757aea972636a1b8.png')">
   <div class="post-detail-header-mask"></div>
   <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
   
   <div class="post-detail-header_info-box">
     <div class="title-box">
       <span class="title">
-        原型与原型链
+        window.resize与window.addEventListener
       </span>
     </div>
     
     
       
         <span class="post-detail-header_date">
-          <i class="fas fa-calendar"></i> 发表于：2021-05-04 |
+          <i class="fas fa-calendar"></i> 发表于：2023-12-28 |
         </span>
       
 
@@ -417,15 +417,12 @@
   <div class="main-content">
     <article class="post post-detail">
       <div class="post-content">
-        <blockquote>
-<p>原型与原型链<br>🍒🍒🍒</p>
-</blockquote>
-<span id="more"></span>
+        <span id="more"></span>
 
-<p>当你定义一个对象<code>var obj = &#123;&#125;</code>那么打印obj会发现除了空对象还有一个<code>__proto__</code>的玩意<br>众所周知定义两个对象然后==它们，结果都不会是true的，对象里总是有些奇奇怪怪的东西<br>那这个<code>__proto__</code>是个什么呢，可以理解成obj它爹,打印<code>var obj = &#123;name:&#39;123&#39;&#125;</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name</span>: <span class="string">&quot;123&quot;</span>,</span><br><span class="line"><span class="attr">__proto__</span>:</span><br><span class="line">	<span class="attr">constructor</span>: ƒ <span class="title class_">Object</span>()</span><br><span class="line">	<span class="attr">hasOwnProperty</span>: ƒ <span class="title function_">hasOwnProperty</span>()</span><br><span class="line">	<span class="attr">isPrototypeOf</span>: ƒ <span class="title function_">isPrototypeOf</span>()</span><br><span class="line">	<span class="attr">propertyIsEnumerable</span>: ƒ <span class="title function_">propertyIsEnumerable</span>()</span><br><span class="line">	<span class="attr">toLocaleString</span>: ƒ <span class="title function_">toLocaleString</span>()</span><br><span class="line">	<span class="attr">toString</span>: ƒ <span class="title function_">toString</span>()</span><br><span class="line">	<span class="attr">valueOf</span>: ƒ <span class="title function_">valueOf</span>()</span><br><span class="line">	<span class="attr">__defineGetter__</span>: ƒ <span class="title function_">__defineGetter__</span>()</span><br><span class="line">	<span class="attr">__defineSetter__</span>: ƒ <span class="title function_">__defineSetter__</span>()</span><br><span class="line">	<span class="attr">__lookupGetter__</span>: ƒ <span class="title function_">__lookupGetter__</span>()</span><br><span class="line">	<span class="attr">__lookupSetter__</span>: ƒ <span class="title function_">__lookupSetter__</span>()</span><br><span class="line">	get <span class="attr">__proto__</span>: ƒ <span class="title function_">__proto__</span>()</span><br><span class="line">	set <span class="attr">__proto__</span>: ƒ <span class="title function_">__proto__</span>()</span><br></pre></td></tr></table></figure>
-<p>在定义方法的时候比如在定义对象的时候给这个对象一个方法show，name下面是不是就会多出一个show，<br>给proto爸爸也添加一个show，会发现obj其实是个好孩子，自己有钱的话就绝对不会找自己的爹要钱<br>还有一种情况可以称之为<code>你爸没了</code><br>create创建的对象可以决定你的原型，比如<code>o = Object.create(Object.prototype);</code>就是<code>var obj = &#123;&#125;</code><br>而<code>o = Object.create(null);</code>就是没有原型了<br>prototype类似于亲戚，爸妈是不能共享的，但是舅舅是可以当别人爹的<br>当你定义了一个方法，再在下面定义一个构造函数</p>
-<p>prototype说白了就是可以引用的东西</p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我在计算table组件的高度时使用了window.resize来计算窗口高度变化时表格的滚动条,一开始没有什么问题<br>直到我写了一个抽屉,打开抽屉里面有个高度定为 auto 的table,当抽屉关闭的时候,原来外层的表格的高度变成了auto</p>
+<h2 id="window-resize与window-addEventListener的区别"><a href="#window-resize与window-addEventListener的区别" class="headerlink" title="window.resize与window.addEventListener的区别"></a>window.resize与window.addEventListener的区别</h2><h3 id="window-resize"><a href="#window-resize" class="headerlink" title="window.resize"></a>window.resize</h3><p>  是一个直接在 window 对象上调用的方法，用于在窗口大小改变时触发相应的操作。这个方法通常用于执行一些与窗口大小直接相关的计算、操作或更新。例如，你可以在 window.resize 中编写代码来重新计算页面布局、调整元素大小或执行其他与窗口大小相关的操作。</p>
+<h3 id="window-addEventListener-“resize”-handler"><a href="#window-addEventListener-“resize”-handler" class="headerlink" title="window.addEventListener(“resize”, handler)"></a>window.addEventListener(“resize”, handler)</h3><p>  利用了事件监听器来监听窗口大小改变事件，并在事件发生时调用相应的处理函数。这种方式通常用于在窗口大小改变时触发某些操作，例如重新计算元素的位置、重新布局页面等。你可以通过添加事件监听器来注册窗口大小改变事件的处理函数，以便在窗口大小改变时执行相应的操作。</p>
+<p> window.resize 是直接调用 window 对象上的方法，用于在窗口大小改变时立即触发相应的操作。这个方法通常用于执行一些与窗口大小直接相关的计算或操作<code>但它并不会直接触发 HTML 内容的更新</code></p>
 
       </div>
       <div class="post-tags-categories">
@@ -440,47 +437,23 @@
 
 
 
-  
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img" style="background-size: cover; 
-      background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="/img/big/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" class="lazyload placeholder" data-srcset="/img/big/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="">
-    </div>
-    <a href="/2021/05/05/%E5%AE%9E%E8%B7%B5/react/ModalTable%E7%BB%84%E4%BB%B6/" class="post-nav-link">
-      <div class="title">
-        <i class="fas fa-angle-left"></i> 上一篇:
-        <div class="title-text">&lt;React&gt; Antd ModalTable组件</div>
-      </div>
-      
-      <!-- <div class="content">
-        
-API链接
-ModalTable说明
-Antd ModalTable组件/2021/12/05/框架/react/Mo
-      </div> -->
-    </a>
-  </div>
-
 
 
   
   <div class="post-nav-next post-nav-item">
     <div class="post-nav-img" style="background-size: cover; 
       background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="/img/big/v2-1f5fecc916dcb213570e1a79be2a5d65_1440w.jpg" class="lazyload placeholder" data-srcset="/img/big/v2-1f5fecc916dcb213570e1a79be2a5d65_1440w.jpg" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
+      <img class="lazyload lazyload placeholder" src="/img/big/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" class="lazyload placeholder" data-srcset="/img/big/v2-573ac3e25de03fad9c32add5a05e5cfc_1440w.webp" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" src="" alt="">
     </div>
-    <a href="/2021/05/03/%E5%AE%9E%E8%B7%B5/react/React_%E6%9D%A1%E4%BB%B6%E7%AD%9B%E9%80%89%E7%BB%84%E4%BB%B6/" class="post-nav-link">
+    <a href="/2023/12/27/%E5%AE%9E%E8%B7%B5/%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2%E4%B8%8D%E6%88%90%E5%8A%9F%E5%A4%8D%E5%88%B6%E6%89%93%E5%BC%80%E5%8F%AF%E4%BB%A5/" class="post-nav-link">
       <div class="title">
         下一篇: <i class="fas fa-angle-right"></i>
-        <div class="title-text">&lt;React&gt; Antd 条件筛选组件</div>
+        <div class="title-text">页面跳转不成功,复制到浏览器可以打开</div>
       </div>
       <!-- <div class="content">
         
-Antd 还是挺好用的
 
-
-
-Antd组件库官网https://ant.design/components/table
+有些网站写 a 标签跳转后跳过去的的页面显示不成功,但是复制地址再到浏览器回车就能够显示出来会出现这样的问题是因为有
       </div> -->
     </a>
   </div>
@@ -560,7 +533,7 @@ Antd组件库官网https://ant.design/components/table
   <div class='content'>
     <div class="toc-main">
       <div class="toc-content">
-        <!--  -->
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#window-resize%E4%B8%8Ewindow-addEventListener%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">window.resize与window.addEventListener的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#window-resize"><span class="toc-text">window.resize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-addEventListener-%E2%80%9Cresize%E2%80%9D-handler"><span class="toc-text">window.addEventListener(“resize”, handler)</span></a></li></ol></li></ol> -->
         <div class="toc"></div>
       </div>
     </div>
